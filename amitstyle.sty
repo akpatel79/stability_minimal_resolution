@@ -1,0 +1,53 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{amitstyle}[2025/10/04 Amit Patel personal style]
+
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bbm}          % blackboard bold 1
+\usepackage{fullpage}
+\usepackage{comment}
+\usepackage{authblk}
+\usepackage{enumitem}
+\usepackage{tikz-cd}
+\usepackage[numbers,sort]{natbib}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage[small,labelfont=bf]{caption}
+
+\usepackage{txfonts}      % Times-like; consider newtxtext/newtxmath
+
+\usepackage[normalem]{ulem}
+
+\tikzcdset{
+  cells={font=\everymath\expandafter{\the\everymath\displaystyle}},
+}
+
+\hypersetup{
+  colorlinks   = true,
+  urlcolor     = blue,
+  linkcolor    = blue,
+  citecolor    = blue
+}
+
+\newtheoremstyle{amit}% name
+{7pt}{7pt}% space above/below
+{}% body font
+{0pt}% indent
+{\bfseries}% head font
+{:}% punctuation after head
+{.5em}% space after head
+{}% head spec
+
+\theoremstyle{amit}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{corollary}[definition]{Corollary}
+\newtheorem{remark}[definition]{Remark}
+\newtheorem{example}[definition]{Example}
+\newtheorem{conjecture}[definition]{Conjecture}
+\newtheorem{claim}[definition]{Claim}
+\newtheorem{notation}[definition]{Notation}
+
