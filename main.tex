@@ -54,56 +54,31 @@ Department of Mathematics, Colorado State University, Fort Collins, CO 80523, US
 \subsection{Organization}
 
 
-%%%%%%%%%%%%%%%%%%%%%%
-
 \section{Preliminaries}
 \label{sec:prelim}
 
-Throughout this paper, $\Bbbk$ is a field, $\bfP = (\bfP, \le)$ is a poset.
-The poset $\bfP$ is regarded as a category as follows.
-The set $\bfP_0$ of objects is defined by $\bfP_0:= \bfP$.
-For each pair $(x,y) \in \bfP \times \bfP$,
-the set $\bfP(x,y)$ of morphisms from $x$ to $y$
-is defined by $\bfP(x,y):= \{p_{y,x}\}$ if $x \le y$, 
-and $\bfP(x,y):= \emptyset$ otherwise, where
-we set $p_{y,x}:= (y,x)$.
-The composition is defined by $p_{z,y}p_{y,x} = p_{z,x}$
-for all $x, y, z \in \bfP$ with $x \le y \le z$.
-The identity $\id_x$ at an object $x \in \bfP$ is
-given by $\id_x = p_{x,x}$.
-The category of posets whose morphisms are the monotone maps
-(Subsection \ref{ssec:mont-funct}) is denoted by $\Pos$.
-We assume that $\bfP$ is a finite poset except for Sect.\ \ref{sec:intlv-dist}.
+Throughout this paper, $\Bbbk$ is a field, and $\bfP=(\bfP,\le)$ is a poset.
+We regard $\bfP$ as a small (thin) category: there is a unique morphism $x\to y$ exactly when $x\le y$. This convention lets us treat $\bfP$-modules as functors $\bfP\to\vect$ and, equivalently, as left modules over the $\Bbbk$-linearization $\Bbbk\bfP$ (same objects, order relations as basis arrows, composition determined by transitivity). We assume $\bfP$ is finite except in Sect.\ \ref{sec:intlv-dist}.
 
-The category of finite-dimensional $\Bbbk$-vector spaces is denoted by $\vect$.
-The functor category $\Fun(\bfP, \vect)$ is denoted by $\vect^\bfP$,
-objects of which are called (point-wise finite-dimensional) $\bfP$-\emph{modules}.
-Note that if $\bfP$ is finite,
-then $\vect^\bfP$ is a $\Bbbk$-linear abelian, Krull--Schmidt category, and for each pair $(x,y)$ of objects,
-the Hom-space $\vect^\bfP(x,y)$ is finite-dimensional.
+The category of finite-dimensional $\Bbbk$-vector spaces is denoted by $\vect$. We write $\vect^\bfP=\Fun(\bfP,\vect)$ for the category of $\bfP$-modules. If $\bfP$ is finite, then $\vect^\bfP$ is a $\Bbbk$-linear, abelian, Krull--Schmidt category, and for each pair of $\bfP$-modules $M,N$ the Hom-space $\vect^\bfP(M,N)$ is finite-dimensional.
 
-\begin{notation}
-(1) We denote by $\bbN$ the set of all non-negative integers.
-
-(2) For each $n \in \bbN$, we set
-$[n]:= \{1, 2, \dots, n\}$.  In particular, $[0] = \emptyset$.
-
-(2) The set of all projective objects in $\vect^\bfP$ is
-denoted by $\prj \bfP$.
-
-(3) For any sets $X, Y$, we denote by $\Bij(X, Y)$ the set of all bijections from $X$ to $Y$.
-\end{notation}
-
-The following is well-known, and we omit the proof.
+We write $\prj\bfP$ for the full subcategory of projective objects in $\vect^\bfP$.
+Given $x\in\bfP$, the \emph{representable} at $x$ is $\Yp{x}:=\bfP(x,-)\in\vect^\bfP$. 
+It assigns to $y\in\bfP$ the vector space $\Yp{x}(y)=\Bbbk$ if $x\le y$ and $0$ otherwise, and on a relation $y\le z$ acts by the identity on $\Bbbk$ whenever $x\le y$ (and by $0$ otherwise). 
+Representables encode evaluation: by the Yoneda lemma there is a natural isomorphism
+\[
+\Hom_{\vect^\bfP}(\Yp{x},M)\cong M(x)
+\]
+for every $\bfP$-module $M$. 
+It follows that each $\Yp{x}$ is projective, and these are the indecomposable projectives in $\vect^\bfP$. The following is well known; we omit the proof.
 
 \begin{lemma}
 \label{lem:ind-proj}
-The set $\{\bfP(x,\blank) \mid x \in \bfP\}$ of representable functors
-forms a complete set of representatives of isoclasses of indecomposable projective $\bfP$-modules.
-Hence each $P \in \prj \bfP$ is expressed as
-$P \iso \Ds_{x \in \bfP} \bfP(x,\blank)^{a_x}$ by
-a unique family $(a_x)_{x \in \bfP} \in \bbN^\bfP$.
-%up to isomorphism.
+The family $\{\Yp{x}\mid x\in\bfP\}$ forms a complete set of representatives of isoclasses of indecomposable projective $\bfP$-modules. Hence each $M\in\prj \bfP$ is expressed as
+\[
+M \cong \bigoplus_{x\in\bfP} \Yp{x}^{\,a_x}
+\]
+by a unique family $(a_x)_{x\in\bfP}\in\bbN^\bfP$.
 \end{lemma}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -111,196 +86,137 @@ a unique family $(a_x)_{x \in \bfP} \in \bbN^\bfP$.
 \label{ssec:mont-funct}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Recall that a map $f: \bfP \to \bfQ$ between posets $\bfP$ and $\bfQ$
-is said to be \emph{monotone} if \ $a\le b$ in $\bfP$ implies $f(a)\le f(b)$ in $\bfQ$ for all $a, b \in \bfP$.
-Note that by regarding posets as categories,
-a functor from $\bfP$ to $\bfQ$ is nothing but a monotone map $\bfP \to \bfQ$.
-Hence a monotone map $f$ above induces the restriction functor
-$$
-f^\ast \colon \vect^\bfQ \to \vect^\bfP
-$$
-defined by setting $f^\ast N := N \circ f$ for all $N \in \vect^\bfQ$.
-The following is well-known in category theory:
+A map $f:\bfP\to\bfQ$ between posets is \emph{monotone} if $x\le y$ in $\bfP$ implies $f(x)\le f(y)$ in $\bfQ$ for all $x,y\in\bfP$. Viewing posets as thin categories, a functor $\bfP\to\bfQ$ is the same thing as a monotone map. Hence a monotone map $f:\bfP\to\bfQ$ induces the restriction functor
+\[
+f^{*}:\vect^\bfQ\to\vect^\bfP,\qquad f^{*}N = N\circ f.
+\]
+The following facts are standard.
 
 \begin{proposition}
-In the setting above,
-$f^\ast$ has a left (resp.\ right) adjoint $f_\dagger$ (resp.\ $f_\ast$)
-defined by setting $f_\dagger M$ (resp.\ $f_\ast M$)
-to be the left (resp.\ right) Kan extension of $M$ along $f$
-for all $M \in \vect^\bfP$:
-$$
-\begin{tikzcd}[column sep=40pt]
-\vect^\bfQ & \vect^\bfP
-\arrow[from={1-2}, to={1-1}, "f_\dagger "', ""{name=lu1}, bend right=50pt]\arrow[from={1-1}, to={1-2}, "f^\ast"{name=lu2},""'{name=ld1} description]\arrow[from={1-2}, to={1-1}, "f_\ast",""'{name=ld2}, bend left=50pt]\arrow[from={lu1}, to={lu2}, "\rotatebox{-90}{$\dashv$}" description, phantom]\arrow[from={ld1}, to={ld2}, "\rotatebox{-90}{$\dashv$}" description, phantom]\end{tikzcd}.
-$$
+For any monotone $f:\bfP\to\bfQ$, the functor $f^{*}$ is exact. Moreover, the left and right Kan extensions along $f$ exist and are given objectwise by
+\[
+(f_{!}M)(q)=\varinjlim_{\{\,x\in\bfP\mid f(x)\le q\,\}} M(x),
+\qquad
+(f_{*}M)(q)=\varprojlim_{\{\,x\in\bfP\mid q\le f(x)\,\}} M(x),
+\]
+and there are natural adjunctions $f_{!}\dashv f^{*}\dashv f_{*}$. In particular, $f_{!}$ is right exact, $f_{*}$ is left exact, and $f^{*}$ is exact.
 \end{proposition}
 
-Since left (resp.\ right) adjoints are right (resp.\ left) exact,
-$f_\dagger$ is right exact, $f_\ast$ is left exact, and $f^\ast$ is exact.
+We record a general fact that we will use later.
 
+
+\begin{lemma}
+\label{lem:pres-proj}
+Let $L:\calC\to\calD$ be a functor between abelian categories.
+If $L$ has an exact right adjoint $R:\calD\to\calC$,
+then $L$ sends projectives to projectives.
+\end{lemma}
+
+\begin{proof}
+Let $A$ be projective in $\calC$. Then $\calC(A,-)$ is exact, hence so is
+$\calC(A,-)\circ R=\calC(A,R(-))\cong \calD(L(A),-)$.
+Thus $L(A)$ is projective.
+\end{proof}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Galois Connections}
+\subsection{Galois Connections}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We recall Galois connections, which are adjunctions between posets and underlie the identifications among $f_{!}, f^{*}, f_{*}$ used later.
 
 \begin{definition}
-A \emph{Galois connection} between posets $\bfP, \bfQ$ consists of monotone maps $f:\bfP\to \bfQ$ and $g: \bfQ\to \bfP$ with
+A \emph{Galois connection} between posets $\bfP,\bfQ$ consists of monotone maps $f:\bfP\to\bfQ$ and $g:\bfQ\to\bfP$ such that
 \[
-f(a)\le x \iff a\le g(x)\qquad(a\in \bfP,\ x\in \bfQ).
+f(x)\le q \iff x\le g(q)\qquad(x\in \bfP,\ q\in \bfQ).
 \]
-Note that by looking at both $f$ and $g$ as functors between $\bfP, \bfQ$
-as categories, a Galois connection between posets $\bfP, \bfQ$ are
-nothing but an adjoint pair $f \dashv g$.
-\color{black}
-We write $f:\bfP\rightleftarrows \bfQ:g$, with $f$ left adjoint and $g$ right adjoint.
+Equivalently, viewing $\bfP$ and $\bfQ$ as thin categories, this means $f\dashv g$ as functors. We write $f:\bfP\rightleftarrows \bfQ:g$, with $f$ left adjoint and $g$ right adjoint.
 \end{definition}
 
-Let $\frkU$ be a universe.
-An element of $\frkU$ is called a $\frkU$-\emph{small} set.
-A category $\calC$ is called a $\frkU$-\emph{small} category if
-the set of objects of $\calC$ is $\frkU$-small, and
-for any objects $X, Y$, the set $\calC(X,Y)$ is $\frkU$-small.
-We denote by $\Cat^\frkU$ the $2$-category
-whose objects are the $\frkU$-small categories,
-whose 1-morphisms are the functors between the objects, and
-whose 2-morphisms are the natural transformations between the 1-morphisms.
+Let $\frkU$ be a universe. An element of $\frkU$ is called a $\frkU$-\emph{small} set. A category $\calC$ is $\frkU$-\emph{small} if its object set is $\frkU$-small and, for any objects $X,Y$, each hom-set $\calC(X,Y)$ is $\frkU$-small. We denote by $\Cat^\frkU$ the $2$-category whose objects are the $\frkU$-small categories, whose $1$-morphisms are functors, and whose $2$-morphisms are natural transformations.
 
-We note the following general fact.
 \begin{proposition}
 \label{prp:Yoneda-2-functor}
-Let $\calC$ be an object of $\Cat^\frkU$,
-then $\Cat^\frkU(\mbox{-}, \calC) \colon (\Cat^\frkU)^{\text{op}} \to \Cat^\frkU$
-turns out to be a $2$-functor.
+If $\calC$ is an object of $\Cat^\frkU$, then $\Cat^\frkU(\mbox{-},\calC):(\Cat^\frkU)^{\mathrm{op}}\to\Cat^\frkU$ is a $2$-functor.
 \end{proposition}
 
 \begin{proof}
-This follows by Proposition 4.5.4 in \cite{JY}.
+See Proposition~4.5.4 in \cite{JY}.
 \end{proof}
 
 \begin{corollary}
-If $f:\bfP\rightleftarrows \bfQ:g$ is a Galois connection between postes $\bfP, \bfQ$,
-then we have the adjoint pair $g^\ast \dashv f^\ast$:
+If $f:\bfP\rightleftarrows \bfQ:g$ is a Galois connection between posets $\bfP,\bfQ$, then $g^{*}\dashv f^{*}$.
 $$
 \begin{tikzcd}[row sep=3em]
 \Nname{E}\vect^\bfP &\Nname{C} \vect^\bfQ 
-%% ue yoko
-\arrow[from={E}, to={C}, "g^\ast", ""'{name=Fd},bend left]\arrow[from={C}, to={E}, "f^\ast" pos=0.48, ""'{name=Gu}, bend left]%% adjoints
-\arrow[from={Fd}, to={Gu}, "\rotatebox{-90}{$\dashv$}" description, phantom]%{mapsfrom, no tail}
+\arrow[from={E}, to={C}, "g^{*}", ""'{name=Fd}, bend left]
+\arrow[from={C}, to={E}, "f^{*}" pos=0.48, ""'{name=Gu}, bend left]
+\arrow[from={Fd}, to={Gu}, "\rotatebox{-90}{$\dashv$}" description, phantom]
 \end{tikzcd}.
 $$
 \end{corollary}
 
 \begin{proof}
-Consider an universe $\frkU$ such that $\vect$ is a $\frkU$-small category.
-Apply Proposition \ref{prp:Yoneda-2-functor} to $\calC:= \vect$ to see
-that $(\mbox{-})^\ast:= \Cat^\frkU(\mbox{-}, \vect) \colon (\Cat^\frkU)^{\text{op}} \to \Cat^\frkU$ is a 2-functor.
-Then this sends an adjoint system $(f, g, \eta, \varepsilon)$ to the adjoint system
-$(g^\ast,f^\ast, \eta^\ast, \varepsilon^\ast)$.
+With $\vect$ chosen $\frkU$-small, Proposition~\ref{prp:Yoneda-2-functor} applied to $\calC:=\vect$ shows that $(\mbox{-})^{*}:=\Cat^\frkU(\mbox{-},\vect):(\Cat^\frkU)^{\mathrm{op}}\to\Cat^\frkU$ is a $2$-functor. It sends an adjoint system $(f,g,\eta,\varepsilon)$ to $(g^{*},f^{*},\eta^{*},\varepsilon^{*})$.
 \end{proof}
 
 \begin{corollary}
 \label{cor:3_adj}
-In the same setting as above, 
-we have $g^\ast \cong f_\dagger$ and $f^\ast\cong g_\ast$.
-Therefore, we have the following three adjoint pairs:
+In the same setting, there are natural isomorphisms $g^{*}\cong f_{!}$ and $f^{*}\cong g_{*}$. In particular, the adjoint pairs
+\[
+g^{*}\dashv f^{*},\qquad f_{!}\dashv f^{*},\qquad g^{*}\dashv g_{*}
+\]
+are compatible via these isomorphisms.
 $$
 \begin{tikzcd}[row sep=50pt, column sep = 70pt]
 \Nname{E}\vect^\bfP &\Nname{C} \vect^\bfQ 
-%% ue yoko
-\arrow[from={E}, to={C}, "g^\ast \cong f_\dagger"{name=Fu}, ""'{name=Fd},bend left=15pt]\arrow[from={C}, to={E}, "f^\ast\cong g_\ast"{name=Gd}, ""'{name=Gu}, bend left=15pt]\arrow[from={C}, to={E}, "g_\dagger"', ""{name=gd},bend right=80pt]\arrow[from={E}, to={C}, "f_\ast"', ""{name=fu}, bend right=80pt]%% adjoints
-\arrow[from={Fd}, to={Gu}, "\rotatebox{-90}{$\dashv$}" description, phantom]%{mapsfrom, no tail}
-\arrow[from={gd}, to={Fu}, "\rotatebox{-90}{$\dashv$}" description, phantom]\arrow[from={Gd}, to={fu}, "\rotatebox{-90}{$\dashv$}" description, phantom]\end{tikzcd}.
+\arrow[from={E}, to={C}, "g^{*} \cong f_{!}"{name=Fu}, ""'{name=Fd}, bend left=15pt]
+\arrow[from={C}, to={E}, "f^{*}\cong g_{*}"{name=Gd}, ""'{name=Gu}, bend left=15pt]
+\arrow[from={C}, to={E}, "g_{!}"', ""{name=gd}, bend right=80pt]
+\arrow[from={E}, to={C}, "f_{*}"', ""{name=fu}, bend right=80pt]
+\arrow[from={Fd}, to={Gu}, "\rotatebox{-90}{$\dashv$}" description, phantom]
+\arrow[from={gd}, to={Fu}, "\rotatebox{-90}{$\dashv$}" description, phantom]
+\arrow[from={Gd}, to={fu}, "\rotatebox{-90}{$\dashv$}" description, phantom]
+\end{tikzcd}.
 $$
 \end{corollary}
 
 \begin{proof}
-Since $g^\ast \dashv f^\ast$ and $f_\dagger \dashv f^\ast$,
-we have $g^\ast \cong f_\dagger$.
-Similarly, we have $f^\ast \cong g_\ast$.
+Since $g^{*}\dashv f^{*}$ and $f_{!}\dashv f^{*}$, we obtain $g^{*}\cong f_{!}$. Similarly, $f^{*}\cong g_{*}$.
 \end{proof}
-
-% \begin{proposition}\label{prop:galois_connection_functor_equalities}
-% \cite[Prop.\ 6.3]{ElchesenPatel}
-% For a Galois connection $f:\bfP\rightleftarrows \bfQ:g$,
-% \[
-% f^\ast=g_\ast\qquad\text{and}\qquad f_\dagger=g^\ast .
-% \]
-% \end{proposition}
 
 \begin{corollary}
 \label{cor:g-ast-ex}
-If $f:\bfP\rightleftarrows \bfQ:g$ is a Galois connection,
-then $g_\ast:\vect^\bfQ \to \vect^\bfP$ is exact.
+If $f:\bfP\rightleftarrows \bfQ:g$ is a Galois connection, then $g_{*}:\vect^\bfQ\to\vect^\bfP$ is exact.
 \end{corollary}
 
-%\paragraph{Projective modules in $\vect^\bfP$.}
+\begin{proof}
+By Corollary~\ref{cor:3_adj}, $g_{*}\cong f^{*}$, and $f^{*}$ is exact.
+\end{proof}
 
-% For $p\in \bfP$, let $\sfU(p) \in \vect^\bfP$ be the principal upset module
-% \[
-% \sfU(p)(a)=
-% \begin{cases}
-% k & \text{if } p\le a,\\
-% 0 & \text{otherwise,}
-% \end{cases}
-% \qquad
-% \sfU(p)(a\le b)=
-% \begin{cases}
-% \id_k & \text{if } p\le a,\\
-% 0 & \text{otherwise.}
-% \end{cases}
-% \]
-% These are linearized representables, hence projective. We will use without proof that projectives in $\vect^\bfP$ are precisely (small) direct sums, equivalently retracts of sums, of principal upsets.
+Combining Corollary~\ref{cor:g-ast-ex} with Lemma~\ref{lem:pres-proj} yields:
+
+\begin{proposition}\label{prop:pullback_preserves_projectives}
+Let $f:\bfP\rightleftarrows \bfQ:g$ be a Galois connection. If $M\in\vect^\bfP$ is projective, then $g^{*}(M)$ is projective in $\vect^\bfQ$.\qed
+\end{proposition}
+
 
 \begin{lemma}\label{lem:galois-connection-basics}
-Let $f:\bfP\rightleftarrows \bfQ:g$ be a Golois connection. Then the following hold.
-
-\begin{enumerate}%[label=\textup{(\alph*)}]
-\item The following are equivalent:
+Let $f:\bfP\rightleftarrows \bfQ:g$ be a Galois connection. Then:
 \begin{enumerate}
-\item $f$ is surjective.
-\item $g$ is injective.
-\item $f\circ g =\id_\bfQ$.
-\end{enumerate}
-\item For $x\in \bfQ$, $g(x)=\max\{\,a\in \bfP\mid f(a)\le x\,\}$. In particular, if $f\circ g=\id_\bfQ$, then $g(x)=\max\{\,a\in \bfP\mid f(a)=x\,\}$.
+\item The following are equivalent: $f$ is surjective; $g$ is injective; $f\circ g=\id_{\bfQ}$.
+\item For $q\in \bfQ$, $g(q)=\max\{\,x\in \bfP\mid f(x)\le q\,\}$. In particular, if $f\circ g=\id_{\bfQ}$, then $g(q)=\max\{\,x\in \bfP\mid f(x)=q\,\}$.
 \end{enumerate}
 \end{lemma}
 
 \begin{proof}
-(1) This follows from the facts that $fgf = f$ and $gfg = g$.
-%Standard for adjunctions on posets. 
-
-(2) This follows from the equivalence: $a\le g(x)\iff f(a)\le x$
-for all $a \in \bfP$ and $b \in \bfQ$.
+(1) From $fgf=f$ and $gfg=g$ one deduces the three conditions are equivalent. 
+(2) The Galois equivalence $x\le g(q)\iff f(x)\le q$ holds for all $x\in\bfP$ and $q\in\bfQ$, and implies the stated formulas.
 \end{proof}
 
 \begin{definition}
-A Galois connection $f:\bfP \rightleftarrows \bfQ:g$ is called
-a \emph{Galois insertion} if the equivalent conditions in (1) above hold.
-% when $f\circ g=\id_Q$, equivalently $f$ is surjective and $g$ injective.
+A Galois connection $f:\bfP\rightleftarrows \bfQ:g$ is a \emph{Galois insertion} if the equivalent conditions in (1) above hold.
 \end{definition}
-
-We recall the following general fact.
-
-\begin{lemma}
-\label{lem:pres-proj}
-Let $L \colon \calC \to \calD$ be a functor between abelian categories.
-If $L$ has an exact right adjoint $R \colon \calD \to \calC$,
-then $L$ sends projectives to projectives.
-\end{lemma}
-
-\begin{proof}
-Let $M$ be a projective object in $\calC$.
-Then the functor $\calC(M,\mbox{-})$ is exact, hence so is
-$\calC(M,\mbox{-}) \circ R = \calC(M, R(\mbox{-})) \cong \calD(L(M),\mbox{-})$.
-Thus $L(M)$ is projective.
-\end{proof}
-
-The following is immediate from Lemma \ref{cor:g-ast-ex} and \ref{lem:pres-proj}.
-
-\begin{proposition}\label{prop:pullback_preserves_projectives}
-Let $f:\bfP \rightleftarrows \bfQ : g$ be a Galois connection. If $M\in\vect^\bfP$ is projective, then $g^\ast(M)$ is projective in $\vect^\bfQ$. \qed
-\end{proposition}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -409,8 +325,8 @@ so $\sigma\circ\pi_\Gamma=\tau\circ\pi_\Lambda$.
 \noindent\textbf{Legs and adjoints.}
 With projections $\pi_\bfX,\pi_\bfY:\bfZ\to \bfX,\bfY$, define
 \[
-\iota_\bfX:\bfX\to \bfZ,\ \ \iota_\bfX(x)=(x,\,g'(h(x))),\qquad
-\iota_\bfY:\bfY\to \bfZ,\ \ \iota_\bfY(y)=(i(f'(y)),\,y).
+\iota_\bfX:\bfX\to \bfZ,\ \ \iota_\bfX(x)=(x,g'(h(x))),\qquad
+\iota_\bfY:\bfY\to \bfZ,\ \ \iota_\bfY(y)=(i(f'(y)),y).
 \]
 Then $\pi_\bfX\dashv\iota_\bfX$ and $\pi_\bfY\dashv\iota_\bfY$, and
 \[
@@ -677,6 +593,10 @@ Thus the two distances coincide.
 
 
 \section{Botleneck distance of minimal projective resolutions}
+
+We use the following simple conventions for this section. For $n\in\bbN$ write $[n]=\{1,\dots,n\}$. If $X \cong \bigoplus_{i=1}^{n} X_i$ is a finite direct sum of indecomposables, write $\Summands(X)=\{X_i \mid i\in [n]\}$. For finite sets $A$ and $B$ with the same cardinality, $\Bij(A,B)$ denotes the set of bijections $A\to B$.
+
+
 
 %Let $A$ be a finite-dimensional algebra over the field $\Bbbk$.
 
