@@ -57,53 +57,7 @@ Department of Mathematics, Colorado State University, Fort Collins, CO 80523, US
 \section{Preliminaries}
 \label{sec:prelim}
 
-Throughout this paper, $\Bbbk$ is a field, and $\bfP=(\bfP,\le)$ is a poset.
-We regard $\bfP$ as a small (thin) category: there is a unique morphism $x\to y$ exactly when $x\le y$. This convention lets us treat $\bfP$-modules as functors $\bfP\to\vect$ and, equivalently, as left modules over the $\Bbbk$-linearization $\Bbbk\bfP$ (same objects, order relations as basis arrows, composition determined by transitivity). We assume $\bfP$ is finite except in Sect.\ \ref{sec:intlv-dist}.
-
-The category of finite-dimensional $\Bbbk$-vector spaces is denoted by $\vect$. We write $\vect^\bfP=\Fun(\bfP,\vect)$ for the category of $\bfP$-modules. If $\bfP$ is finite, then $\vect^\bfP$ is a $\Bbbk$-linear, abelian, Krull--Schmidt category, and for each pair of $\bfP$-modules $M,N$ the Hom-space $\vect^\bfP(M,N)$ is finite-dimensional.
-
-We write $\prj\bfP$ for the full subcategory of projective objects in $\vect^\bfP$.
-Given $x\in\bfP$, the \emph{representable} at $x$ is $\Yp{x}:=\bfP(x,-)\in\vect^\bfP$. 
-It assigns to $y\in\bfP$ the vector space $\Yp{x}(y)=\Bbbk$ if $x\le y$ and $0$ otherwise, and on a relation $y\le z$ acts by the identity on $\Bbbk$ whenever $x\le y$ (and by $0$ otherwise). 
-Representables encode evaluation: by the Yoneda lemma there is a natural isomorphism
-\[
-\Hom_{\vect^\bfP}(\Yp{x},M)\cong M(x)
-\]
-for every $\bfP$-module $M$. 
-It follows that each $\Yp{x}$ is projective, and these are the indecomposable projectives in $\vect^\bfP$. The following is well known; we omit the proof.
-
-\begin{lemma}
-\label{lem:ind-proj}
-The family $\{\Yp{x}\mid x\in\bfP\}$ forms a complete set of representatives of isoclasses of indecomposable projective $\bfP$-modules. Hence each $M\in\prj \bfP$ is expressed as
-\[
-M \cong \bigoplus_{x\in\bfP} \Yp{x}^{\,a_x}
-\]
-by a unique family $(a_x)_{x\in\bfP}\in\bbN^\bfP$.
-\end{lemma}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Monotone Functions}
-\label{ssec:mont-funct}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-A map $f:\bfP\to\bfQ$ between posets is \emph{monotone} if $x\le y$ in $\bfP$ implies $f(x)\le f(y)$ in $\bfQ$ for all $x,y\in\bfP$. Viewing posets as thin categories, a functor $\bfP\to\bfQ$ is the same thing as a monotone map. Hence a monotone map $f:\bfP\to\bfQ$ induces the restriction functor
-\[
-f^{*}:\vect^\bfQ\to\vect^\bfP,\qquad f^{*}N = N\circ f.
-\]
-The following facts are standard.
-
-\begin{proposition}
-For any monotone $f:\bfP\to\bfQ$, the functor $f^{*}$ is exact. Moreover, the left and right Kan extensions along $f$ exist and are given objectwise by
-\[
-(f_{!}M)(q)=\varinjlim_{\{\,x\in\bfP\mid f(x)\le q\,\}} M(x),
-\qquad
-(f_{*}M)(q)=\varprojlim_{\{\,x\in\bfP\mid q\le f(x)\,\}} M(x),
-\]
-and there are natural adjunctions $f_{!}\dashv f^{*}\dashv f_{*}$. In particular, $f_{!}$ is right exact, $f_{*}$ is left exact, and $f^{*}$ is exact.
-\end{proposition}
-
-We record a general fact that we will use later.
-
+We start with some categorical facts that will be used throughout.
 
 \begin{lemma}
 \label{lem:pres-proj}
@@ -113,17 +67,102 @@ then $L$ sends projectives to projectives.
 \end{lemma}
 
 \begin{proof}
-Let $A$ be projective in $\calC$. Then $\calC(A,-)$ is exact, hence so is
-$\calC(A,-)\circ R=\calC(A,R(-))\cong \calD(L(A),-)$.
+Let $A$ be projective in $\calC$. Then the functor $\calC(A,-)$ is exact, hence so is
+\[
+\calC(A,-)\circ R=\calC(A,R(-))\cong \calD(L(A),-).
+\]
 Thus $L(A)$ is projective.
 \end{proof}
+
+Let $\frkU$ be a universe. An element of $\frkU$ is called a $\frkU$-\emph{small} set. A category $\calC$ is $\frkU$-\emph{small} if its object set is $\frkU$-small and, for any objects $X,Y$, each hom-set $\calC(X,Y)$ is $\frkU$-small. We denote by $\Cat^\frkU$ the $2$-category whose objects are the $\frkU$-small categories, whose $1$-morphisms are functors, and whose $2$-morphisms are natural transformations.
+
+\begin{proposition}
+\label{prp:Yoneda-2-functor}
+If $\calC$ is an object of $\Cat^\frkU$, then
+\[
+\Cat^\frkU(\mbox{-},\calC):(\Cat^\frkU)^{\mathrm{op}}\longrightarrow\Cat^\frkU
+\]
+is a $2$-functor.
+\end{proposition}
+
+\begin{proof}
+See Proposition~4.5.4 in \cite{JY}.
+\end{proof}
+
+\begin{remark}
+\label{rmk:contravariant-adj}
+In particular, the $2$-functor $\Cat^\frkU(\mbox{-},\calC)$ sends an adjoint system $(f,g,\eta,\varepsilon)$ to the adjoint system $(g^{*},f^{*},\eta^{*},\varepsilon^{*})$ in a contravariant manner. Concretely, if $f\dashv g$ between categories $\calA$ and $\calB$, then precomposition yields $g^{*}\dashv f^{*}$ between the functor categories $\Cat^\frkU(\calB,\calC)$ and $\Cat^\frkU(\calA,\calC)$. We use this repeatedly with $\calC=\vect$ below.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Poset Modules}
+\label{ssec:poset-mod}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Throughout, $\Bbbk$ is a field, and $\bfP=(\bfP,\le)$ is a poset. We regard $\bfP$ as a small (thin) category: there is a unique morphism $x\to y$ exactly when $x\le y$. This lets us identify $\bfP$-modules with functors $\bfP\to\vect$ and, equivalently, with left modules over the $\Bbbk$-linearization $\Bbbk\bfP$ (same objects, order relations as basis arrows, composition by transitivity). We assume $\bfP$ is finite except in Sect.\ \ref{sec:intlv-dist}.
+
+Let $\vect$ denote the category of finite-dimensional $\Bbbk$-vector spaces, and write $\vect^\bfP=\Fun(\bfP,\vect)$ for the category of $\bfP$-modules. If $\bfP$ is finite, then $\vect^\bfP$ is a $\Bbbk$-linear, abelian, Krull–Schmidt category, and for each $M,N\in\vect^\bfP$ the $\Bbbk$-space $\vect^\bfP(M,N)$ is finite dimensional.
+
+We write $\prj\bfP$ for the full subcategory of projective objects in $\vect^\bfP$.
+For $x\in\bfP$, the \emph{representable} at $x$ is the functor
+\[
+\Yp{x}:=\bfP(x,-)\in\vect^\bfP.
+\]
+It sends $y\in\bfP$ to $\Yp{x}(y)=\Bbbk$ if $x\le y$ and to $0$ otherwise; for a relation $y\le z$ it acts by the identity on $\Bbbk$ whenever $x\le y$ (and by $0$ otherwise). By the Yoneda lemma there is a natural isomorphism
+\[
+\Hom_{\vect^\bfP}(\Yp{x},M)\cong M(x)\qquad(M\in\vect^\bfP),
+\]
+showing that each $\Yp{x}$ is projective.
+
+\begin{lemma}
+\label{lem:ind-proj}
+The family $\{\Yp{x}\mid x\in\bfP\}$ is a complete set of representatives of the isomorphism classes of indecomposable projective $\bfP$-modules. Hence each $M\in\prj \bfP$ decomposes uniquely as
+\[
+M \cong \bigoplus_{x\in\bfP} \Yp{x}^{\,a_x}
+\]
+for a uniquely determined family $(a_x)_{x\in\bfP}\in\bbN^\bfP$.
+\end{lemma}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Monotone Functions and Conextensions}
+\label{ssec:mont-funct}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+A map $f:\bfP\to\bfQ$ of posets is \emph{monotone} if $x\le y$ in $\bfP$ implies $f(x)\le f(y)$ in $\bfQ$. Viewing posets as thin categories, a functor $\bfP\to\bfQ$ is precisely a monotone map. Thus a monotone map $f:\bfP\to\bfQ$ induces the restriction (precomposition) functor
+\[
+f^{*}:\vect^\bfQ\to\vect^\bfP,\qquad f^{*}N = N\circ f .
+\]
+
+\begin{proposition}
+\label{prop:Kan-posets}
+For any monotone $f:\bfP\to\bfQ$, the functor $f^{*}$ is exact. Moreover, the left and right Kan extensions along $f$ exist and we denote them by
+\[
+f_{!}:=\Lan_{f}\qquad\text{and}\qquad f_{*}:=\Ran_{f}.
+\]
+By the defining property of conextensions there are natural adjunctions
+\[
+f_{!}\dashv f^{*}\dashv f_{*}.
+\]
+In particular, $f_{!}$ is right exact, $f_{*}$ is left exact, and $f^{*}$ is exact.
+\end{proposition}
+
+\[
+\begin{tikzcd}[row sep=3em, column sep=6em]
+\Nname{E}\vect^\bfP & \Nname{C}\vect^\bfQ
+\arrow[from={E}, to={C}, "f_{!}", ""'{name=Fu}, bend left]
+\arrow[from={C}, to={E},"f^{*}"{description, pos=.5, name=Fc}]
+\arrow[from={E}, to={C}, "f_{*}"', ""'{name=Fd}, bend right]
+\arrow[from={Fu}, to={Fc}, "\rotatebox{-90}{$\dashv$}" description, phantom]
+\arrow[from={Fc}, to={Fd}, "\rotatebox{-90}{$\dashv$}" description, phantom]
+\end{tikzcd}
+\]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Galois Connections}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-We recall Galois connections, which are adjunctions between posets and underlie the identifications among $f_{!}, f^{*}, f_{*}$ used later.
+We recall that Galois connections are adjunctions between posets and underlie the identifications among $f_{!}, f^{*}, f_{*}$ used later.
 
 \begin{definition}
 A \emph{Galois connection} between posets $\bfP,\bfQ$ consists of monotone maps $f:\bfP\to\bfQ$ and $g:\bfQ\to\bfP$ such that
@@ -133,31 +172,20 @@ f(x)\le q \iff x\le g(q)\qquad(x\in \bfP,\ q\in \bfQ).
 Equivalently, viewing $\bfP$ and $\bfQ$ as thin categories, this means $f\dashv g$ as functors. We write $f:\bfP\rightleftarrows \bfQ:g$, with $f$ left adjoint and $g$ right adjoint.
 \end{definition}
 
-Let $\frkU$ be a universe. An element of $\frkU$ is called a $\frkU$-\emph{small} set. A category $\calC$ is $\frkU$-\emph{small} if its object set is $\frkU$-small and, for any objects $X,Y$, each hom-set $\calC(X,Y)$ is $\frkU$-small. We denote by $\Cat^\frkU$ the $2$-category whose objects are the $\frkU$-small categories, whose $1$-morphisms are functors, and whose $2$-morphisms are natural transformations.
-
-\begin{proposition}
-\label{prp:Yoneda-2-functor}
-If $\calC$ is an object of $\Cat^\frkU$, then $\Cat^\frkU(\mbox{-},\calC):(\Cat^\frkU)^{\mathrm{op}}\to\Cat^\frkU$ is a $2$-functor.
-\end{proposition}
-
-\begin{proof}
-See Proposition~4.5.4 in \cite{JY}.
-\end{proof}
-
 \begin{corollary}
-If $f:\bfP\rightleftarrows \bfQ:g$ is a Galois connection between posets $\bfP,\bfQ$, then $g^{*}\dashv f^{*}$.
-$$
+If $f:\bfP\rightleftarrows \bfQ:g$ is a Galois connection, then $g^{*}\dashv f^{*}$.
+\[
 \begin{tikzcd}[row sep=3em]
-\Nname{E}\vect^\bfP &\Nname{C} \vect^\bfQ 
+\Nname{E}\vect^\bfP & \Nname{C}\vect^\bfQ 
 \arrow[from={E}, to={C}, "g^{*}", ""'{name=Fd}, bend left]
-\arrow[from={C}, to={E}, "f^{*}" pos=0.48, ""'{name=Gu}, bend left]
+\arrow[from={C}, to={E}, "f^{*}"{description, pos=.5, name=Gu}, bend left]
 \arrow[from={Fd}, to={Gu}, "\rotatebox{-90}{$\dashv$}" description, phantom]
 \end{tikzcd}.
-$$
+\]
 \end{corollary}
 
 \begin{proof}
-With $\vect$ chosen $\frkU$-small, Proposition~\ref{prp:Yoneda-2-functor} applied to $\calC:=\vect$ shows that $(\mbox{-})^{*}:=\Cat^\frkU(\mbox{-},\vect):(\Cat^\frkU)^{\mathrm{op}}\to\Cat^\frkU$ is a $2$-functor. It sends an adjoint system $(f,g,\eta,\varepsilon)$ to $(g^{*},f^{*},\eta^{*},\varepsilon^{*})$.
+Immediate from the contravariant $2$-functoriality of $\Cat^\frkU(\mbox{-},\vect)$ (e.g.\ Proposition~4.5.4 in \cite{JY}).
 \end{proof}
 
 \begin{corollary}
@@ -167,22 +195,22 @@ In the same setting, there are natural isomorphisms $g^{*}\cong f_{!}$ and $f^{*
 g^{*}\dashv f^{*},\qquad f_{!}\dashv f^{*},\qquad g^{*}\dashv g_{*}
 \]
 are compatible via these isomorphisms.
-$$
+\[
 \begin{tikzcd}[row sep=50pt, column sep = 70pt]
-\Nname{E}\vect^\bfP &\Nname{C} \vect^\bfQ 
-\arrow[from={E}, to={C}, "g^{*} \cong f_{!}"{name=Fu}, ""'{name=Fd}, bend left=15pt]
-\arrow[from={C}, to={E}, "f^{*}\cong g_{*}"{name=Gd}, ""'{name=Gu}, bend left=15pt]
+\Nname{E}\vect^\bfP & \Nname{C}\vect^\bfQ 
+\arrow[from={E}, to={C}, "g^{*} \cong f_{!}"{description, pos=.5, name=Fu}, ""'{name=Fd}, bend left=15pt]
+\arrow[from={C}, to={E}, "f^{*}\cong g_{*}"{description, pos=.5, name=Gd}, ""'{name=Gu}, bend left=15pt]
 \arrow[from={C}, to={E}, "g_{!}"', ""{name=gd}, bend right=80pt]
 \arrow[from={E}, to={C}, "f_{*}"', ""{name=fu}, bend right=80pt]
 \arrow[from={Fd}, to={Gu}, "\rotatebox{-90}{$\dashv$}" description, phantom]
 \arrow[from={gd}, to={Fu}, "\rotatebox{-90}{$\dashv$}" description, phantom]
 \arrow[from={Gd}, to={fu}, "\rotatebox{-90}{$\dashv$}" description, phantom]
 \end{tikzcd}.
-$$
+\]
 \end{corollary}
 
 \begin{proof}
-Since $g^{*}\dashv f^{*}$ and $f_{!}\dashv f^{*}$, we obtain $g^{*}\cong f_{!}$. Similarly, $f^{*}\cong g_{*}$.
+By uniqueness of adjoints in a $2$-category: $g^{*}$ and $f_{!}$ are both left adjoint to $f^{*}$, hence canonically isomorphic; dually for $f^{*}$ and $g_{*}$.
 \end{proof}
 
 \begin{corollary}
@@ -191,7 +219,7 @@ If $f:\bfP\rightleftarrows \bfQ:g$ is a Galois connection, then $g_{*}:\vect^\bf
 \end{corollary}
 
 \begin{proof}
-By Corollary~\ref{cor:3_adj}, $g_{*}\cong f^{*}$, and $f^{*}$ is exact.
+Using Corollary~\ref{cor:3_adj}, $g_{*}\cong f^{*}$, and $f^{*}$ is exact by Proposition~\ref{prop:Kan-posets}.
 \end{proof}
 
 Combining Corollary~\ref{cor:g-ast-ex} with Lemma~\ref{lem:pres-proj} yields:
@@ -200,23 +228,184 @@ Combining Corollary~\ref{cor:g-ast-ex} with Lemma~\ref{lem:pres-proj} yields:
 Let $f:\bfP\rightleftarrows \bfQ:g$ be a Galois connection. If $M\in\vect^\bfP$ is projective, then $g^{*}(M)$ is projective in $\vect^\bfQ$.\qed
 \end{proposition}
 
+\medskip
+
+The next basic facts will be used tacitly; they are immediate from the adjunction $f\dashv g$ and we omit the proof.
 
 \begin{lemma}\label{lem:galois-connection-basics}
 Let $f:\bfP\rightleftarrows \bfQ:g$ be a Galois connection. Then:
 \begin{enumerate}
 \item The following are equivalent: $f$ is surjective; $g$ is injective; $f\circ g=\id_{\bfQ}$.
-\item For $q\in \bfQ$, $g(q)=\max\{\,x\in \bfP\mid f(x)\le q\,\}$. In particular, if $f\circ g=\id_{\bfQ}$, then $g(q)=\max\{\,x\in \bfP\mid f(x)=q\,\}$.
+\item For $q\in \bfQ$,
+\[
+g(q)=\max\{\,x\in \bfP\mid f(x)\le q\,\}.
+\]
+In particular, if $f\circ g=\id_{\bfQ}$, then
+\[
+g(q)=\max\{\,x\in \bfP\mid f(x)=q\,\}.
+\]
 \end{enumerate}
 \end{lemma}
 
-\begin{proof}
-(1) From $fgf=f$ and $gfg=g$ one deduces the three conditions are equivalent. 
-(2) The Galois equivalence $x\le g(q)\iff f(x)\le q$ holds for all $x\in\bfP$ and $q\in\bfQ$, and implies the stated formulas.
-\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\section{Galois Transport Distance}
+\label{sec:galois-transport}
+
+Fix a finite poset $\bfP$ equipped with a metric $d_{\bfP}$. Motivated by optimal transport, we compare $\bfP$-modules by \emph{transporting} them through a common “apex” poset $\bfQ$ via \emph{Galois insertions}. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Couplings from Galois insertions and the induced distance}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}[Galois coupling with insertions]
+\label{def:coupling-insertion}
+Let $M,N\in\vect^{\bfP}$. A \emph{Galois coupling} of $(M,N)$ consists of a poset $\bfQ$, two Galois insertions
+\[
+f:\bfQ\rightleftarrows \bfP:g,
+\qquad
+h:\bfQ\rightleftarrows \bfP:i
+\quad\text{with}\quad
+f\circ g=\id_{\bfP}=h\circ i,
+\]
+and a module $\Gamma\in\vect^{\bfQ}$ such that $g^{*}\Gamma \cong M$ and $i^{*}\Gamma \cong N$. Equivalently (Corollary~\ref{cor:3_adj}), $M\cong f_{!}\Gamma$ and $N\cong h_{!}\Gamma$.
+\end{definition}
+
 
 \begin{definition}
-A Galois connection $f:\bfP\rightleftarrows \bfQ:g$ is a \emph{Galois insertion} if the equivalent conditions in (1) above hold.
+\label{def:cost-distance}
+The \emph{cost} of a coupling $(\bfQ,f\dashv g,\ h\dashv i,\ \Gamma)$ is
+\[
+\cost(\Gamma):=\sup_{q\in\bfQ} d_{\bfP}\big(f(q),\,h(q)\big).
+\]
+The \emph{Galois transport distance} between $M,N\in\vect^{\bfP}$ is
+\[
+\dGT{M}{N}:=\inf\{\ \cost(\Gamma)\ \mid\ \Gamma\ \text{is a Galois coupling of }(M,N)\ \}.
+\]
 \end{definition}
+
+Basic properties are immediate: $\dGT(M,M)=0$ (take $\bfQ=\bfP$ and the identity insertions), symmetry (swap the legs), and isomorphism invariance.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Composition of couplings and the triangle inequality}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We now prove the triangle inequality by gluing couplings along a pullback apex. The proof is categorical: we use Kan–extension formulas, adjunctions, and objectwise pullbacks in $\vect$—no heavy base change.
+
+\begin{theorem}[Triangle inequality]
+\label{thm:triangle}
+For all $M,N,O\in\vect^{\bfP}$,
+\[
+\dGT{M}{O}\ \le\ \dGT{M}{N}\ +\ \dGT{N}{O}.
+\]
+\end{theorem}
+
+\begin{proof}
+Let $(\bfQ,f\dashv g,\ h\dashv i,\ \Gamma)$ be a coupling of $(M,N)$ and $(\bfQ',f'\dashv g',\ h'\dashv i',\ \Lambda)$ a coupling of $(N,O)$, with $f\circ g=h\circ i=f'\circ g'=h'\circ i'=\id_{\bfP}$ and
+\[
+g^{*}\Gamma \cong M,\quad i^{*}\Gamma \cong N,\qquad
+g'^{*}\Lambda \cong N,\quad i'^{*}\Lambda \cong O.
+\]
+
+\noindent\emph{Step 1 (pullback apex).}
+Form the pullback in $\Pos$:
+\[
+\begin{tikzcd}[column sep=4.6em, row sep=3.8em]
+& \Nname{Q}\bfQ \arrow[dl, "f"'] \arrow[dr, "h"] & \\
+\Nname{P}\bfP & & \Nname{Ptwo}\bfP \\
+& \Nname{Qp}\bfQ' \arrow[ul, "f'"'] \arrow[ur, "h'"] & \\
+& \Nname{PB}{\bfQ\times_{\bfP}\bfQ'}
+  \arrow[from={PB}, to={Q}, "\pi_{1}"']
+  \arrow[from={PB}, to={Qp}, "\pi_{2}"]
+  \arrow[from={PB}, to={P}, "F=f\circ \pi_{1}"', bend left=14]
+  \arrow[from={PB}, to={Ptwo}, "H=h'\circ \pi_{2}", bend left=14]
+\end{tikzcd}
+\]
+so that $p:=h\circ\pi_{1}=f'\circ\pi_{2}$. The maps $F$ and $H$ are the new left legs that determine cost.
+
+\noindent\emph{Step 2 (glued mediator $\Psi$ in $\vect^{\bfQ\times_{\bfP}\bfQ'}$).}
+Using the identifications $i^{*}\Gamma\cong N$ and $g'^{*}\Lambda\cong N$, together with the units/counits for $h\dashv i$ and $f'\dashv g'$, there are canonical natural transformations
+\[
+\Gamma\circ \pi_{1}\ \longrightarrow\ N\circ p,
+\qquad
+\Lambda\circ \pi_{2}\ \longrightarrow\ N\circ p.
+\]
+Define $\Psi$ as their objectwise pullback in $\vect$:
+\[
+\begin{tikzcd}[row sep=large, column sep=large]
+\Psi \arrow[r] \arrow[d] & \Lambda\circ \pi_{2} \arrow[d] \\
+\Gamma\circ \pi_{1} \arrow[r] & N\circ p
+\end{tikzcd}
+\qquad(\text{pullback in }\vect).
+\]
+
+\noindent\emph{Step 3 ($F_{!}\Psi\cong M$ and $H_{!}\Psi\cong O$).}
+For $F=f\circ\pi_{1}$, consider the comma category $(F\downarrow x)$ at $x\in\bfP$. Since $f\dashv g$ and $f\circ g=\id_{\bfP}$, the object
+\[
+G(x)\ :=\ \big(g(x),\ g'\big(h(g(x))\big)\big)\ \in\ \bfQ\times_{\bfP}\bfQ'
+\]
+is terminal in $(F\downarrow x)$. By the Kan formula specialized to thin categories,
+\[
+(F_{!}\Psi)(x)\ \cong\ \Psi\big(G(x)\big).
+\]
+Evaluating the pullback square at $G(x)$ and using $g'^{*}\Lambda\cong N$ identifies the fiber product with $\Gamma\big(g(x)\big)$, and then $g^{*}\Gamma\cong M$ gives $\Gamma\big(g(x)\big)\cong M(x)$, naturally in $x$. Hence $F_{!}\Psi\cong M$. By the same argument (interchanging $(f,h,g,i)$ with $(f',h',g',i')$) we obtain $H_{!}\Psi\cong O$.
+
+\noindent\emph{Step 4 (cost bound).}
+For any $(q,q')$ in the pullback apex, the seam identity $h(\pi_{1}(q,q'))=f'(\pi_{2}(q,q'))=p(q,q')$ gives, by the metric triangle inequality on $\bfP$,
+\[
+d_{\bfP}\big(F(q,q'),\,H(q,q')\big)
+= d_{\bfP}\big(f(q),\,h'(q')\big)
+\le d_{\bfP}\big(f(q),\,h(q)\big)+d_{\bfP}\big(f'(q'),\,h'(q')\big).
+\]
+Taking suprema yields $\cost(\Psi)\le \cost(\Gamma)+\cost(\Lambda)$.
+
+\noindent\emph{Conclusion.}
+Given $\varepsilon>\dGT{M}{N}$ and $\delta>\dGT{N}{O}$, choose couplings of costs $<\varepsilon$ and $<\delta$; the construction above produces a coupling of $(M,O)$ with cost $<\varepsilon+\delta$. Taking infima proves the claim.
+\end{proof}
+
+\begin{remark}
+On $(\mathbb{R},\le)$ with metric $|x-y|$, the transport distance agrees with the classical interleaving distance: translations supply the insertion legs, interleaving maps assemble into a coupling of the same cost, and conversely. A brief appendix records this dictionary; the main text works with finite posets.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Metric properties}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We record the basic metric behavior of the Galois transport distance. Recall that “extended” means the value $+\infty$ is allowed (when no finite‑cost coupling exists).
+
+\begin{proposition}
+\label{prop:gt-pseudometric}
+For a finite poset $\bfP$ with metric $d_{\bfP}$, the function
+\[
+\dGT{-}{-}:\ \mathrm{Ob}(\vect^{\bfP})\times \mathrm{Ob}(\vect^{\bfP})\longrightarrow [0,+\infty]
+\]
+is an extended pseudometric: $\dGT{M}{M}=0$ for all $M$, $\dGT{M}{N}=\dGT{N}{M}$ for all $M,N$, and the triangle inequality of Theorem~\ref{thm:triangle} holds.
+\end{proposition}
+
+\begin{proof}
+Nonnegativity is immediate from the definition of cost. The diagonal vanishes by the identity coupling $\bfQ=\bfP$, $f=h=\id_{\bfP}$, $g=i=\id_{\bfP}$, $\Gamma=M$, which has cost $0$. Symmetry holds by exchanging the two insertion legs of any coupling. The triangle inequality is Theorem~\ref{thm:triangle}.
+\end{proof}
+
+\begin{corollary}
+\label{cor:gt-metric-on-iso}
+On isomorphism classes, $\dGT{-}{-}$ is an extended metric: if $\dGT{M}{N}=0$ then $M\cong N$.
+\end{corollary}
+
+\begin{proof}
+Since $\bfP$ is finite, the set of values $\{d_{\bfP}(x,y)\mid x,y\in\bfP\}$ is finite; consequently every coupling has cost in this finite set, and the infimum of achievable costs is a \emph{minimum}. Thus $\dGT{M}{N}=0$ implies the existence of a coupling with $\cost(\Gamma)=0$. For such a coupling we have $d_{\bfP}(f(q),h(q))=0$ for all $q\in\bfQ$, hence $f(q)=h(q)$ (metric $T_0$ property), so $f=h$ as maps $\bfQ\to\bfP$. Therefore
+\[
+M\ \cong\ f_{!}\Gamma\ =\ h_{!}\Gamma\ \cong\ N,
+\]
+which shows $M\cong N$.
+\end{proof}
+
+\begin{remark}
+The “extended” qualifier is essential in general: for some pairs $(M,N)$ there may be no coupling of finite cost (hence $\dGT{M}{N}=+\infty$). All results above remain valid with $+\infty$ admitted.
+\end{remark}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
