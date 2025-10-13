@@ -6,7 +6,7 @@
 
 \begin{document}
 
-\title{Stability of minimal projective resolutions}
+\title{Title TBD}
 \author{Hideto Asashiba\thanks{Supported by JSPS Grant-in-Aid for Scientific Research (C) 18K03207; 
 JSPS Grant-in-Aid for Transformative Research Areas (A) (22A201); 
 Osaka Central Advanced Mathematical Institute (MEXT Promotion of Distinctive Joint Research Center Program JPMXP0723833165).}
@@ -106,25 +106,25 @@ Let $\vect$ denote the category of finite-dimensional $\Bbbk$-vector spaces, and
 We write $\prj\bfP$ for the full subcategory of projective objects in $\vect^\bfP$.
 For $x\in\bfP$, the \emph{representable} at $x$ is the functor
 \[
-\Yp{x}:=\bfP(x,-)\in\vect^\bfP.
+\bfP(x,-)\in\vect^\bfP.
 \]
-It sends $y\in\bfP$ to $\Yp{x}(y)=\Bbbk$ if $x\le y$ and to $0$ otherwise; for a relation $y\le z$ it acts by the identity on $\Bbbk$ whenever $x\le y$ (and by $0$ otherwise). By the Yoneda lemma there is a natural isomorphism
+It sends $y\in\bfP$ to $\bfP(x,-)(y)=\Bbbk$ if $x\le y$ and to $0$ otherwise; for a relation $y\le z$ it acts by the identity on $\Bbbk$ whenever $x\le y$ (and by $0$ otherwise). By the Yoneda lemma there is a natural isomorphism
 \[
-\Hom_{\vect^\bfP}(\Yp{x},M)\cong M(x)\qquad(M\in\vect^\bfP),
+\Hom_{\vect^\bfP}(\bfP(x,-),M)\cong M(x)\qquad(M\in\vect^\bfP),
 \]
-showing that each $\Yp{x}$ is projective.
+showing that each $\bfP(x,-)$ is projective.
 
 \begin{lemma}
 \label{lem:ind-proj}
-The family $\{\Yp{x}\mid x\in\bfP\}$ is a complete set of representatives of the isomorphism classes of indecomposable projective $\bfP$-modules. Hence each $M\in\prj \bfP$ decomposes uniquely as
+The family $\{\bfP(x,-)\mid x\in\bfP\}$ is a complete set of representatives of the isomorphism classes of indecomposable projective $\bfP$-modules. Hence each $M\in\prj \bfP$ decomposes uniquely as
 \[
-M \cong \bigoplus_{x\in\bfP} \Yp{x}^{\,a_x}
+M \cong \bigoplus_{x\in\bfP} \bfP(x,-)^{\,a_x}
 \]
 for a uniquely determined family $(a_x)_{x\in\bfP}\in\bbN^\bfP$.
 \end{lemma}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Monotone Functions and Conextensions}
+\subsection{Monotone Functions and Kan Extensions}
 \label{ssec:mont-funct}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -178,7 +178,7 @@ If $f:\bfP\rightleftarrows \bfQ:g$ is a Galois connection, then $g^{*}\dashv f^{
 \begin{tikzcd}[row sep=3em]
 \Nname{E}\vect^\bfP & \Nname{C}\vect^\bfQ 
 \arrow[from={E}, to={C}, "g^{*}", ""'{name=Fd}, bend left]
-\arrow[from={C}, to={E}, "f^{*}"{description, pos=.5, name=Gu}, bend left]
+\arrow[from={C}, to={E}, "f^{*}"{name=Gu}, bend left]
 \arrow[from={Fd}, to={Gu}, "\rotatebox{-90}{$\dashv$}" description, phantom]
 \end{tikzcd}.
 \]
@@ -247,23 +247,19 @@ g(q)=\max\{\,x\in \bfP\mid f(x)=q\,\}.
 \end{enumerate}
 \end{lemma}
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
 \section{Galois Transport Distance}
 \label{sec:galois-transport}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Fix a finite poset $\bfP$ equipped with a metric $d_{\bfP}$. Motivated by optimal transport, we compare $\bfP$-modules by \emph{transporting} them through a common “apex” poset $\bfQ$ via \emph{Galois insertions}. 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Couplings from Galois insertions and the induced distance}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{definition}[Galois coupling with insertions]
+\begin{definition}
 \label{def:coupling-insertion}
-Let $M,N\in\vect^{\bfP}$. A \emph{Galois coupling} of $(M,N)$ consists of a poset $\bfQ$, two Galois insertions
+Let $M,N\in\vect^{\bfP}$. A \emph{Galois coupling} of $(M,N, f \dashv g, h \dashv i, \Gamma)$ consists of a poset $\bfQ$, two Galois insertions
 \[
 f:\bfQ\rightleftarrows \bfP:g,
 \qquad
@@ -274,391 +270,662 @@ f\circ g=\id_{\bfP}=h\circ i,
 and a module $\Gamma\in\vect^{\bfQ}$ such that $g^{*}\Gamma \cong M$ and $i^{*}\Gamma \cong N$. Equivalently (Corollary~\ref{cor:3_adj}), $M\cong f_{!}\Gamma$ and $N\cong h_{!}\Gamma$.
 \end{definition}
 
+\[
+\begin{tikzcd}
+& \bfQ \ar[dd,"\Gamma"] \ar[dr, bend left, "h"{name=H}] \ar[dl, bend right, "f"'{name=F}] & \\
+\bfP \ar[rd,"M"'] \ar[ru, bend right, "g"'{name=G}] && \bfP \ar[ld,"N"] \ar[lu, bend left, "i"{name=I}] \\
+& \vect &
+% adjunction markers:
+\arrow[phantom, from=F, to=G, "\rotatebox{-45}{$\dashv$}" description]
+\arrow[phantom, from=H, to=I, "\rotatebox{-135}{$\dashv$}" description]
+\end{tikzcd}
+\]
 
 \begin{definition}
-\label{def:cost-distance}
+\label{def:cost}
 The \emph{cost} of a coupling $(\bfQ,f\dashv g,\ h\dashv i,\ \Gamma)$ is
 \[
 \cost(\Gamma):=\sup_{q\in\bfQ} d_{\bfP}\big(f(q),\,h(q)\big).
 \]
-The \emph{Galois transport distance} between $M,N\in\vect^{\bfP}$ is
-\[
-\dGT{M}{N}:=\inf\{\ \cost(\Gamma)\ \mid\ \Gamma\ \text{is a Galois coupling of }(M,N)\ \}.
-\]
 \end{definition}
 
-Basic properties are immediate: $\dGT(M,M)=0$ (take $\bfQ=\bfP$ and the identity insertions), symmetry (swap the legs), and isomorphism invariance.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Composition of Couplings}
+\label{ssec:composition}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Composition of couplings and the triangle inequality}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Now consider two Galois couplings $(M,N, f_1 \dashv g_1, h_1 \dashv i_1, \Gamma_1)$ and
+$(N,O, f_2 \dashv g_2, h_2 \dashv i_2, \Gamma_2)$ below:
 
-We now prove the triangle inequality by gluing couplings along a pullback apex. The proof is categorical: we use Kan–extension formulas, adjunctions, and objectwise pullbacks in $\vect$—no heavy base change.
-
-\begin{theorem}[Triangle inequality]
-\label{thm:triangle}
-For all $M,N,O\in\vect^{\bfP}$,
 \[
-\dGT{M}{O}\ \le\ \dGT{M}{N}\ +\ \dGT{N}{O}.
+\begin{tikzcd}
+    && \bfR \ar[dr, bend left, "\pi_2"{name=piTwo}] \ar[dl, bend right, "\pi_1"'{name=piOne}]  && \\
+    & \bfQ_1 \ar[dddr, "\Gamma_1", near end, bend right = 20] \ar[ur, bend right, "\iota_1"'{name=iotaOne}]  
+        \ar[dl, bend right, "f_1"'{name=fOne}] \ar[dr, bend left, "h_1"{name=hOne}] & & 
+      \bfQ_2 \ar[ddld, "\Gamma_2"', bend left = 20, near end] \ar[ul, bend left, "\iota_2"{name=iotaTwo}] 
+        \ar[dl, bend right, "f_2"'{name=fTwo}] \ar[dr, bend left, "h_2"{name=hTwo}] & \\
+    \bfP \ar[rrdd, "M"] \ar[ur, bend right, "g_1"'{name=gOne}] && 
+    \bfP \ar[dd, "N"]  \ar[ul, bend left, "i_1"{name=iOne}] 
+      \ar[ur, bend right, "g_2"'{name=gTwo}] && 
+    \bfP \ar[ldld, "O"] \ar[ul, bend left, "i_2"{name=iTwo}] \\
+    &  & &  & \\
+    && \vect &&
+    % adjunction markers:
+    \arrow[phantom, from=piOne, to=iotaOne, "\rotatebox{-45}{$\dashv$}" description]
+    \arrow[phantom, from=piTwo, to=iotaTwo, "\rotatebox{-135}{$\dashv$}" description]
+    \arrow[phantom, from=fOne,  to=gOne,   "\rotatebox{-45}{$\dashv$}" description]
+    \arrow[phantom, from=hOne,  to=iOne,   "\rotatebox{-135}{$\dashv$}" description]
+    \arrow[phantom, from=fTwo,  to=gTwo,   "\rotatebox{-34}{$\dashv$}" description]
+    \arrow[phantom, from=hTwo,  to=iTwo,   "\rotatebox{-135}{$\dashv$}" description]
+\end{tikzcd}
 \]
-\end{theorem}
+\vspace{-0.5em}
+
+Let $\bfR$ be the pullback of $(h_1,f_2)$ in the category of posets (i.e.\ thin categories), with projections $\pi_1:\bfR\to\bfQ_1$ and $\pi_2:\bfR\to\bfQ_2$. Set
+\[
+\delta:=h_1\circ\pi_1=f_2\circ\pi_2:\bfR\to\bfP.
+\]
+Since $h_1$ and $f_2$ are the left adjoints in Galois insertions, $f_2\circ g_2=\id_{\bfP}$ and $h_1\circ i_1=\id_{\bfP}$. By the universal property of the pullback there are unique monotone maps
+\[
+\iota_1:\bfQ_1\to\bfR\quad\text{and}\quad \iota_2:\bfQ_2\to\bfR
+\]
+with $\pi_1\circ\iota_1=\id_{\bfQ_1}$ and $\pi_2\circ\iota_2=\id_{\bfQ_2}$. In particular, $\pi_j\dashv\iota_j$ is a Galois insertion (Lemma~\ref{lem:galois-connection-basics}(1)–(2)).
+
+\begin{proposition}
+\label{prop:compose-couplings}
+With notation as above, there exists $\Psi\in\vect^{\bfR}$ and natural isomorphisms
+\[
+(\iota_1\circ g_1)^{*}\Psi \cong M,
+\qquad
+(\iota_2\circ i_2)^{*}\Psi \cong O,
+\]
+so that
+\[
+\big(M,O,\ f_1\circ\pi_1 \dashv \iota_1\circ g_1,\ \ h_2\circ\pi_2 \dashv \iota_2\circ i_2,\ \ \Psi\big)
+\]
+is a Galois coupling (the \emph{composite} of the two displayed couplings).
+Moreover, this composite is unique up to unique isomorphism of couplings.
+\end{proposition}
 
 \begin{proof}
-Let $(\bfQ,f\dashv g,\ h\dashv i,\ \Gamma)$ be a coupling of $(M,N)$ and $(\bfQ',f'\dashv g',\ h'\dashv i',\ \Lambda)$ a coupling of $(N,O)$, with $f\circ g=h\circ i=f'\circ g'=h'\circ i'=\id_{\bfP}$ and
+Consider the canonical isomorphisms in $\vect^{\bfP}$ coming from the two couplings,
 \[
-g^{*}\Gamma \cong M,\quad i^{*}\Gamma \cong N,\qquad
-g'^{*}\Lambda \cong N,\quad i'^{*}\Lambda \cong O.
+i_1^{*}\Gamma_1 \ \cong\ N \ \cong\ g_2^{*}\Gamma_2,
 \]
-
-\noindent\emph{Step 1 (pullback apex).}
-Form the pullback in $\Pos$:
+and let $\varphi:i_1^{*}\Gamma_1\xrightarrow{\cong} g_2^{*}\Gamma_2$ be their composite. Whisker by $\delta^{*}$ to obtain an isomorphism
 \[
-\begin{tikzcd}[column sep=4.6em, row sep=3.8em]
-& \Nname{Q}\bfQ \arrow[dl, "f"'] \arrow[dr, "h"] & \\
-\Nname{P}\bfP & & \Nname{Ptwo}\bfP \\
-& \Nname{Qp}\bfQ' \arrow[ul, "f'"'] \arrow[ur, "h'"] & \\
-& \Nname{PB}{\bfQ\times_{\bfP}\bfQ'}
-  \arrow[from={PB}, to={Q}, "\pi_{1}"']
-  \arrow[from={PB}, to={Qp}, "\pi_{2}"]
-  \arrow[from={PB}, to={P}, "F=f\circ \pi_{1}"', bend left=14]
-  \arrow[from={PB}, to={Ptwo}, "H=h'\circ \pi_{2}", bend left=14]
-\end{tikzcd}
+\delta^{*}i_1^{*}\Gamma_1 \xrightarrow{\cong} \delta^{*}g_2^{*}\Gamma_2\quad\text{in }\vect^{\bfR}.
 \]
-so that $p:=h\circ\pi_{1}=f'\circ\pi_{2}$. The maps $F$ and $H$ are the new left legs that determine cost.
-
-\noindent\emph{Step 2 (glued mediator $\Psi$ in $\vect^{\bfQ\times_{\bfP}\bfQ'}$).}
-Using the identifications $i^{*}\Gamma\cong N$ and $g'^{*}\Lambda\cong N$, together with the units/counits for $h\dashv i$ and $f'\dashv g'$, there are canonical natural transformations
+The units of the insertions $\id\Rightarrow i_1h_1$ and $\id\Rightarrow g_2f_2$, transported by precomposition, give natural transformations
 \[
-\Gamma\circ \pi_{1}\ \longrightarrow\ N\circ p,
+\sigma_1:\ \pi_1^{*}\Gamma_1 \longrightarrow \delta^{*}i_1^{*}\Gamma_1,
 \qquad
-\Lambda\circ \pi_{2}\ \longrightarrow\ N\circ p.
+\sigma_2:\ \pi_2^{*}\Gamma_2 \longrightarrow \delta^{*}g_2^{*}\Gamma_2.
 \]
-Define $\Psi$ as their objectwise pullback in $\vect$:
+Define $\Psi$ as the \emph{pullback} in the functor category $\vect^{\bfR}$:
 \[
-\begin{tikzcd}[row sep=large, column sep=large]
-\Psi \arrow[r] \arrow[d] & \Lambda\circ \pi_{2} \arrow[d] \\
-\Gamma\circ \pi_{1} \arrow[r] & N\circ p
-\end{tikzcd}
-\qquad(\text{pullback in }\vect).
+\Psi\ :=\ \mathrm{pullback}\!\left(
+\pi_1^{*}\Gamma_1 \xrightarrow{\ \sigma_1\ } \delta^{*}i_1^{*}\Gamma_1
+\ \xleftarrow[\ \cong\ ]{\ \delta^{*}\varphi\ }\ 
+\delta^{*}g_2^{*}\Gamma_2 \xleftarrow{\ \sigma_2\ } \pi_2^{*}\Gamma_2
+\right).
 \]
+Functor categories into $\vect$ admit limits computed pointwise, so this pullback exists canonically; the universal property immediately yields
+$\iota_1^{*}\Psi\cong\Gamma_1$ and $\iota_2^{*}\Psi\cong\Gamma_2$, hence the endpoint isomorphisms. Uniqueness up to unique isomorphism follows from the universal property of the pullback.
 
-\noindent\emph{Step 3 ($F_{!}\Psi\cong M$ and $H_{!}\Psi\cong O$).}
-For $F=f\circ\pi_{1}$, consider the comma category $(F\downarrow x)$ at $x\in\bfP$. Since $f\dashv g$ and $f\circ g=\id_{\bfP}$, the object
+By construction we have $\iota_1^{*}\Psi\cong\Gamma_1$ and $\iota_2^{*}\Psi\cong\Gamma_2$. 
+Since precomposition is a (contravariant) $2$-functor, it is strictly functorial on composites:
 \[
-G(x)\ :=\ \big(g(x),\ g'\big(h(g(x))\big)\big)\ \in\ \bfQ\times_{\bfP}\bfQ'
+(\iota_1\circ g_1)^{*}=g_1^{*}\circ \iota_1^{*},
+\qquad
+(\iota_2\circ i_2)^{*}=i_2^{*}\circ \iota_2^{*}.
 \]
-is terminal in $(F\downarrow x)$. By the Kan formula specialized to thin categories,
+Therefore
 \[
-(F_{!}\Psi)(x)\ \cong\ \Psi\big(G(x)\big).
+(\iota_1\circ g_1)^{*}\Psi
+\;=\; g_1^{*}(\iota_1^{*}\Psi)
+\;\cong\; g_1^{*}\Gamma_1
+\;\cong\; M,
+\qquad
+(\iota_2\circ i_2)^{*}\Psi
+\;=\; i_2^{*}(\iota_2^{*}\Psi)
+\;\cong\; i_2^{*}\Gamma_2
+\;\cong\; O,
 \]
-Evaluating the pullback square at $G(x)$ and using $g'^{*}\Lambda\cong N$ identifies the fiber product with $\Gamma\big(g(x)\big)$, and then $g^{*}\Gamma\cong M$ gives $\Gamma\big(g(x)\big)\cong M(x)$, naturally in $x$. Hence $F_{!}\Psi\cong M$. By the same argument (interchanging $(f,h,g,i)$ with $(f',h',g',i')$) we obtain $H_{!}\Psi\cong O$.
-
-\noindent\emph{Step 4 (cost bound).}
-For any $(q,q')$ in the pullback apex, the seam identity $h(\pi_{1}(q,q'))=f'(\pi_{2}(q,q'))=p(q,q')$ gives, by the metric triangle inequality on $\bfP$,
-\[
-d_{\bfP}\big(F(q,q'),\,H(q,q')\big)
-= d_{\bfP}\big(f(q),\,h'(q')\big)
-\le d_{\bfP}\big(f(q),\,h(q)\big)+d_{\bfP}\big(f'(q'),\,h'(q')\big).
-\]
-Taking suprema yields $\cost(\Psi)\le \cost(\Gamma)+\cost(\Lambda)$.
-
-\noindent\emph{Conclusion.}
-Given $\varepsilon>\dGT{M}{N}$ and $\delta>\dGT{N}{O}$, choose couplings of costs $<\varepsilon$ and $<\delta$; the construction above produces a coupling of $(M,O)$ with cost $<\varepsilon+\delta$. Taking infima proves the claim.
+where the last isomorphisms are those in the defining data of the two input couplings.
+These composites are natural isomorphisms, being composites of natural isomorphisms.
 \end{proof}
 
-\begin{remark}
-On $(\mathbb{R},\le)$ with metric $|x-y|$, the transport distance agrees with the classical interleaving distance: translations supply the insertion legs, interleaving maps assemble into a coupling of the same cost, and conversely. A brief appendix records this dictionary; the main text works with finite posets.
-\end{remark}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Transport Distance}
+\label{ssec:Galois_metric}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Metric properties}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+With composition available, we now define the transport distance and record its basic properties.
 
-We record the basic metric behavior of the Galois transport distance. Recall that “extended” means the value $+\infty$ is allowed (when no finite‑cost coupling exists).
+\begin{definition}
+\label{def:transport-distance}
+The \emph{Galois transport distance} between $M,N\in\vect^{\bfP}$ is
+\[
+\dGT(M,N):=\inf\{\ \cost(\Gamma)\ \mid\ \Gamma\ \text{is a Galois coupling of }(M,N)\ \}.
+\]
+If there is no Galois coupling between $M$ and $N$, set $\dGT(M,N)=\infty$.
+\end{definition}
+
+\begin{lemma}
+\label{lem:cost-subadditive}
+If $\Gamma_1$ is a coupling for $(M,N)$ and $\Gamma_2$ is a coupling for $(N,O)$, and $\Psi$ is their composite from Proposition~\ref{prop:compose-couplings}, then
+\[
+\cost(\Psi)\ \le\ \cost(\Gamma_1)\ +\ \cost(\Gamma_2).
+\]
+\end{lemma}
+
+\begin{proof}
+For $r\in\bfR$,
+\[
+\begin{aligned}
+d_{\bfP}\big((f_1\pi_1)(r),\ (h_2\pi_2)(r)\big)
+&\le d_{\bfP}\big((f_1\pi_1)(r),\ (h_1\pi_1)(r)\big) \\
+&\quad + \underbrace{d_{\bfP}\big((h_1\pi_1)(r),\ (f_2\pi_2)(r)\big)}_{=\,0} \\
+&\quad + d_{\bfP}\big((f_2\pi_2)(r),\ (h_2\pi_2)(r)\big),
+\end{aligned}
+\]
+since $\delta=h_1\pi_1=f_2\pi_2$. Taking suprema and observing
+\[
+\sup_{r\in\bfR}d_{\bfP}\big(f_1\pi_1(r),h_1\pi_1(r)\big)=\sup_{q_1\in\bfQ_1}d_{\bfP}\big(f_1(q_1),h_1(q_1)\big)=\cost(\Gamma_1),
+\]
+(and similarly for $\Gamma_2$) yields the claim.
+\end{proof}
 
 \begin{proposition}
 \label{prop:gt-pseudometric}
 For a finite poset $\bfP$ with metric $d_{\bfP}$, the function
 \[
-\dGT{-}{-}:\ \mathrm{Ob}(\vect^{\bfP})\times \mathrm{Ob}(\vect^{\bfP})\longrightarrow [0,+\infty]
+\dGT:\ \mathrm{Ob}(\vect^{\bfP})\times \mathrm{Ob}(\vect^{\bfP})\longrightarrow [0,+\infty]
 \]
-is an extended pseudometric: $\dGT{M}{M}=0$ for all $M$, $\dGT{M}{N}=\dGT{N}{M}$ for all $M,N$, and the triangle inequality of Theorem~\ref{thm:triangle} holds.
+is an extended pseudometric.
 \end{proposition}
 
 \begin{proof}
-Nonnegativity is immediate from the definition of cost. The diagonal vanishes by the identity coupling $\bfQ=\bfP$, $f=h=\id_{\bfP}$, $g=i=\id_{\bfP}$, $\Gamma=M$, which has cost $0$. Symmetry holds by exchanging the two insertion legs of any coupling. The triangle inequality is Theorem~\ref{thm:triangle}.
+Nonnegativity is immediate. For any $M$, the identity coupling $\bfQ=\bfP$, $f=h=\id_{\bfP}$, $g=i=\id_{\bfP}$, $\Gamma=M$ has cost $0$, so $\dGT(M,M)=0$. Symmetry holds because swapping the two insertion legs $(f\dashv g,h\dashv i)$ of any coupling gives a coupling for $(N,M)$ with the same cost (the metric $d_{\bfP}$ is symmetric). The triangle inequality follows from Lemma~\ref{lem:cost-subadditive}.
 \end{proof}
 
 \begin{corollary}
 \label{cor:gt-metric-on-iso}
-On isomorphism classes, $\dGT{-}{-}$ is an extended metric: if $\dGT{M}{N}=0$ then $M\cong N$.
+On isomorphism classes, $\dGT$ is an extended metric: if $\dGT{M}{N}=0$ then $M\cong N$.
 \end{corollary}
 
 \begin{proof}
-Since $\bfP$ is finite, the set of values $\{d_{\bfP}(x,y)\mid x,y\in\bfP\}$ is finite; consequently every coupling has cost in this finite set, and the infimum of achievable costs is a \emph{minimum}. Thus $\dGT{M}{N}=0$ implies the existence of a coupling with $\cost(\Gamma)=0$. For such a coupling we have $d_{\bfP}(f(q),h(q))=0$ for all $q\in\bfQ$, hence $f(q)=h(q)$ (metric $T_0$ property), so $f=h$ as maps $\bfQ\to\bfP$. Therefore
+Since $\bfP$ is finite, the set $\{d_{\bfP}(x,y)\mid x,y\in\bfP\}$ is finite; hence every coupling has cost in this finite set, and the infimum in the definition of $\dGT(M,N)$ is a \emph{minimum}. If $\dGT(M,N)=0$, there exists a coupling with $\cost(\Gamma)=0$, so $d_{\bfP}(f(q),h(q))=0$ for all $q\in\bfQ$, hence $f(q)=h(q)$ and therefore $f=h$ as maps $\bfQ\to\bfP$. Using Corollary~\ref{cor:3_adj},
 \[
 M\ \cong\ f_{!}\Gamma\ =\ h_{!}\Gamma\ \cong\ N,
 \]
-which shows $M\cong N$.
+so $M\cong N$.
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Bottleneck Distance}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We adopt the following conventions. For $n\in\bbN$ write $[n]=\{1,\dots,n\}$. If $X \cong \bigoplus_{i=1}^{n} X_i$ is a finite direct sum of indecomposables, write $\Summands(X)=\{X_i \mid i\in [n]\}$; for finite sets $A,B$ with $|A|=|B|$, let $\Bij(A,B)$ be the set of bijections $A\to B$. Throughout, $(\bfP,d_{\bfP})$ is a finite metric poset.
+
+For each $M\in\vect^{\bfP}$ fix once and for all a decomposition $M\cong\Ds_{i=1}^n M_i$ into indecomposables. Set $|M|:=n$ (the \emph{size}) and $\Summands(M):=\{M_i\mid i\in[n]\}$ (the \emph{summand set}); these are well defined up to isomorphism and the elements of $\Summands(M)$ are pairwise distinct. A minimal projective resolution of $M$ is denoted $P\down^M$ and is unique up to isomorphism of exact complexes. Let
+\[
+\Res(M)\quad\text{denote the set of all projective resolutions of }M.
+\]
+If $R\down=(R_i,\partial_i)_{i\ge 0}\in\Res(M)$, its \emph{size vector} is $|R\down|:=(|R_i|)_{i\ge 0}$. For indecomposable projectives $U,V$ (identified with representables $U\cong\bfP(x,-)$, $V\cong\bfP(y,-)$), put
+\[
+\dist(U,V):=d_{\bfP}(x,y).
+\]
+
+If $E$ is any projective object in $\vect^{\bfP}$, the mapping cone $\Cone(\id_E)$ is the two-term contractible complex
+\[
+\cdots \to 0 \to E \xrightarrow{\ \id\ } E \to 0 \to \cdots,
+\]
+concentrated in consecutive degrees; its shift $\Cone(\id_E)[a]$ places the two copies of $E$ in degrees $a$ and $a-1$. Direct-summing $\Cone(\id_E)[a]$ with a projective resolution leaves the resolved module unchanged and yields a chain-homotopy equivalent resolution (we call this \emph{padding by a contractible cone}).
+
+\begin{lemma}
+\label{lem:all-prj-resol}
+Every projective resolution of $M$ is obtained from the minimal one by padding with contractible cones:
+\[
+\Res(M)
+\ =\
+\Bigl\{
+\ P\down^M\ \ds\ \Ds_{i\in[n]}\,\Cone(\id_{E_i})[a_i]\
+\Bigm|\ n\in\bbN,\ a_i\in\bbN,\ a_i\ge 1,\ E_i\in\prj\bfP\ 
+\Bigr\}.
+\]
+\end{lemma}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Matchings}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We now define degreewise matchings between two resolutions. Given $M,N\in\vect^{\bfP}$, consider pairs of projective resolutions with the same size vector:
+\[
+\Res(P\down^M,P\down^N)
+\ :=\
+\bigl\{\, (E\down,F\down)\in\Res(M)\times\Res(N)\ \bigm|\ |E\down|=|F\down|\,\bigr\}.
+\]
+
+\begin{proposition}
+\label{prop:common-padding}
+If the size vectors of $P\down^M$ and $P\down^N$ are finitely supported and have the same alternating sum
+\[
+\sum_{i\ge 0}(-1)^i|P^M_i|\ =\ \sum_{i\ge 0}(-1)^i|P^N_i|,
+\]
+then $\Res(P\down^M,P\down^N)\neq\emptyset$.
+\end{proposition}
+
+\begin{proof}
+Let $p=(|P^M_i|)$ and $q=(|P^N_i|)$. Adding $\Cone(\id_E)[a]$ with $a\ge 1$ increases the size vector by the elementary vector $e^{(a)}$ having $1$ in degrees $a$ and $a-1$ (and $0$ elsewhere). These $e^{(a)}$ generate, as an abelian group, the kernel of the alternating-sum map $\alpha:\bigoplus_{i\ge 0}\bbZ\to\bbZ$, $\alpha(r)=\sum_i(-1)^ir_i$. Since $\alpha(p)=\alpha(q)$, the difference $q-p$ lies in this kernel and can be written $T^+-T^-$ with $T^\pm$ finite nonnegative combinations of the $e^{(a)}$. Then $p+T^+=q+T^-$ is a common upper bound, realized by padding $P\down^M$ by the cones in $T^+$ and $P\down^N$ by those in $T^-$. Hence there exist $(E\down,F\down)$ with $|E\down|=|F\down|$.
 \end{proof}
 
-\begin{remark}
-The “extended” qualifier is essential in general: for some pairs $(M,N)$ there may be no coupling of finite cost (hence $\dGT{M}{N}=+\infty$). All results above remain valid with $+\infty$ admitted.
-\end{remark}
+For $(E\down,F\down)\in\Res(P\down^M,P\down^N)$, a \emph{matching} is a family of degreewise bijections
+\[
+B=(B_i)_{i\ge 0},\qquad B_i\in\Bij\bigl(\Summands(E_i),\,\Summands(F_i)\bigr).
+\]
+Define its \emph{cost} as the $L^\infty$–type aggregate of the underlying poset metric,
+\[
+\cost(B)\ :=\
+\sup\bigl\{\,\dist\bigl(U,\ B_i(U)\bigr)\ \bigm|\ i\ge 0,\ U\in\Summands(E_i)\,\bigr\}.
+\]
+(Equivalently, $\cost(B)=\sup\{\dist(B_i^{-1}(V),V)\mid i\ge 0,\ V\in\Summands(F_i)\}$.)  
+We refer to the quantity
+\[
+\dist_R(E\down,F\down)\ :=\ \inf_{\,B\in\Match(E\down,F\down)}\ \cost(B)
+\]
+as the \emph{matching distance} for resolutions with a fixed size vector.
 
+\begin{lemma}[Triangle inequality for $\dist_R$ on a fixed size vector]
+\label{lem:reg-triangle}
+If $|E\down|=|F\down|=|G\down|$, then
+\[
+\dist_R(E\down,G\down)\ \le\ \max\bigl\{\dist_R(E\down,F\down),\ \dist_R(F\down,G\down)\bigr\}.
+\]
+\end{lemma}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Galois Transport Distance}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Let $\bfP$ be a finite poset with a metric $d_\bfP : \bfP \times \bfP \to \mathbb{R}_{\ge 0}$.
+\noindent\emph{Proof sketch.}
+Compose nearly optimal degreewise bijections and take suprema across degrees.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Transports and their composition}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Matching Distance}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{definition}[Galois coupling / transport]\label{def:galois-coupling}
-A \emph{Galois coupling} between $M,N\in\vect^\bfP$ consists of Galois insertions
+With matchings and \(\dist_R\) in hand, we define the global distance by allowing padding.
+
+\begin{definition}
+For minimal resolutions $P\down^M$ and $P\down^N$ (not necessarily of the same size), the \emph{bottleneck distance} is
 \[
-f:\bfX\rightleftarrows \bfP:g,\qquad h:\bfX\rightleftarrows \bfP:i,
+\dist_B\bigl(P\down^M,P\down^N\bigr)
+\ :=\ 
+\inf_{\ (E\down,F\down)\in\Res(P\down^M,P\down^N)}\ \dist_R(E\down,F\down).
 \]
-a functor $\Gamma\in\vect^\bfX$, and isomorphisms
-\[
-\alpha: g^\ast\Gamma \xrightarrow{\cong} M,\qquad
-\beta: i^\ast\Gamma \xrightarrow{\cong} N.
-\]
-\[
-\begin{tikzcd}
-& \bfX \ar[dd,"\Gamma"] \ar[dr, bend left, "h"] \ar[dl, bend right, "f"'] & \\
-\bfP \ar[rd,"M"'] \ar[ru, bend right, "g"'] && \bfP \ar[ld,"N"] \ar[lu, bend left, "i"] \\
-& \vect &
-\end{tikzcd}
-\]
+We adopt the extended-value convention that $\dist_B\bigl(P\down^M,P\down^N\bigr)=\infty$ if there is no compatible padding (i.e.\ $\Res(P\down^M,P\down^N)=\varnothing$).
 \end{definition}
 
-\subsection*{Composition as a pullback in $\vect^\bfZ$.}
-Given Galois couplings
-\[
-(\bfX,f\dashv g,\ h\dashv i,\ \Gamma,\alpha,\beta)\text{ for }(M,N)
-\quad\text{and}\quad
-(\bfY,f'\dashv g',\ h'\dashv i',\ \Lambda,\alpha',\beta')\text{ for }(N,O),
-\]
-consider the pull back of $h$ and $f'$ in the category $\mathbf{Pos}$ of posets:
-\[
-\begin{tikzcd}[column sep=large,row sep=large]
-\bfZ \ar[r,"\pi_\bfY"] \ar[d,"\pi_\bfX"'] \ar[dr,phantom,"\lrcorner",very near start]
-  & \bfY \ar[d,"f'"] \\
-\bfX \ar[r,"h"'] & \bfP
-\end{tikzcd},
-\]
-and set $p:=h\circ\pi_\bfX=f'\circ\pi_\bfY:\bfZ\to \bfP$.
+Proposition~\ref{prop:common-padding} gives a sufficient condition for finiteness (equality of alternating sums); in general, $\dist_B$ may be infinite.
 
-\noindent\textbf{Cospan in $\vect^\bfZ$ (construction of $\sigma,\tau$).}
-From the units $\eta^h:\mathrm{id}_\bfX\Rightarrow i\circ h$ and $\eta^{f'}:\mathrm{id}_\bfY\Rightarrow g'\circ f'$,
-whisker along the projections to obtain
+\begin{proposition}
+\label{prop:bneck-pseudometric}
+On the class of minimal projective resolutions $\{P\down^M\mid M\in\vect^{\bfP}\}$, the function $\dist_B$ is an extended metric:
 \[
-\pi_\bfX \Rightarrow i\circ p \quad\text{and}\quad \pi_\bfY \Rightarrow g'\circ p,
-\qquad p=h\circ\pi_\bfX=f'\circ\pi_\bfY.
+\dist_B:\ \{P\down^M\}\times\{P\down^N\}\longrightarrow [0,+\infty].
 \]
-Postcompose with $\Gamma$ and $\Lambda$, then use the seam isomorphisms
-$\beta:i^\ast\Gamma\cong N$ and $\alpha':g'^{\ast}\Lambda\cong N$ to get
+\end{proposition}
+
+\begin{proof}
+Nonnegativity is immediate. For any $M$, take the same padding on both sides and the identity matching degreewise to obtain $\dist_B(P\down^M,P\down^M)=0$. Symmetry holds because each matching family $B=(B_i)$ has an inverse family of the same cost. For the triangle inequality, given $P\down^M,P\down^N,P\down^O$, choose paddings producing $(E\down,F\down)$ and $(F'\down,G\down)$ with equal size vectors for $(M,N)$ and $(N,O)$ and with $\dist_R$ arbitrarily close to $\dist_B(M,N)$ and $\dist_B(N,O)$. Pad further to a common refinement so both pairs share the same size vector, compose the degreewise bijections, and apply Lemma~\ref{lem:reg-triangle}; taking infima over paddings yields the inequality. Finally, if $\dist_B(P\down^M,P\down^N)=0$, the costs lie in the finite set $\{d_{\bfP}(x,y)\mid x,y\in\bfP\}$, so the infimum is attained: there exist paddings and a matching of cost $0$. Thus each matched pair of summands has equal index in $\bfP$, the padded resolutions agree termwise up to isomorphism, and removing contractible cones yields $P\down^M\cong P\down^N$. Hence $\dist_B$ is an extended metric.
+\end{proof}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Bottleneck Distance}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We adopt the following conventions. For $n\in\bbN$ write $[n]=\{1,\dots,n\}$. If $X \cong \bigoplus_{i=1}^{n} X_i$ is a finite direct sum of indecomposables, write $\Summands(X)=\{X_i \mid i\in [n]\}$; for finite sets $A,B$ with $|A|=|B|$, let $\Bij(A,B)$ be the set of bijections $A\to B$. Throughout, $(\bfP,d_{\bfP})$ is a finite metric poset.
+
+For each $M\in\vect^{\bfP}$ fix once and for all a decomposition $M\cong\Ds_{i=1}^n M_i$ into indecomposables. Set $|M|:=n$ (the \emph{size}) and $\Summands(M):=\{M_i\mid i\in[n]\}$ (the \emph{summand set}); these are well defined up to isomorphism and the elements of $\Summands(M)$ are pairwise distinct. A minimal projective resolution of $M$ is denoted $P\down^M$ and is unique up to isomorphism of exact complexes. Let
 \[
-\sigma:\Gamma\circ\pi_\bfX \Rightarrow N\circ p,\qquad
-\tau:\Lambda\circ\pi_\bfY \Rightarrow N\circ p,
+\Res(M)\quad\text{denote the set of all projective resolutions of }M.
 \]
-as the composites
+If $R\down=(R_i,\partial_i)_{i\ge 0}\in\Res(M)$, its \emph{size vector} is $|R\down|:=(|R_i|)_{i\ge 0}$. For indecomposable projectives $U,V$ (identified with representables $U\cong\bfP(x,-)$, $V\cong\bfP(y,-)$), put
 \[
-\begin{tikzcd}[column sep=huge,row sep=large]
-\Gamma\circ\pi_\bfX
-  \ar[r, "{\Gamma(\pi_\bfX \Rightarrow i\circ p)}"]
-& \Gamma\circ i\circ p
-  \ar[r, "="]
-& (i^\ast\Gamma)\circ p
-  \ar[r, "{\beta\circ p}", "\cong"']
-& N\circ p
-\end{tikzcd}
-\]
-\[
-\begin{tikzcd}[column sep=huge,row sep=large]
-\Lambda\circ\pi_\bfY
-  \ar[r, "{\Lambda(\pi_\bfY \Rightarrow g'\circ p)}"]
-& \Lambda\circ g'\circ p
-  \ar[r, "="]
-& (g'^\ast\Lambda)\circ p
-  \ar[r, "{\alpha'\circ p}", "\cong"']
-& N\circ p
-\end{tikzcd}
-\]
-Thus, we have the cospan in $\vect^\bfZ$:
-\[
-\begin{tikzcd}[column sep=huge]
-\Gamma\circ\pi_\bfX \ar[dr, "{\sigma}"'] && \Lambda\circ\pi_\bfY \ar[dl, "{\tau}"] \\[-2pt]
-& N\circ p &
-\end{tikzcd}
+\dist(U,V):=d_{\bfP}(x,y).
 \]
 
-\begin{definition}[Composite apex]\label{def:composite-apex}
-Define $\Psi\in\vect^\bfZ$ as the pullback of this cospan:
+If $E$ is any projective object in $\vect^{\bfP}$, the mapping cone $\Cone(\id_E)$ is the two-term contractible complex
 \[
-\begin{tikzcd}[column sep=large,row sep=large]
-\Psi \ar[r,"\pi_\Lambda"] \ar[d,"\pi_\Gamma"'] \ar[dr,phantom,"\lrcorner",very near start]
-  & \Lambda\circ\pi_\bfY \ar[d,"\tau"] \\
-\Gamma\circ\pi_\bfX \ar[r,"\sigma"'] & N\circ p
-\end{tikzcd}
+\cdots \to 0 \to E \xrightarrow{\ \id\ } E \to 0 \to \cdots,
 \]
-so $\sigma\circ\pi_\Gamma=\tau\circ\pi_\Lambda$.
+concentrated in consecutive degrees; its shift $\Cone(\id_E)[a]$ places the two copies of $E$ in degrees $a$ and $a-1$. Direct-summing $\Cone(\id_E)[a]$ with a projective resolution leaves the resolved module unchanged and yields a chain-homotopy equivalent resolution (we call this \emph{padding by a contractible cone}).
+
+\begin{lemma}
+\label{lem:all-prj-resol}
+Every projective resolution of $M$ is obtained from the minimal one by padding with contractible cones:
+\[
+\Res(M)
+\ =\
+\Bigl\{
+\ P\down^M\ \ds\ \Ds_{i\in[n]}\,\Cone(\id_{E_i})[a_i]\
+\Bigm|\ n\in\bbN,\ a_i\in\bbN,\ E_i\in\prj\bfP\ 
+\Bigr\}.
+\]
+\end{lemma}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Matchings}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We now define degreewise matchings between two resolutions. Given $M,N\in\vect^{\bfP}$, consider pairs of projective resolutions with the same size vector:
+\[
+\Res(P\down^M,P\down^N)
+\ :=\
+\bigl\{\, (E\down,F\down)\in\Res(M)\times\Res(N)\ \bigm|\ |E\down|=|F\down|\,\bigr\}.
+\]
+
+
+\begin{proposition}
+If the size vectors of $P\down^M$ and $P\down^N$ are finitely supported and have the same alternating sum $\sum_i(-1)^i|P_i|=\sum_i(-1)^i|Q_i|$, then $\Res(P\down^M,P\down^N) \neq \emptyset$.
+\end{proposition}
+\begin{proof}
+%Add proof
+\end{proof}
+
+
+For $(E\down,F\down)\in\Res(P\down^M,P\down^N)$, a \emph{matching} is a family of degreewise bijections
+\[
+B=(B_i)_{i\ge 0},\qquad B_i\in\Bij\bigl(\Summands(E_i),\,\Summands(F_i)\bigr).
+\]
+Define its \emph{cost} s the $L^\infty$–type aggregate of the underlying poset metric,
+\[
+\cost(B)\ :=\
+\sup\bigl\{\,\dist\bigl(U,\ B_i(U)\bigr)\ \bigm|\ i\ge 0,\ U\in\Summands(E_i)\,\bigr\}.
+\]
+Because $\bfP$ is finite, this supremum is a maximum and hence finite. 
+
+%Remove discussion of regular distance
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Matching Distance}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Change notation to match notation above for the various projective resolutions
+%Add transition words
+
+\begin{definition}
+The \emph{bottleneck distance} between any two minimal resolutions $P\down^M$ and $P\down^N$ of two $P$-module $M$, and $N$, not necessarily of the same size, is define as the best regular distance over all compatible paddings:
+\[
+\dist_B\bigl(P\down^M,P\down^N\bigr)
+\ :=\ 
+\inf_{\ (P\down,Q\down)\in\Res(P\down^M,P\down^N)}\ \dist_R(P\down,Q\down).
+\]
+For completeness we adopt the extended-value convention that $\dist_B\bigl(P\down^M,P\down^N\bigr)=\infty$ if the infimum is taken over the empty set.
 \end{definition}
 
-\noindent\textbf{Legs and adjoints.}
-With projections $\pi_\bfX,\pi_\bfY:\bfZ\to \bfX,\bfY$, define
+
+
+\begin{proposition}
+\label{prop:bneck-pseudometric}
+On the class of minimal projective resolutions $\{P\down^M\mid M\in\vect^{\bfP}\}$, the function $\dist_B$ is an extended metric.
 \[
-\iota_\bfX:\bfX\to \bfZ,\ \ \iota_\bfX(x)=(x,g'(h(x))),\qquad
-\iota_\bfY:\bfY\to \bfZ,\ \ \iota_\bfY(y)=(i(f'(y)),y).
+\dist_B: \{P\down^M\mid M\in\vect^{\bfP}\} \times \{P\down^M\mid M\in\vect^{\bfP}\} \longrightarrow [0,+\infty]
 \]
-Then $\pi_\bfX\dashv\iota_\bfX$ and $\pi_\bfY\dashv\iota_\bfY$, and
-\[
-F:=f\circ\pi_\bfX \dashv G:=\iota_\bfX\circ g,\qquad
-H:=h'\circ\pi_\bfY \dashv I:=\iota_\bfY\circ i',
-\]
-are Galois insertions ($f\circ g=\id_\bfP$, $h'\circ i'=\id_\bfP$, and $\id_\bfZ\le\iota_\bfX\pi_\bfX$, $\id_\bfZ\le\iota_\bfY\pi_\bfY$).
+\end{proposition}
 
-\medskip
-\noindent\emph{Schematics.}
-\[
-\begin{tikzcd}
-    && \bfZ \ar[dr, bend left, "\pi_\bfY"] \ar[dl, bend right, "\pi_\bfX"']  && \\
-    & \bfX \ar[dd, "\Gamma", near end] \ar[ur, bend right, "\iota_\bfX"']  
-        \ar[dl, bend right, "f"'] \ar[dr, bend left, "h"] & & 
-      \bfY \ar[dd, "\Lambda", near end] \ar[ul, bend left, "\iota_\bfY"] 
-        \ar[dl, bend right, "f'"'] \ar[dr, bend left, "h'"] & \\
-    \bfP \ar[rd, "M"] \ar[ur, bend right, "g"'] && 
-    \bfP \ar[ld, "N"] \ar[rd, "N"] \ar[ul, bend left, "i"] 
-      \ar[ur, bend right, "g'"'] && 
-    \bfP \ar[ld, "O"] \ar[ul, bend left, "i'"] \\
-    & \vect & & \vect &
-\end{tikzcd}
-\]
-\vspace{-0.5em}
-\[
-\begin{tikzcd}
-& \bfZ \ar[dd,"\Psi"] \ar[dr, bend left, "H"] \ar[dl, bend right, "F"'] & \\
-\bfP \ar[rd,"M"'] \ar[ru, bend right, "G"'] && \bfP \ar[ld,"O"] \ar[lu, bend left, "I"] \\
-& \vect &
-\end{tikzcd}
-\]
-
-\noindent\textbf{Recovery of $M$ and $O$.}
-Precomposition preserves limits, so pulling back the defining cospan of $\Psi$ along $G$ and $I$ gives pullback squares in $\vect^\bfP$. In each, one vertical leg is an isomorphism, hence the opposite corner identifies with the pullback.
-
-\medskip
-\noindent\emph{Along $G:\bfP\to \bfZ$:}
-\[
-\begin{tikzcd}[column sep=huge, row sep=large]
-G^\ast\Psi \ar[r] \ar[d] \ar[dr,phantom,"\lrcorner",very near start]
-  & \Lambda\circ g'\circ h\circ g \ar[d, "{G^\ast\tau\ (\cong)}"'] \\
-\Gamma\circ g \ar[r, "{G^\ast\sigma}"'] & N\circ h\circ g
-\end{tikzcd}
-\]
-Thus $G^\ast\Psi\cong \Gamma\circ g \xrightarrow[\alpha]{\cong} M$.
-
-\medskip
-\noindent\emph{Along $I:\bfP\to \bfZ$:}
-\[
-\begin{tikzcd}[column sep=huge, row sep=large]
-I^\ast\Psi \ar[r] \ar[d] \ar[dr,phantom,"\lrcorner",very near start]
-  & \Lambda\circ i' \ar[d, "{I^\ast\tau}"] \\
-\Gamma\circ i\circ f'\circ i' \ar[r, "{I^\ast\sigma\ (\cong)}"'] & N\circ f'\circ i'
-\end{tikzcd}
-\]
-Hence $I^\ast\Psi\cong \Lambda\circ i' \xrightarrow[\beta']{\cong} O$.
+\begin{proof}
+%fill in proof
+\end{proof}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Cost and the Galois transport distance}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{definition}[Cost]\label{def:coupling-cost}
-For a Galois coupling $(\bfX,f\dashv g,h\dashv i,\Gamma)$, we set
-\[
-\operatorname{cost}(\Gamma):=\max_{x\in \bfX} d_\bfP\big(f(x),h(x)\big).
-\]
-\end{definition}
 
-\begin{definition}[Galois transport distance]\label{def:GaloisTransport}
-For $M,N\in\vect^\bfP$, we define
-\[
-\dGT(M,N):=\inf\{\operatorname{cost}(\Gamma)\mid (\bfX,f\dashv g,h\dashv i,\Gamma)\ \text{a coupling for }(M,N)\},
-\]
-with the convention that $\dGT(M,N)=\infty$ if no Galois coupling exists.
-\end{definition}
 
-\begin{lemma}\label{lem:GT-basic}
-For all $M,N\in\vect^\bfP$, we have the following:
-\begin{enumerate}%[label=\textup{(\alph*)}]
-\item $\dGT(M,N)=\dGT(N,M)$, \quad
-\item If $M\cong N$ then $\dGT(M,N)=0$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Botleneck distance of minimal projective resolutions}
+%Not a fan of the title for this subsection
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% The following macros might be useful. They are already in my macros.tex
+%\DeclareMathOperator{\Match}{Match}      % set of matchings (as defined in text)
+%\DeclareMathOperator{\Bij}{Bij}          % set of bijections
+%\DeclareMathOperator{\Cone}{Cone}        % cone construction
+%\DeclareMathOperator{\Summands}{Summands}% set of direct summands
+
+
+We use the following simple conventions for this section. For $n\in\bbN$ write $[n]=\{1,\dots,n\}$. If $X \cong \bigoplus_{i=1}^{n} X_i$ is a finite direct sum of indecomposables, write $\Summands(X)=\{X_i \mid i\in [n]\}$. For finite sets $A$ and $B$ with the same cardinality, $\Bij(A,B)$ denotes the set of bijections $A\to B$.
+
+
+
+%Let $A$ be a finite-dimensional algebra over the field $\Bbbk$.
+% I do not lilke to start with a set of notation. I prefer to introduce notation when needed.
+
+\begin{notation}
+We choose an indecomposable decomposition $M = \Ds_{i=1}^n M_i$ of $M$ once for all $M \in \vect^\bfP$,
+and set $|M|:= n$, and $\Summands(M):= \{M_i \mid i \in [n]\}$, which are called the \emph{size} and the \emph{summand set} of $M$, respectively.
+
+Note that $|M|$ is an invariant of $M$ up to isomorphism,
+and that the elements of $\Summands(M)$ are pairwise distinct.
+\begin{enumerate}
+\item
+We denote a minimal projective resolution of $M$
+by $P \down^M$, which is uniquely determined up to isomorphism of exact sequences.
+
+%% I am not happy with the notation $P \down M$ for the set of minimal projective reslutions
+
+\item
+Denote by $\calP(M)$ the set of all projective resolutions of $M$.
+
+%% I am not happy with the notation $\calP(M)$ for the set of all projective reslutions. We are using P too many times.
+
+
+\item
+For each $P\down = (P_i, \partial_i)_{i\ge 0} \in \calP(M)$,
+we set $|P\down|:= (|P_i|)_{i \ge 0}$, and call it the \emph{size vector} of $P\down$.
+
+\item
+Let $(\bfP, d_\bfP)$ be a finite metric poset\footnote{%%%%%%%%%%%%%%%%%%
+For example, in the classical case that $\bfP$ is a totally ordered set $\bfP:= \{1 < 2 < \cdots < n\}$ for some $n \ge 1$, we can define
+$d_\bfP(x, y):= |x - y|$ for all $x, y \in \bfP$.
+}.
+Then for any indecomposable projective $\bfP$-modules
+$P$ and $Q$, we set the \emph{distance} of $P$ and $Q$ to be
+$$
+\dist(P, Q):= d_\bfP(x, y),
+$$
+where $P \iso \bfP(x, \blank)$ and
+$Q \iso \bfP(y, \blank)$ with $x, y \in \bfP$.
+
+%Not correct notation. Should be using \bfP(x,-) for indecomposable projectives
+
 \end{enumerate}
+\end{notation}
+
+\begin{lemma}
+\label{lem:all-prj-resol}
+The following holds.
+$$
+\calP(M) =\{P\down^M \ds \Ds_{i \in [n]} \Cone(\id_{P_i})[a_i]
+\mid \exists n \in \bbN, \forall i \in [n], P_i \in \prj \bfP, a_i \in \bbN\}.
+$$
+\end{lemma}
+
+The following definition is crucial for our stability theorem.
+
+%% Below, the notion of a bottleneck distance is defined between minimal projective modules. Parallel the development
+% of this metric with the development of the Galois Transport Distance above as much as possible while keeping the presentation
+%simple and natural.
+
+\begin{definition}
+Let $M, N \in \vect^\bfP$. Then 
+\begin{enumerate}
+\item
+We set
+$$
+\calP(P\down^M, P\down^N):=
+\{(P\down, Q\down) \in \calP(M) \times \calP(N) \mid
+|P\down| = |Q\down|\}.
+$$
+
+\item
+For each $(P\down, Q\down) \in \calP(P\down^M, P\down^N)$, we set
+$$
+\Match(P\down, Q\down):= \prod_{i\ge 0}
+\Bij(\Summands(P_{i}(M)), \Summands(Q_{i}(N))),
+$$
+the element of which is called a \emph{matching} of $P\down$ and $Q\down$.
+
+\item
+For each matching $b = (b_i)_{i\ge 0}$ of
+$P\down$ and $Q\down$, we define its \emph{cost}
+$\cost(b)$ by
+$$
+\cost(b):= \sup\{\dist(P, b_i(P)) \mid i \ge 0,
+P \in \Summands(P_i^M)\}.
+$$
+
+\item
+We define the \emph{regular distance}
+of $P\down$ and $Q\down$ by
+$$
+\dist_R(P\down, Q\down):=
+\inf \{\cost(b) \mid b \in \Match(P\down, Q\down)\}.
+$$
+
+\item
+Finally, we define the \emph{bottle neck distance}
+of $P\down^M$ and $P\down^N$ by
+$$
+\dist_B(P\down^M, P\down^N):=
+\inf \{\dist_R(P\down, Q\down) \mid 
+(P\down, Q\down) \in \calP(P\down^M, P\down^N)\}.
+$$
+\end{enumerate}
+\end{definition}
+
+\begin{remark}
+By Lemma \ref{lem:all-prj-resol}, we see that
+$\calP(P\down^M, P\down^N) \ne \emptyset$
+for all $M, N \in \vect^\bfP$.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Stability Theorem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{lemma}
+\label{lem:rt-adj-prj-ind}
+
+
+
+If $f : \bfX \leftrightarrows \bfP : g$ is a Galois connection of posets $\bfX$ and $\bfP$,
+then we have $g^\ast \bfX(x,\blank) \iso \bfP(f(x), \blank)$
+in $\vect^\bfP$ for all $x \in \bfX$.
 \end{lemma}
 
 \begin{proof}
-(1) Swap $(f,g)$ with $(h,i)$ in any coupling. (2) Take $\bfX=\bfP$, $g=i=\id_\bfP$, $f=h=\id_\bfP$, and $\Gamma=M\cong N$.
+There exist isomorphisms
+$$
+(g^\ast\bfX(x,\blank))(y) \iso \bfX(x,g(y)) \iso \bfP(f(x), y)
+$$
+natural in $y \in \bfP$.
 \end{proof}
 
-\begin{proposition}[Finiteness under agreement at the top]\label{prop:finiteness_infty}
-If $\bfP$ has a top element $\infty$ and $M(\infty)\cong N(\infty)$, then $\dGT(M,N)<\infty$.
-\end{proposition}
+We now prove the stability theorem for
+minimal projective resolutions.
+
+\begin{theorem}
+Let $(\bfP, d_\bfP)$ be a finite metric poset.
+Then for any $M, N \in \vect^\bfP$ we have
+$$
+\dist_B(P\down^M, P\down^N) \le \dGT(M, N).
+$$
+\end{theorem}
 
 \begin{proof}
-Use the standard two-wing construction $\bfX=\bfP_L\sqcup_\infty \bfP_R$, map
-$g(a)=a_L$, $i(a)=a_R$, $f(a_L)=a$, $f(a_R)=\infty$, $h(a_R)=a$, $h(a_L)=\infty$,
-and glue $\Gamma$ along $M(\infty)\cong N(\infty)$. Then 
-$\operatorname{cost}(\Gamma)=\max_{a\in \bfP} d_\bfP(a,\infty)<\infty$.
+Let $e:= \dGT(M,N)$ and $\ep > 0$ any positive real number.
+Then there exists some Galois coupling $(\bfX, f \dashv g, h \dashv i, \Ga)$
+of $M$ and $N$
+% with $\al \colon g^\ast \Ga \isoto M$
+% and $\be \colon i^\ast \Ga \isoto N$ isomorphisms 
+such that $e \le \cost(\Ga) \le e + \ep$.
+It is enough to construct some
+$(P\down, Q\down) \in \calP(P\down^M, P\down^N)$
+such that $\dist_R(P\down, Q\down) \le \cost(\Ga)$.
+Indeed, when this is the case,
+we have $\dist_B(P\down^M, P\down^N) \le \dist_R(P\down, Q\down) \le e + \ep$,
+which shows that $\dist_B(P\down^M, P\down^N) \le e$.
+% \todoilgreen{Here give such a construcion from
+% the $\ep$-interleaving diagram of $M$ and $N$ as
+% in the notes of 2025-07-30.}
+
+Let $R\down = (R_i, \partial_i)_{i \ge 0}$ be a projective resolution of $\Ga$.
+Then since $g^\ast$ (resp.\ $i^\ast$) is an exact functor preserving projectivity,
+$P\down:= (g^\ast R_i, g^\ast \partial_i)_{i \ge 0}$
+(resp.\ $Q\down:= (i^\ast R_i, i^\ast \partial_i)_{i \ge 0}$) is a projective
+resolution of $g^\ast \Ga \iso M$ (resp. $i^\ast \Ga \iso N$).
+We first show that $(P\down, Q\down) \in \calP(P\down^M, P\down^N)$,
+equivalently that $|P\down| = |Q\down|$.
+For each $i \ge 0$, there exists a sequence $(x_{i,1}, \dots, x_{i,{n_i}})$ of elements of $\bfX$ (we allow $x_{i,j} = x_{i,k}$ for some $j \ne k$)
+with $n_i = |R_i|$
+such that $R_i \iso \Ds_{j=1}^{n_i} \bfX(x_{i,j}, \blank)$
+by Lemma \ref{lem:ind-proj}.
+Then we have indecomposable decompositions
+\begin{equation}
+\label{eq:ind-dec-P,Q}
+P_i \iso \Ds_{j=1}^{n_i} \bfP(f(x_{i,j}), \blank),\ 
+Q_i \iso \Ds_{j=1}^{n_i} \bfP(h(x_{i,j}), \blank)
+\end{equation}
+by Lemma \ref{lem:rt-adj-prj-ind}.
+Thus $|P_i| = n_i = |Q_i|$ for all $i \ge 0$.
+Hence $|P\down| = |Q\down|$.
+
+By using \eqref{eq:ind-dec-P,Q}, we can define a matching
+$b \in \Match(P\down, Q\down)$ by
+$b_i(\bfP(f(x_{i,j}),\blank))$\linebreak[3]$:= \bfP(h(x_{i,j}),\blank)$ for all $i \ge 0$, $j = 1, \dots, n_i$.
+Then we have
+$$
+\begin{aligned}
+\dist_R(P\down, Q\down) &\le \cost(b)\\
+&= \sup\{\dist(\bfP(f(x_{i,j}),\blank), \bfP(h(x_{i,j}),\blank)) \mid i \ge 0, j=1,\dots,n_i\}\\
+&= \sup\{d_\bfP(f(x_{i,j}), h(x_{i,j})) \mid i \ge 0, j=1,\dots,n_i\}\\
+&\le \sup\{d_\bfP(f(x), h(x)) \mid x \in \bfX\} = \cost(\Ga),
+\end{aligned}
+$$
+as desired.
 \end{proof}
 
-\begin{lemma}[Subadditivity under composition]\label{lem:cost-subadd}
-If $(\bfX,f\dashv g,h\dashv i,\Gamma)$ is a coupling for $(M,N)$ and
-$(\bfY,f'\dashv g',h'\dashv i',\Lambda)$ a coupling for $(N,O)$, and
-$(\bfZ,F\dashv G,H\dashv I,\Psi)$ is their composite, then
-\[
-\operatorname{cost}(\Psi)\ \le\ \operatorname{cost}(\Gamma)+\operatorname{cost}(\Lambda).
-\]
-\end{lemma}
 
-\begin{proof}
-For $z=(x,y)\in \bfZ$ the seam gives $h(x)=f'(y)$, so
-\[
-d_\bfP\big(F(z),H(z)\big)=d_\bfP\big(f(x),h'(y)\big)
-\ \le\ d_\bfP\big(f(x),h(x)\big)+d_\bfP\big(f'(y),h'(y)\big).
-\]
-Take maxima.
-\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Applications to Persistence}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{proposition}[Triangle inequality]\label{prop:triangle_ineq}
-For all $M,N,O\in\vect^\bfP$,
-\[
-\dGT(M,O)\ \le\ \dGT(M,N)+\dGT(N,O).
-\]
-\end{proposition}
 
-\begin{proof}
-Approximate the infima within $\varepsilon>0$, compose, and apply Lemma~\ref{lem:cost-subadd}; let $\varepsilon\to 0$.
-\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{corollary}[Extended metric on isomorphism classes]\label{cor:extended-metric}
-$\GT$ is an extended pseudo-metric on $\vect^\bfP$ and descends to an extended metric on isomorphism classes.
-\end{corollary}
-
-\begin{proof}
-Nonnegativity is tautological; symmetry is Lemma~\ref{lem:GT-basic}(a);
-the triangle inequality is Proposition~\ref{prop:triangle_ineq}.
-If $M\cong N$ then $\dGT(M,N)=0$ by Lemma~\ref{lem:GT-basic}(b).
-\end{proof}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Interleaving Distance}
 \label{sec:intlv-dist}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The Galois transport distance can be viewed as an adaptation of the classical interleaving distance from persistence theory. In this paper we work with modules over a finite poset $\bfP$, whereas classical persistence uses the totally ordered real line $(\mathbb{R},\le)$. Although persistence modules over $\mathbb{R}$ are not required to be finite, in practice one often restricts attention to a finite totally ordered subposet (e.g.\ determined by selected parameter values or critical times) and extends from there. This places interleavings and Galois transports in a common finite setting for comparison.
@@ -781,204 +1048,7 @@ Thus the two distances coincide.
 
 
 
-\section{Botleneck distance of minimal projective resolutions}
 
-We use the following simple conventions for this section. For $n\in\bbN$ write $[n]=\{1,\dots,n\}$. If $X \cong \bigoplus_{i=1}^{n} X_i$ is a finite direct sum of indecomposables, write $\Summands(X)=\{X_i \mid i\in [n]\}$. For finite sets $A$ and $B$ with the same cardinality, $\Bij(A,B)$ denotes the set of bijections $A\to B$.
-
-
-
-%Let $A$ be a finite-dimensional algebra over the field $\Bbbk$.
-
-\begin{notation}
-We choose an indecomposable decomposition $M = \Ds_{i=1}^n M_i$ of $M$ once for all $M \in \vect^\bfP$,
-and set $|M|:= n$, and $\Summands(M):= \{M_i \mid i \in [n]\}$, which are called the \emph{size} and the \emph{summand set} of $M$, respectively.
-
-Note that $|M|$ is an invariant of $M$ up to isomorphism,
-and that the elements of $\Summands(M)$ are pairwise distinct.
-\begin{enumerate}
-\item
-We denote a minimal projective resolution of $M$
-by $P \down^M$, which is uniquely determined up to isomorphism of exact sequences.
-
-\item
-Denote by $\calP(M)$ the set of all projective resolutions of $M$.
-
-\item
-For each $P\down = (P_i, \partial_i)_{i\ge 0} \in \calP(M)$,
-we set $|P\down|:= (|P_i|)_{i \ge 0}$, and call it the \emph{size vector} of $P\down$.
-
-\item
-Let $(\bfP, d_\bfP)$ be a finite metric poset\footnote{%%%%%%%%%%%%%%%%%%
-For example, in the classical case that $\bfP$ is a totally ordered set $\bfP:= \{1 < 2 < \cdots < n\}$ for some $n \ge 1$, we can define
-$d_\bfP(x, y):= |x - y|$ for all $x, y \in \bfP$.
-}.
-Then for any indecomposable projective $\bfP$-modules
-$P$ and $Q$, we set the \emph{distance} of $P$ and $Q$ to be
-$$
-\dist(P, Q):= d_\bfP(x, y),
-$$
-where $P \iso \bfP(x, \blank)$ and
-$Q \iso \bfP(y, \blank)$ with $x, y \in \bfP$.
-
-
-
-\end{enumerate}
-\end{notation}
-
-\begin{lemma}
-\label{lem:all-prj-resol}
-The following holds.
-$$
-\calP(M) =\{P\down^M \ds \Ds_{i \in [n]} \Cone(\id_{P_i})[a_i]
-\mid \exists n \in \bbN, \forall i \in [n], P_i \in \prj \bfP, a_i \in \bbN\}.
-$$
-\end{lemma}
-
-The following definition is crucial for our stability theorem.
-
-\begin{definition}
-Let $M, N \in \vect^\bfP$. Then 
-\begin{enumerate}
-\item
-We set
-$$
-\calP(P\down^M, P\down^N):=
-\{(P\down, Q\down) \in \calP(M) \times \calP(N) \mid
-|P\down| = |Q\down|\}.
-$$
-
-\item
-For each $(P\down, Q\down) \in \calP(P\down^M, P\down^N)$, we set
-$$
-\Match(P\down, Q\down):= \prod_{i\ge 0}
-\Bij(\Summands(P_{i}(M)), \Summands(Q_{i}(N))),
-$$
-the element of which is called a \emph{matching} of $P\down$ and $Q\down$.
-
-\item
-For each matching $b = (b_i)_{i\ge 0}$ of
-$P\down$ and $Q\down$, we define its \emph{cost}
-$\cost(b)$ by
-$$
-\cost(b):= \sup\{\dist(P, b_i(P)) \mid i \ge 0,
-P \in \Summands(P_i^M)\}.
-$$
-
-\item
-We define the \emph{regular distance}
-of $P\down$ and $Q\down$ by
-$$
-\dist_R(P\down, Q\down):=
-\inf \{\cost(b) \mid b \in \Match(P\down, Q\down)\}.
-$$
-
-\item
-Finally, we define the \emph{bottle neck distance}
-of $P\down^M$ and $P\down^N$ by
-$$
-\dist_B(P\down^M, P\down^N):=
-\inf \{\dist_R(P\down, Q\down) \mid 
-(P\down, Q\down) \in \calP(P\down^M, P\down^N)\}.
-$$
-\end{enumerate}
-\end{definition}
-
-\begin{remark}
-By Lemma \ref{lem:all-prj-resol}, we see that
-$\calP(P\down^M, P\down^N) \ne \emptyset$
-for all $M, N \in \vect^\bfP$.
-\end{remark}
-
-\section{Stability of minimal projective resolutions}
-
-\begin{lemma}
-\label{lem:rt-adj-prj-ind}
-
-
-
-If $f : \bfX \leftrightarrows \bfP : g$ is a Galois connection of posets $\bfX$ and $\bfP$,
-then we have $g^\ast \bfX(x,\blank) \iso \bfP(f(x), \blank)$
-in $\vect^\bfP$ for all $x \in \bfX$.
-\end{lemma}
-
-\begin{proof}
-There exist isomorphisms
-$$
-(g^\ast\bfX(x,\blank))(y) \iso \bfX(x,g(y)) \iso \bfP(f(x), y)
-$$
-natural in $y \in \bfP$.
-\end{proof}
-
-We now prove the stability theorem for
-minimal projective resolutions.
-
-\begin{theorem}
-Let $(\bfP, d_\bfP)$ be a finite metric poset.
-Then for any $M, N \in \vect^\bfP$ we have
-$$
-\dist_B(P\down^M, P\down^N) \le \dGT(M, N).
-$$
-\end{theorem}
-
-\begin{proof}
-Let $e:= \dGT(M,N)$ and $\ep > 0$ any positive real number.
-Then there exists some Galois coupling $(\bfX, f \dashv g, h \dashv i, \Ga)$
-of $M$ and $N$
-% with $\al \colon g^\ast \Ga \isoto M$
-% and $\be \colon i^\ast \Ga \isoto N$ isomorphisms 
-such that $e \le \cost(\Ga) \le e + \ep$.
-It is enough to construct some
-$(P\down, Q\down) \in \calP(P\down^M, P\down^N)$
-such that $\dist_R(P\down, Q\down) \le \cost(\Ga)$.
-Indeed, when this is the case,
-we have $\dist_B(P\down^M, P\down^N) \le \dist_R(P\down, Q\down) \le e + \ep$,
-which shows that $\dist_B(P\down^M, P\down^N) \le e$.
-% \todoilgreen{Here give such a construcion from
-% the $\ep$-interleaving diagram of $M$ and $N$ as
-% in the notes of 2025-07-30.}
-
-Let $R\down = (R_i, \partial_i)_{i \ge 0}$ be a projective resolution of $\Ga$.
-Then since $g^\ast$ (resp.\ $i^\ast$) is an exact functor preserving projectivity,
-$P\down:= (g^\ast R_i, g^\ast \partial_i)_{i \ge 0}$
-(resp.\ $Q\down:= (i^\ast R_i, i^\ast \partial_i)_{i \ge 0}$) is a projective
-resolution of $g^\ast \Ga \iso M$ (resp. $i^\ast \Ga \iso N$).
-We first show that $(P\down, Q\down) \in \calP(P\down^M, P\down^N)$,
-equivalently that $|P\down| = |Q\down|$.
-For each $i \ge 0$, there exists a sequence $(x_{i,1}, \dots, x_{i,{n_i}})$ of elements of $\bfX$ (we allow $x_{i,j} = x_{i,k}$ for some $j \ne k$)
-with $n_i = |R_i|$
-such that $R_i \iso \Ds_{j=1}^{n_i} \bfX(x_{i,j}, \blank)$
-by Lemma \ref{lem:ind-proj}.
-Then we have indecomposable decompositions
-\begin{equation}
-\label{eq:ind-dec-P,Q}
-P_i \iso \Ds_{j=1}^{n_i} \bfP(f(x_{i,j}), \blank),\ 
-Q_i \iso \Ds_{j=1}^{n_i} \bfP(h(x_{i,j}), \blank)
-\end{equation}
-by Lemma \ref{lem:rt-adj-prj-ind}.
-Thus $|P_i| = n_i = |Q_i|$ for all $i \ge 0$.
-Hence $|P\down| = |Q\down|$.
-
-By using \eqref{eq:ind-dec-P,Q}, we can define a matching
-$b \in \Match(P\down, Q\down)$ by
-$b_i(\bfP(f(x_{i,j}),\blank))$\linebreak[3]$:= \bfP(h(x_{i,j}),\blank)$ for all $i \ge 0$, $j = 1, \dots, n_i$.
-Then we have
-$$
-\begin{aligned}
-\dist_R(P\down, Q\down) &\le \cost(b)\\
-&= \sup\{\dist(\bfP(f(x_{i,j}),\blank), \bfP(h(x_{i,j}),\blank)) \mid i \ge 0, j=1,\dots,n_i\}\\
-&= \sup\{d_\bfP(f(x_{i,j}), h(x_{i,j})) \mid i \ge 0, j=1,\dots,n_i\}\\
-&\le \sup\{d_\bfP(f(x), h(x)) \mid x \in \bfX\} = \cost(\Ga),
-\end{aligned}
-$$
-as desired.
-\end{proof}
-
-
-
-%\section{Applications}
-
-
-%\section*{Acknowledgement}
 
 
 \bibliographystyle{plain}
