@@ -157,7 +157,6 @@ In particular, $f_{!}$ is right exact, $f_{*}$ is left exact, and $f^{*}$ is exa
 \end{tikzcd}
 \]
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Galois Connections}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -165,21 +164,21 @@ In particular, $f_{!}$ is right exact, $f_{*}$ is left exact, and $f^{*}$ is exa
 We recall that Galois connections are adjunctions between posets and underlie the identifications among $f_{!}, f^{*}, f_{*}$ used later.
 
 \begin{definition}
-A \emph{Galois connection} between posets $\bfP,\bfQ$ consists of monotone maps $f:\bfP\to\bfQ$ and $g:\bfQ\to\bfP$ such that
+A \emph{Galois connection} between posets $\bfQ,\bfP$ consists of monotone maps $f:\bfQ\to\bfP$ and $g:\bfP\to\bfQ$ such that
 \[
-f(x)\le q \iff x\le g(q)\qquad(x\in \bfP,\ q\in \bfQ).
+f(u)\le x \iff u\le g(x)\qquad(u\in \bfQ,\ x\in \bfP).
 \]
-Equivalently, viewing $\bfP$ and $\bfQ$ as thin categories, this means $f\dashv g$ as functors. We write $f:\bfP\rightleftarrows \bfQ:g$, with $f$ left adjoint and $g$ right adjoint.
+Equivalently, viewing $\bfQ$ and $\bfP$ as thin categories, this means $f\dashv g$ as functors. We write $f:\bfQ\rightleftarrows \bfP:g$, with $f$ left adjoint and $g$ right adjoint.
 \end{definition}
 
 \begin{corollary}
-If $f:\bfP\rightleftarrows \bfQ:g$ is a Galois connection, then $g^{*}\dashv f^{*}$.
+If $f:\bfQ\rightleftarrows \bfP:g$ is a Galois connection, then $g^{*}\dashv f^{*}$.
 \[
 \begin{tikzcd}[row sep=3em]
-\Nname{E}\vect^\bfP & \Nname{C}\vect^\bfQ 
-\arrow[from={E}, to={C}, "g^{*}", ""'{name=Fd}, bend left]
-\arrow[from={C}, to={E}, "f^{*}"{name=Gu}, bend left]
-\arrow[from={Fd}, to={Gu}, "\rotatebox{-90}{$\dashv$}" description, phantom]
+\Nname{E}\vect^\bfP & \Nname{C} \vect^\bfQ 
+\arrow[from={C}, to={E}, "g^{*}", ""'{name=Gs}, bend left]
+\arrow[from={E}, to={C}, "f^{*}"{name=Fs}, bend left]
+\arrow[from={Gs}, to={Fs}, "\rotatebox{-90}{$\dashv$}" description, phantom]
 \end{tikzcd}.
 \]
 \end{corollary}
@@ -197,14 +196,14 @@ g^{*}\dashv f^{*},\qquad f_{!}\dashv f^{*},\qquad g^{*}\dashv g_{*}
 are compatible via these isomorphisms.
 \[
 \begin{tikzcd}[row sep=50pt, column sep = 70pt]
-\Nname{E}\vect^\bfP & \Nname{C}\vect^\bfQ 
-\arrow[from={E}, to={C}, "g^{*} \cong f_{!}"{description, pos=.5, name=Fu}, ""'{name=Fd}, bend left=15pt]
-\arrow[from={C}, to={E}, "f^{*}\cong g_{*}"{description, pos=.5, name=Gd}, ""'{name=Gu}, bend left=15pt]
-\arrow[from={C}, to={E}, "g_{!}"', ""{name=gd}, bend right=80pt]
-\arrow[from={E}, to={C}, "f_{*}"', ""{name=fu}, bend right=80pt]
-\arrow[from={Fd}, to={Gu}, "\rotatebox{-90}{$\dashv$}" description, phantom]
-\arrow[from={gd}, to={Fu}, "\rotatebox{-90}{$\dashv$}" description, phantom]
-\arrow[from={Gd}, to={fu}, "\rotatebox{-90}{$\dashv$}" description, phantom]
+\Nname{E}\vect^\bfP & \Nname{C} \vect^\bfQ 
+\arrow[from={C}, to={E}, "g^{*} \cong f_{!}"{description, pos=.5, name=gs}, bend left=15pt]
+\arrow[from={E}, to={C}, "f^{*}\cong g_{*}"{description, pos=.5, name=fs}, bend left=15pt]
+\arrow[from={E}, to={C}, "g_{!}"', ""{name=gL}, bend right=80pt]
+\arrow[from={C}, to={E}, "f_{*}"', ""{name=fR}, bend right=80pt]
+\arrow[from={gs}, to={fs}, "\rotatebox{-90}{$\dashv$}" description, phantom]
+\arrow[from={gL}, to={gs}, "\rotatebox{-90}{$\dashv$}" description, phantom]
+\arrow[from={fs}, to={fR}, "\rotatebox{-90}{$\dashv$}" description, phantom]
 \end{tikzcd}.
 \]
 \end{corollary}
@@ -215,7 +214,7 @@ By uniqueness of adjoints in a $2$-category: $g^{*}$ and $f_{!}$ are both left a
 
 \begin{corollary}
 \label{cor:g-ast-ex}
-If $f:\bfP\rightleftarrows \bfQ:g$ is a Galois connection, then $g_{*}:\vect^\bfQ\to\vect^\bfP$ is exact.
+If $f:\bfQ\rightleftarrows \bfP:g$ is a Galois connection, then $g_{*}:\vect^\bfP\to\vect^\bfQ$ is exact.
 \end{corollary}
 
 \begin{proof}
@@ -225,7 +224,7 @@ Using Corollary~\ref{cor:3_adj}, $g_{*}\cong f^{*}$, and $f^{*}$ is exact by Pro
 Combining Corollary~\ref{cor:g-ast-ex} with Lemma~\ref{lem:pres-proj} yields:
 
 \begin{proposition}\label{prop:pullback_preserves_projectives}
-Let $f:\bfP\rightleftarrows \bfQ:g$ be a Galois connection. If $M\in\vect^\bfP$ is projective, then $g^{*}(M)$ is projective in $\vect^\bfQ$.\qed
+Let $f:\bfQ\rightleftarrows \bfP:g$ be a Galois connection. If $M\in\vect^\bfQ$ is projective, then $g^{*}(M)$ is projective in $\vect^\bfP$.\qed
 \end{proposition}
 
 \medskip
@@ -233,19 +232,20 @@ Let $f:\bfP\rightleftarrows \bfQ:g$ be a Galois connection. If $M\in\vect^\bfP$ 
 The next basic facts will be used tacitly; they are immediate from the adjunction $f\dashv g$ and we omit the proof.
 
 \begin{lemma}\label{lem:galois-connection-basics}
-Let $f:\bfP\rightleftarrows \bfQ:g$ be a Galois connection. Then:
+Let $f:\bfQ\rightleftarrows \bfP:g$ be a Galois connection. Then:
 \begin{enumerate}
-\item The following are equivalent: $f$ is surjective; $g$ is injective; $f\circ g=\id_{\bfQ}$.
-\item For $q\in \bfQ$,
+\item The following are equivalent: $f$ is surjective; $g$ is injective; $f\circ g=\id_{\bfP}$.
+\item For $x\in \bfP$,
 \[
-g(q)=\max\{\,x\in \bfP\mid f(x)\le q\,\}.
+g(x)=\max\{\,u\in \bfQ\mid f(u)\le x\,\}.
 \]
-In particular, if $f\circ g=\id_{\bfQ}$, then
+In particular, if $f\circ g=\id_{\bfP}$, then
 \[
-g(q)=\max\{\,x\in \bfP\mid f(x)=q\,\}.
+g(x)=\max\{\,u\in \bfQ\mid f(u)=x\,\}.
 \]
 \end{enumerate}
 \end{lemma}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -364,7 +364,7 @@ The units of the insertions $\id\Rightarrow i_1h_1$ and $\id\Rightarrow g_2f_2$,
 \]
 Define $\Psi$ as the \emph{pullback} in the functor category $\vect^{\bfR}$:
 \[
-\Psi\ :=\ \mathrm{pullback}\!\left(
+\Psi\ :=\ \mathrm{pullback}\left(
 \pi_1^{*}\Gamma_1 \xrightarrow{\ \sigma_1\ } \delta^{*}i_1^{*}\Gamma_1
 \ \xleftarrow[\ \cong\ ]{\ \delta^{*}\varphi\ }\ 
 \delta^{*}g_2^{*}\Gamma_2 \xleftarrow{\ \sigma_2\ } \pi_2^{*}\Gamma_2
@@ -383,14 +383,14 @@ Since precomposition is a (contravariant) $2$-functor, it is strictly functorial
 Therefore
 \[
 (\iota_1\circ g_1)^{*}\Psi
-\;=\; g_1^{*}(\iota_1^{*}\Psi)
-\;\cong\; g_1^{*}\Gamma_1
-\;\cong\; M,
+= g_1^{*}(\iota_1^{*}\Psi)
+\cong g_1^{*}\Gamma_1
+\cong M,
 \qquad
 (\iota_2\circ i_2)^{*}\Psi
-\;=\; i_2^{*}(\iota_2^{*}\Psi)
-\;\cong\; i_2^{*}\Gamma_2
-\;\cong\; O,
+= i_2^{*}(\iota_2^{*}\Psi)
+\cong i_2^{*}\Gamma_2
+\cong O,
 \]
 where the last isomorphisms are those in the defining data of the two input couplings.
 These composites are natural isomorphisms, being composites of natural isomorphisms.
@@ -452,7 +452,7 @@ Nonnegativity is immediate. For any $M$, the identity coupling $\bfQ=\bfP$, $f=h
 
 \begin{corollary}
 \label{cor:gt-metric-on-iso}
-On isomorphism classes, $\dGT$ is an extended metric: if $\dGT{M}{N}=0$ then $M\cong N$.
+On isomorphism classes, $\dGT$ is an extended metric: if $\dGT(M, N)=0$ then $M\cong N$.
 \end{corollary}
 
 \begin{proof}
@@ -462,6 +462,10 @@ M\ \cong\ f_{!}\Gamma\ =\ h_{!}\Gamma\ \cong\ N,
 \]
 so $M\cong N$.
 \end{proof}
+
+\begin{example}
+Relate the interleaving distance to the Galois transport distance for finite totally ordered posets.
+\end{example}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Bottleneck Distance}
@@ -584,467 +588,360 @@ Nonnegativity is immediate. For any $M$, take the same padding on both sides and
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Bottleneck Distance}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-We adopt the following conventions. For $n\in\bbN$ write $[n]=\{1,\dots,n\}$. If $X \cong \bigoplus_{i=1}^{n} X_i$ is a finite direct sum of indecomposables, write $\Summands(X)=\{X_i \mid i\in [n]\}$; for finite sets $A,B$ with $|A|=|B|$, let $\Bij(A,B)$ be the set of bijections $A\to B$. Throughout, $(\bfP,d_{\bfP})$ is a finite metric poset.
-
-For each $M\in\vect^{\bfP}$ fix once and for all a decomposition $M\cong\Ds_{i=1}^n M_i$ into indecomposables. Set $|M|:=n$ (the \emph{size}) and $\Summands(M):=\{M_i\mid i\in[n]\}$ (the \emph{summand set}); these are well defined up to isomorphism and the elements of $\Summands(M)$ are pairwise distinct. A minimal projective resolution of $M$ is denoted $P\down^M$ and is unique up to isomorphism of exact complexes. Let
-\[
-\Res(M)\quad\text{denote the set of all projective resolutions of }M.
-\]
-If $R\down=(R_i,\partial_i)_{i\ge 0}\in\Res(M)$, its \emph{size vector} is $|R\down|:=(|R_i|)_{i\ge 0}$. For indecomposable projectives $U,V$ (identified with representables $U\cong\bfP(x,-)$, $V\cong\bfP(y,-)$), put
-\[
-\dist(U,V):=d_{\bfP}(x,y).
-\]
-
-If $E$ is any projective object in $\vect^{\bfP}$, the mapping cone $\Cone(\id_E)$ is the two-term contractible complex
-\[
-\cdots \to 0 \to E \xrightarrow{\ \id\ } E \to 0 \to \cdots,
-\]
-concentrated in consecutive degrees; its shift $\Cone(\id_E)[a]$ places the two copies of $E$ in degrees $a$ and $a-1$. Direct-summing $\Cone(\id_E)[a]$ with a projective resolution leaves the resolved module unchanged and yields a chain-homotopy equivalent resolution (we call this \emph{padding by a contractible cone}).
-
-\begin{lemma}
-\label{lem:all-prj-resol}
-Every projective resolution of $M$ is obtained from the minimal one by padding with contractible cones:
-\[
-\Res(M)
-\ =\
-\Bigl\{
-\ P\down^M\ \ds\ \Ds_{i\in[n]}\,\Cone(\id_{E_i})[a_i]\
-\Bigm|\ n\in\bbN,\ a_i\in\bbN,\ E_i\in\prj\bfP\ 
-\Bigr\}.
-\]
-\end{lemma}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Matchings}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-We now define degreewise matchings between two resolutions. Given $M,N\in\vect^{\bfP}$, consider pairs of projective resolutions with the same size vector:
-\[
-\Res(P\down^M,P\down^N)
-\ :=\
-\bigl\{\, (E\down,F\down)\in\Res(M)\times\Res(N)\ \bigm|\ |E\down|=|F\down|\,\bigr\}.
-\]
-
-
-\begin{proposition}
-If the size vectors of $P\down^M$ and $P\down^N$ are finitely supported and have the same alternating sum $\sum_i(-1)^i|P_i|=\sum_i(-1)^i|Q_i|$, then $\Res(P\down^M,P\down^N) \neq \emptyset$.
-\end{proposition}
-\begin{proof}
-%Add proof
-\end{proof}
-
-
-For $(E\down,F\down)\in\Res(P\down^M,P\down^N)$, a \emph{matching} is a family of degreewise bijections
-\[
-B=(B_i)_{i\ge 0},\qquad B_i\in\Bij\bigl(\Summands(E_i),\,\Summands(F_i)\bigr).
-\]
-Define its \emph{cost} s the $L^\infty$–type aggregate of the underlying poset metric,
-\[
-\cost(B)\ :=\
-\sup\bigl\{\,\dist\bigl(U,\ B_i(U)\bigr)\ \bigm|\ i\ge 0,\ U\in\Summands(E_i)\,\bigr\}.
-\]
-Because $\bfP$ is finite, this supremum is a maximum and hence finite. 
-
-%Remove discussion of regular distance
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Matching Distance}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%Change notation to match notation above for the various projective resolutions
-%Add transition words
-
-\begin{definition}
-The \emph{bottleneck distance} between any two minimal resolutions $P\down^M$ and $P\down^N$ of two $P$-module $M$, and $N$, not necessarily of the same size, is define as the best regular distance over all compatible paddings:
-\[
-\dist_B\bigl(P\down^M,P\down^N\bigr)
-\ :=\ 
-\inf_{\ (P\down,Q\down)\in\Res(P\down^M,P\down^N)}\ \dist_R(P\down,Q\down).
-\]
-For completeness we adopt the extended-value convention that $\dist_B\bigl(P\down^M,P\down^N\bigr)=\infty$ if the infimum is taken over the empty set.
-\end{definition}
-
-
-
-\begin{proposition}
-\label{prop:bneck-pseudometric}
-On the class of minimal projective resolutions $\{P\down^M\mid M\in\vect^{\bfP}\}$, the function $\dist_B$ is an extended metric.
-\[
-\dist_B: \{P\down^M\mid M\in\vect^{\bfP}\} \times \{P\down^M\mid M\in\vect^{\bfP}\} \longrightarrow [0,+\infty]
-\]
-\end{proposition}
-
-\begin{proof}
-%fill in proof
-\end{proof}
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Botleneck distance of minimal projective resolutions}
-%Not a fan of the title for this subsection
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% The following macros might be useful. They are already in my macros.tex
-%\DeclareMathOperator{\Match}{Match}      % set of matchings (as defined in text)
-%\DeclareMathOperator{\Bij}{Bij}          % set of bijections
-%\DeclareMathOperator{\Cone}{Cone}        % cone construction
-%\DeclareMathOperator{\Summands}{Summands}% set of direct summands
-
-
-We use the following simple conventions for this section. For $n\in\bbN$ write $[n]=\{1,\dots,n\}$. If $X \cong \bigoplus_{i=1}^{n} X_i$ is a finite direct sum of indecomposables, write $\Summands(X)=\{X_i \mid i\in [n]\}$. For finite sets $A$ and $B$ with the same cardinality, $\Bij(A,B)$ denotes the set of bijections $A\to B$.
-
-
-
-%Let $A$ be a finite-dimensional algebra over the field $\Bbbk$.
-% I do not lilke to start with a set of notation. I prefer to introduce notation when needed.
-
-\begin{notation}
-We choose an indecomposable decomposition $M = \Ds_{i=1}^n M_i$ of $M$ once for all $M \in \vect^\bfP$,
-and set $|M|:= n$, and $\Summands(M):= \{M_i \mid i \in [n]\}$, which are called the \emph{size} and the \emph{summand set} of $M$, respectively.
-
-Note that $|M|$ is an invariant of $M$ up to isomorphism,
-and that the elements of $\Summands(M)$ are pairwise distinct.
-\begin{enumerate}
-\item
-We denote a minimal projective resolution of $M$
-by $P \down^M$, which is uniquely determined up to isomorphism of exact sequences.
-
-%% I am not happy with the notation $P \down M$ for the set of minimal projective reslutions
-
-\item
-Denote by $\calP(M)$ the set of all projective resolutions of $M$.
-
-%% I am not happy with the notation $\calP(M)$ for the set of all projective reslutions. We are using P too many times.
-
-
-\item
-For each $P\down = (P_i, \partial_i)_{i\ge 0} \in \calP(M)$,
-we set $|P\down|:= (|P_i|)_{i \ge 0}$, and call it the \emph{size vector} of $P\down$.
-
-\item
-Let $(\bfP, d_\bfP)$ be a finite metric poset\footnote{%%%%%%%%%%%%%%%%%%
-For example, in the classical case that $\bfP$ is a totally ordered set $\bfP:= \{1 < 2 < \cdots < n\}$ for some $n \ge 1$, we can define
-$d_\bfP(x, y):= |x - y|$ for all $x, y \in \bfP$.
-}.
-Then for any indecomposable projective $\bfP$-modules
-$P$ and $Q$, we set the \emph{distance} of $P$ and $Q$ to be
-$$
-\dist(P, Q):= d_\bfP(x, y),
-$$
-where $P \iso \bfP(x, \blank)$ and
-$Q \iso \bfP(y, \blank)$ with $x, y \in \bfP$.
-
-%Not correct notation. Should be using \bfP(x,-) for indecomposable projectives
-
-\end{enumerate}
-\end{notation}
-
-\begin{lemma}
-\label{lem:all-prj-resol}
-The following holds.
-$$
-\calP(M) =\{P\down^M \ds \Ds_{i \in [n]} \Cone(\id_{P_i})[a_i]
-\mid \exists n \in \bbN, \forall i \in [n], P_i \in \prj \bfP, a_i \in \bbN\}.
-$$
-\end{lemma}
-
-The following definition is crucial for our stability theorem.
-
-%% Below, the notion of a bottleneck distance is defined between minimal projective modules. Parallel the development
-% of this metric with the development of the Galois Transport Distance above as much as possible while keeping the presentation
-%simple and natural.
-
-\begin{definition}
-Let $M, N \in \vect^\bfP$. Then 
-\begin{enumerate}
-\item
-We set
-$$
-\calP(P\down^M, P\down^N):=
-\{(P\down, Q\down) \in \calP(M) \times \calP(N) \mid
-|P\down| = |Q\down|\}.
-$$
-
-\item
-For each $(P\down, Q\down) \in \calP(P\down^M, P\down^N)$, we set
-$$
-\Match(P\down, Q\down):= \prod_{i\ge 0}
-\Bij(\Summands(P_{i}(M)), \Summands(Q_{i}(N))),
-$$
-the element of which is called a \emph{matching} of $P\down$ and $Q\down$.
-
-\item
-For each matching $b = (b_i)_{i\ge 0}$ of
-$P\down$ and $Q\down$, we define its \emph{cost}
-$\cost(b)$ by
-$$
-\cost(b):= \sup\{\dist(P, b_i(P)) \mid i \ge 0,
-P \in \Summands(P_i^M)\}.
-$$
-
-\item
-We define the \emph{regular distance}
-of $P\down$ and $Q\down$ by
-$$
-\dist_R(P\down, Q\down):=
-\inf \{\cost(b) \mid b \in \Match(P\down, Q\down)\}.
-$$
-
-\item
-Finally, we define the \emph{bottle neck distance}
-of $P\down^M$ and $P\down^N$ by
-$$
-\dist_B(P\down^M, P\down^N):=
-\inf \{\dist_R(P\down, Q\down) \mid 
-(P\down, Q\down) \in \calP(P\down^M, P\down^N)\}.
-$$
-\end{enumerate}
-\end{definition}
-
-\begin{remark}
-By Lemma \ref{lem:all-prj-resol}, we see that
-$\calP(P\down^M, P\down^N) \ne \emptyset$
-for all $M, N \in \vect^\bfP$.
-\end{remark}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Stability Theorem}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+We now relate the two distances defined above. Informally: a Galois coupling of $M$ and $N$ controls, via restriction, a pair of projective resolutions whose degreewise summands can be matched with cost bounded by the coupling cost. Hence the bottleneck distance between minimal projective resolutions is at most the Galois transport distance.
+
+The next lemma says that pulling back along the right adjoint of a Galois connection sends the indecomposable projective at $x\in\bfQ$ to the indecomposable projective at $f(x)\in\bfP$.
+
 \begin{lemma}
 \label{lem:rt-adj-prj-ind}
-
-
-
-If $f : \bfX \leftrightarrows \bfP : g$ is a Galois connection of posets $\bfX$ and $\bfP$,
-then we have $g^\ast \bfX(x,\blank) \iso \bfP(f(x), \blank)$
-in $\vect^\bfP$ for all $x \in \bfX$.
+If $f : \bfQ \rightleftarrows \bfP : g$ is a Galois connection of posets, then
+\[
+g^\ast\bigl(\bfQ(x,\blank)\bigr)\ \cong\ \bfP\bigl(f(x), \blank\bigr)
+\qquad\text{in }\vect^\bfP\ \text{for all }x\in\bfQ.
+\]
 \end{lemma}
 
 \begin{proof}
-There exist isomorphisms
-$$
-(g^\ast\bfX(x,\blank))(y) \iso \bfX(x,g(y)) \iso \bfP(f(x), y)
-$$
-natural in $y \in \bfP$.
+By Corollary~\ref{cor:3_adj} we have a natural isomorphism $g^{*}\cong f_{!}$. For any $M\in\vect^{\bfP}$,
+\[
+\Hom_{\vect^{\bfP}}\bigl(\bfP(f(x),-),\,M\bigr)\ \cong\ M\bigl(f(x)\bigr)
+\ \cong\ (f^{*}M)(x)
+\ \cong\ \Hom_{\vect^{\bfQ}}\bigl(\bfQ(x,-),\,f^{*}M\bigr)
+\ \cong\ \Hom_{\vect^{\bfP}}\bigl(f_{!}\bfQ(x,-),\,M\bigr).
+\]
+By Yoneda, $f_{!}\bfQ(x,-)\cong \bfP(f(x),-)$, hence $g^{*}\bfQ(x,-)\cong f_{!}\bfQ(x,-)\cong \bfP(f(x),-)$.
 \end{proof}
 
-We now prove the stability theorem for
-minimal projective resolutions.
-
-\begin{theorem}
-Let $(\bfP, d_\bfP)$ be a finite metric poset.
-Then for any $M, N \in \vect^\bfP$ we have
-$$
-\dist_B(P\down^M, P\down^N) \le \dGT(M, N).
-$$
+\begin{theorem}[Stability]
+Let $(\bfP, d_\bfP)$ be a finite metric poset. Then for any $M, N \in \vect^\bfP$,
+\[
+\dist_B\bigl(P\down^M, P\down^N\bigr)\ \le\ \dGT(M, N).
+\]
 \end{theorem}
 
 \begin{proof}
-Let $e:= \dGT(M,N)$ and $\ep > 0$ any positive real number.
-Then there exists some Galois coupling $(\bfX, f \dashv g, h \dashv i, \Ga)$
-of $M$ and $N$
-% with $\al \colon g^\ast \Ga \isoto M$
-% and $\be \colon i^\ast \Ga \isoto N$ isomorphisms 
-such that $e \le \cost(\Ga) \le e + \ep$.
-It is enough to construct some
-$(P\down, Q\down) \in \calP(P\down^M, P\down^N)$
-such that $\dist_R(P\down, Q\down) \le \cost(\Ga)$.
-Indeed, when this is the case,
-we have $\dist_B(P\down^M, P\down^N) \le \dist_R(P\down, Q\down) \le e + \ep$,
-which shows that $\dist_B(P\down^M, P\down^N) \le e$.
-% \todoilgreen{Here give such a construcion from
-% the $\ep$-interleaving diagram of $M$ and $N$ as
-% in the notes of 2025-07-30.}
+If there is no Galois coupling of $(M,N)$, then $\dGT(M,N)=\infty$ and the claim is tautological. Otherwise fix $\varepsilon>0$ and choose a coupling $(\bfQ, f \dashv g,\ h \dashv i,\ \Gamma)$ with
+\[
+g^\ast\Gamma\cong M,\qquad i^\ast\Gamma\cong N,\qquad \cost(\Gamma)\ \le\ \dGT(M,N)+\varepsilon.
+\]
+Let $R\down\to\Gamma$ be any projective resolution in $\vect^{\bfQ}$. Since precomposition is exact (Proposition~\ref{prop:Kan-posets}) and, for a Galois connection, preserves projectives (Proposition~\ref{prop:pullback_preserves_projectives}), the complexes
+\[
+E\down:=g^{*}R\down\quad\text{and}\quad F\down:=i^{*}R\down
+\]
+are projective resolutions of $M$ and $N$ in $\vect^{\bfP}$.
 
-Let $R\down = (R_i, \partial_i)_{i \ge 0}$ be a projective resolution of $\Ga$.
-Then since $g^\ast$ (resp.\ $i^\ast$) is an exact functor preserving projectivity,
-$P\down:= (g^\ast R_i, g^\ast \partial_i)_{i \ge 0}$
-(resp.\ $Q\down:= (i^\ast R_i, i^\ast \partial_i)_{i \ge 0}$) is a projective
-resolution of $g^\ast \Ga \iso M$ (resp. $i^\ast \Ga \iso N$).
-We first show that $(P\down, Q\down) \in \calP(P\down^M, P\down^N)$,
-equivalently that $|P\down| = |Q\down|$.
-For each $i \ge 0$, there exists a sequence $(x_{i,1}, \dots, x_{i,{n_i}})$ of elements of $\bfX$ (we allow $x_{i,j} = x_{i,k}$ for some $j \ne k$)
-with $n_i = |R_i|$
-such that $R_i \iso \Ds_{j=1}^{n_i} \bfX(x_{i,j}, \blank)$
-by Lemma \ref{lem:ind-proj}.
-Then we have indecomposable decompositions
-\begin{equation}
-\label{eq:ind-dec-P,Q}
-P_i \iso \Ds_{j=1}^{n_i} \bfP(f(x_{i,j}), \blank),\ 
-Q_i \iso \Ds_{j=1}^{n_i} \bfP(h(x_{i,j}), \blank)
-\end{equation}
-by Lemma \ref{lem:rt-adj-prj-ind}.
-Thus $|P_i| = n_i = |Q_i|$ for all $i \ge 0$.
-Hence $|P\down| = |Q\down|$.
-
-By using \eqref{eq:ind-dec-P,Q}, we can define a matching
-$b \in \Match(P\down, Q\down)$ by
-$b_i(\bfP(f(x_{i,j}),\blank))$\linebreak[3]$:= \bfP(h(x_{i,j}),\blank)$ for all $i \ge 0$, $j = 1, \dots, n_i$.
-Then we have
-$$
-\begin{aligned}
-\dist_R(P\down, Q\down) &\le \cost(b)\\
-&= \sup\{\dist(\bfP(f(x_{i,j}),\blank), \bfP(h(x_{i,j}),\blank)) \mid i \ge 0, j=1,\dots,n_i\}\\
-&= \sup\{d_\bfP(f(x_{i,j}), h(x_{i,j})) \mid i \ge 0, j=1,\dots,n_i\}\\
-&\le \sup\{d_\bfP(f(x), h(x)) \mid x \in \bfX\} = \cost(\Ga),
-\end{aligned}
-$$
-as desired.
+Write each degree $R_i$ as a finite direct sum of representables $R_i\cong\bigoplus_{x\in S_i}\bfQ(x,-)$ (Lemma~\ref{lem:ind-proj}). By Lemma~\ref{lem:rt-adj-prj-ind} (and the analogue for $h\dashv i$),
+\[
+E_i\ \cong\ \bigoplus_{x\in S_i}\bfP\bigl(f(x),-\bigr),
+\qquad
+F_i\ \cong\ \bigoplus_{x\in S_i}\bfP\bigl(h(x),-\bigr).
+\]
+Hence $|E\down|=|F\down|$ and $(E\down,F\down)\in\Res(P\down^M,P\down^N)$. Define the degreewise matching $B_i$ by the identity on indices $x\in S_i$:
+\[
+B_i:\ \bfP\bigl(f(x),-\bigr)\longmapsto \bfP\bigl(h(x),-\bigr)\qquad(x\in S_i).
+\]
+Then
+\[
+\dist_R(E\down,F\down)\ \le\ \cost(B)\ =\ \sup_{i}\ \sup_{x\in S_i} d_{\bfP}\bigl(f(x),h(x)\bigr)
+\ \le\ \sup_{x\in\bfQ} d_{\bfP}\bigl(f(x),h(x)\bigr)\ =\ \cost(\Gamma).
+\]
+Taking the infimum over all compatible paddings yields
+\[
+\dist_B\bigl(P\down^M,P\down^N\bigr)\ \le\ \dist_R(E\down,F\down)\ \le\ \cost(\Gamma)\ \le\ \dGT(M,N)+\varepsilon.
+\]
+Letting $\varepsilon\to 0$ completes the proof.
 \end{proof}
 
+\begin{example}
+Insert example we constructed in Fort Collins
+\end{example}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Applications to Persistence}
+\section{Application to Persistence}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We extract a persistence construction from a $\bfP$-module by passing to an interval poset and taking kernels of structure maps. The resulting “diagram” admits a stability inequality that recovers the classical bottleneck stability when $\bfP$ is totally ordered.
+
+\begin{definition}
+Let $(\bfP,d_{\bfP})$ be a finite metric poset with a top element $\top$.
+We extend $d_{\bfP}$ to an \emph{extended} metric by
+\[
+d_{\bfP}(x,\top)=d_{\bfP}(\top,x)=+\infty\ \ (x\neq \top),\qquad d_{\bfP}(\top,\top)=0.
+\]
+Define the \emph{interval poset} $\Int\bfP$ to have objects the intervals $[x,y]$ with $x\le y\le \top$ in $\bfP$ and order
+\[
+[x_1,y_1]\ \le\ [x_2,y_2]\quad\Longleftrightarrow\quad x_1\le x_2\ \text{ and }\ y_1\le y_2.
+\]
+Equip $\Int\bfP$ with the product $L^\infty$ extended metric
+\[
+d_{\Int\bfP}\bigl([x_1,y_1],[x_2,y_2]\bigr)\ :=\ \max\{\,d_{\bfP}(x_1,x_2),\ d_{\bfP}(y_1,y_2)\,\}.
+\]
+\end{definition}
+
+\begin{definition}
+For $M\in\vect^{\bfP}$ define $K(M)\in\vect^{\Int\bfP}$ by
+\[
+K(M)([x,y])\ :=\
+\begin{cases}
+\ker\bigl(M(x\to y)\bigr), & y<\top,\\[2pt]
+M(x), & y=\top,
+\end{cases}
+\]
+and for a relation $[x_1,y_1]\le [x_2,y_2]$ let $K(M)([x_1,y_1]\to [x_2,y_2])$ be the map induced by $M(x_1\to x_2)$, which sends $\ker(M(x_1\to y_1))$ into $\ker(M(x_2\to y_2))$ when $y_2<\top$ by functoriality of $M$. This defines a functor $K:\vect^{\bfP}\to\vect^{\Int\bfP}$.
+\end{definition}
+
+We record two lemmas that will be used implicitly below.
+
+\begin{lemma}\label{lem:Int-Galois}
+If $f:\bfQ \rightleftarrows \bfP:g$ is a Galois connection, then so is
+\[
+\Int(f):\Int\bfQ \rightleftarrows \Int\bfP:\Int(g),
+\qquad
+\Int(f)[u,v]=[f(u),f(v)],\ \ \Int(g)[x,y]=[g(x),g(y)].
+\]
+\end{lemma}
+
+\begin{proof}
+Monotonicity of $\Int(f)$ and $\Int(g)$ follows from that of $f$ and $g$.
+For $[u_1,v_1]\in\Int\bfQ$ and $[x_2,y_2]\in\Int\bfP$,
+\[
+\begin{aligned}
+\Int(f)[u_1,v_1]\le [x_2,y_2]
+&\iff \bigl(f(u_1)\le x_2\bigr)\ \text{and}\ \bigl(f(v_1)\le y_2\bigr)\\
+&\iff \bigl(u_1\le g(x_2)\bigr)\ \text{and}\ \bigl(v_1\le g(y_2)\bigr)\\
+&\iff [u_1,v_1]\le \Int(g)[x_2,y_2],
+\end{aligned}
+\]
+using $f\dashv g$ coordinatewise. Thus $\Int(f)\dashv\Int(g)$.
+\end{proof}
+
+\begin{lemma}\label{lem:Int-Lipschitz}
+For any monotone maps $f,h:\bfQ\to\bfP$,
+\[
+\sup_{[u,v]\in\Int\bfQ}
+d_{\Int\bfP}\bigl(\Int(f)[u,v],\,\Int(h)[u,v]\bigr)
+\ \le\
+\sup_{u\in\bfQ} d_{\bfP}\bigl(f(u),\,h(u)\bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+By the $L^\infty$ metric on $\Int\bfP$,
+\[
+d_{\Int\bfP}\bigl([f(u),f(v)],\,[h(u),h(v)]\bigr)
+=\max\bigl\{\,d_{\bfP}(f(u),h(u)),\ d_{\bfP}(f(v),h(v))\,\bigr\}
+\le \sup_{w\in\bfQ} d_{\bfP}(f(w),h(w)).
+\]
+Taking the supremum over all $[u,v]\in\Int\bfQ$ gives the claim.
+\end{proof}
+
+\begin{lemma}\label{lem:K-commute}
+For any monotone $g:\bfP\to\bfQ$ there is a natural isomorphism of functors
+\[
+\Int(g)^{*}\circ K\ \ \cong\ \ K\circ g^{*}:\ \vect^{\bfQ}\longrightarrow \vect^{\Int\bfP}.
+\]
+\end{lemma}
+
+\begin{proof}
+Evaluate both composites at $M\in\vect^{\bfQ}$ and $[x,y]\in\Int\bfP$. If $y<\top$,
+\[
+(\Int(g)^{*}K(M))([x,y])\ =\ K(M)\bigl([g(x),g(y)]\bigr)\ =\ \ker\bigl(M(g(x)\to g(y))\bigr),
+\]
+\[
+(K(g^{*}M))([x,y])\ =\ \ker\bigl((g^{*}M)(x\to y)\bigr)\ =\ \ker\bigl(M(g(x)\to g(y))\bigr).
+\]
+If $y=\top$, both sides equal $M(g(x))$. Naturality in $[x,y]$ follows from functoriality of $M$.
+\end{proof}
+
+\begin{proposition}\label{prop:K-Lipschitz}
+For all $M,N\in\vect^{\bfP}$ one has
+\[
+\dGT^{\Int\bfP}\bigl(K(M),K(N)\bigr)\ \le\ \dGT^{\bfP}(M,N).
+\]
+\end{proposition}
+
+\begin{proof}
+Given a Galois coupling $(\bfQ,f\dashv g,\ h\dashv i,\ \Gamma)$ for $(M,N)$ in $\vect^{\bfP}$, Lemma~\ref{lem:Int-Galois} yields a Galois coupling
+\(
+\Int(f)\dashv\Int(g),\ \Int(h)\dashv\Int(i)
+\)
+on $\Int\bfQ\rightleftarrows\Int\bfP$. Take the apex module $K(\Gamma)\in\vect^{\Int\bfQ}$. By Lemma~\ref{lem:K-commute},
+\[
+\Int(g)^{*}K(\Gamma)\ \cong\ K(g^{*}\Gamma)\ \cong\ K(M),\qquad
+\Int(i)^{*}K(\Gamma)\ \cong\ K(i^{*}\Gamma)\ \cong\ K(N),
+\]
+so this is a coupling for $(K(M),K(N))$. Its cost is bounded by Lemma~\ref{lem:Int-Lipschitz}. Taking infima gives the claim.
+\end{proof}
+
+\begin{definition}
+For $M\in\vect^{\bfP}$, let $K\down^{M}$ denote a minimal projective resolution of $K(M)$ in $\vect^{\Int\bfP}$. We call the family of its degreewise indecomposable projective summands
+\[
+\bigl\{\Summands\bigl(K^{M}_i\bigr)\bigr\}_{i\ge 0}
+\]
+the \emph{persistence diagram} of $M$ over $\bfP$. (Equivalently, the isomorphism class of the minimal resolution $K\down^{M}$ encodes the diagram.)
+\end{definition}
+
+Padding a resolution by contractible cones $\Cone(\id_E)[a]$ adds one copy of $E$ in consecutive degrees $a$ and $a-1$ without changing the resolved module. In our bottleneck framework this plays the role of adding \emph{diagonal points} in classical matching: it equalizes degreewise sizes, and cones added symmetrically on both sides can be matched at zero cost. Thus diagonal padding is implemented categorically by homotopically trivial cones.
+
+\begin{theorem}
+For all $M,N\in\vect^{\bfP}$,
+\[
+\dist_B\bigl(K\down^{M},K\down^{N}\bigr)\ \le\ \dGT^{\Int\bfP}\bigl(K(M),K(N)\bigr)\ \le\ \dGT^{\bfP}(M,N).
+\]
+In particular, if $\bfP=\{1<\cdots<n\}$ with $d_{\bfP}(x,y)=|x-y|$ and $\top$ adjoined with $d_{\bfP}(\cdot,\top)=\infty$, this recovers the classical bottleneck stability inequality.
+\end{theorem}
+
+\begin{proof}
+Apply the Stability Theorem with the base poset replaced by $\Int\bfP$ and the modules $K(M),K(N)$ to get the first inequality. The second inequality is Proposition~\ref{prop:K-Lipschitz}.
+\end{proof}
+
+\begin{example}
+Do a classical 1-parameter persistence example. Demonstrate matching.
+\end{example}
+
+\begin{example}
+Create a 2-parameter persistence example.
+\end{example}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Interleaving Distance}
-\label{sec:intlv-dist}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-The Galois transport distance can be viewed as an adaptation of the classical interleaving distance from persistence theory. In this paper we work with modules over a finite poset $\bfP$, whereas classical persistence uses the totally ordered real line $(\mathbb{R},\le)$. Although persistence modules over $\mathbb{R}$ are not required to be finite, in practice one often restricts attention to a finite totally ordered subposet (e.g.\ determined by selected parameter values or critical times) and extends from there. This places interleavings and Galois transports in a common finite setting for comparison.
-
-
-\subsection*{Definition}
-
-We recall the standard categorical definition using the shift endofunctor
-(see \cite{ChazalCohenSteinerGlisseGuibasOudot2009,Lesnick2015}).
-
-\begin{definition}[Interleaving distance]\label{def:interleaving-distance}
-Let $\bfP=(\mathbb{R},\le)$. For $\varepsilon\ge 0$, set
-$T_\varepsilon:\vect^\bbR \to\vect^\bbR$ by
-$(T_\varepsilon M)(r)=M(r+\varepsilon)$. An \emph{$\varepsilon$-interleaving}
-between $M,N\in \vect^\bbR$ is a pair of natural transformations
-$\varphi:M\Rightarrow T_\varepsilon N$ and $\psi:N\Rightarrow T_\varepsilon M$
-such that the composites $M\to T_{2\varepsilon}M$ and
-$N\to T_{2\varepsilon}N$ equal the canonical structure maps.  The
-\emph{interleaving distance} is
-\[
-d_I(M,N):=\inf\{\ \varepsilon\ge 0\mid M,N\ \text{are $\varepsilon$-interleaved}\ \}.
-\]
-\end{definition}
-
-\subsection*{Two basic facts}
-
-\begin{proposition}[Tail agreement implies finiteness]\label{prop:tail-agree-vanish}
-If $M,N \in \vect^\bbR$ satisfy $M(r)=N(r)=0$ for all $r\le b$ and
-$M|_{[R,\infty)}\cong N|_{[R,\infty)}$, then $d_I(M,N)\le R-b$.
-\end{proposition}
-
-\begin{proof}
-Let $\varepsilon=R-b$.  For $r>b$, define $\varphi_r$ by following
-$M(r)\to M(r+\varepsilon)\xrightarrow{\theta_{r+\varepsilon}}N(r+\varepsilon)$,
-and symmetrically define $\psi_r$.  For $r\le b$ both $M(r)$ and $N(r)$ vanish,
-so the maps are zero.  One checks that these assignments are natural, and that
-the interleaving equations hold: beyond $R$ the isomorphism $\theta$ cancels,
-and before $b$ everything is zero.  Hence $d_I(M,N)\le\varepsilon$.
-\end{proof}
-
-\begin{proposition}[Pseudo-metric and separation]\label{prop:dI-pseudometric}
-For $M,N,O \in \vect^\bbR$,
-\[
-d_I(M,N)=d_I(N,M),\qquad
-d_I(M,O)\le d_I(M,N)+d_I(N,O),\qquad
-d_I(M,M)=0.
-\]
-Moreover, $d_I(M,N)=0$ iff $M\cong N$. Hence $d_I$ is an extended
-metric on isomorphism classes.
-\end{proposition}
-
-\begin{proof}
-Symmetry is clear by swapping $\varphi,\psi$.  
-For the triangle inequality, if $M,N$ are $\varepsilon$-interleaved and $N,O$ are $\delta$-interleaved, then by pasting the data one obtains an $(\varepsilon+\delta)$-interleaving of $M,O$; the details are a standard exercise.  
-Finally, $d_I(M,M)=0$ via the identity maps.  
-If $d_I(M,N)=0$ then a $0$-interleaving exists, giving mutually inverse isomorphisms $M\cong N$.
-\end{proof}
-
-\subsection*{Relating interleavings and Galois couplings on $\mathbb{R}$}
-
-For this subsection fix $\bfP=(\mathbb{R},\le)$ with metric $d(x,y)=|x-y|$.
-For $\varepsilon\ge 0$, the translations
-$t_\varepsilon(x)=x+\varepsilon$ and $r_\varepsilon(x)=x-\varepsilon$
-satisfy $t_\varepsilon\dashv r_\varepsilon$, so $t_\varepsilon\dashv r_\varepsilon$ is a Galois insertion.
-
-\begin{proposition}[Interleaving $\Rightarrow$ coupling]\label{prop:int-to-galois-R}
-If $M,N\in \vect^\bbR$ are $\varepsilon$-interleaved, there exists a
-Galois coupling $(\bfX,f\dashv g,\ h\dashv i,\ \Gamma)$ for $(M,N)$ with
-$\bfX=\mathbb{R}_L\sqcup\mathbb{R}_R$ and $\operatorname{cost}(\Gamma)=\varepsilon$.
-\end{proposition}
-
-\begin{proof}
-Take two copies of $\mathbb{R}$, ordered so that cross-inequalities encode the shift:
-$a_L\le b_R$ iff $a+\varepsilon\le b$, and symmetrically for $R$ to $L$.
-Let $f,h:\bfX\to\mathbb{R}$ be the evident projections, with $f(a_L)=a$ and $f(a_R)=a+\varepsilon$, etc.
-Define $\Gamma$ by $\Gamma(a_L)=M(a)$ and $\Gamma(a_R)=N(a)$, using the interleaving maps to define $\Gamma$ on cross arrows.  
-By construction $g^\ast\Gamma\cong M$, $i^\ast\Gamma\cong N$, and the cost is $\sup|f(x)-h(x)|=\varepsilon$.  
-Functoriality of $\Gamma$ on mixed zigzags is ensured by the interleaving identities; the reader can check this directly.
-\end{proof}
-
-\begin{proposition}[Coupling $\Rightarrow$ interleaving]\label{prop:coupling-implies-int-R}
-Let $(\bfX,f\dashv g,\ h\dashv i,\ \Gamma)$ be a Galois coupling for
-$(M,N)\in \vect^\bbR$ with $\sup_{x\in \bfX}|f(x)-h(x)|\le\varepsilon$.
-Then $M$ and $N$ are $\varepsilon$-interleaved.
-\end{proposition}
-
-\begin{proof}
-Fix $r\in\mathbb{R}$.  Using $x=g(r)$, we have $f(x)=r$ and $h(x)\le r+\varepsilon$.
-Define $\varphi_r:M(r)\to N(r+\varepsilon)$ by
-\[
-M(r)\xrightarrow[\cong]{\alpha_r}\Gamma(x)\xrightarrow{\Gamma(\eta^h_x)}\Gamma(i(h(x)))
-\xrightarrow[\cong]{\beta_{h(x)}}N(h(x))\to N(r+\varepsilon).
-\]
-Here $\eta^h$ is the unit of $h\dashv i$.  Similarly, using $y=i(r)$ one defines
-\[
-\psi_r:\ N(r)\to M(r+\varepsilon).
-\]
-Naturality follows from functoriality of $\Gamma$ and the seam maps.  
-For the interleaving identities, one composes $\varphi$ and $\psi$ and uses the triangle identities of the adjunctions, together with the cost condition ensuring $h(g(r))\le r+\varepsilon$, etc.  
-This reduces exactly to the canonical structure maps $M(r)\to M(r+2\varepsilon)$ and $N(r)\to N(r+2\varepsilon)$.  
-Routine but slightly tedious diagram chases are left to the reader.
-\end{proof}
-
-\subsection*{Equality of distances on $\mathbb{R}$}
-
-\begin{theorem}\label{thm:GT-equals-dI-R}
-For all $M,N\in \vect^\bbR$, the Galois transport distance equals
-the interleaving distance:
-\[
-\dGT(M,N)=d_I(M,N).
-\]
-\end{theorem}
-
-\begin{proof}
-By Proposition~\ref{prop:int-to-galois-R}, any $\varepsilon$-interleaving yields a coupling of cost $\varepsilon$, so $\GT\le d_I$.  
-Conversely, by Proposition~\ref{prop:coupling-implies-int-R}, any coupling of cost $\varepsilon$ yields an $\varepsilon$-interleaving, so $d_I\le \GT$.  
-Thus the two distances coincide.
-\end{proof}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{Interleaving Distance}
+%\label{sec:intlv-dist}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%The Galois transport distance can be viewed as an adaptation of the classical interleaving distance from persistence theory. In this paper we work with modules over a finite poset $\bfP$, whereas classical persistence uses the totally ordered real line $(\mathbb{R},\le)$. Although persistence modules over $\mathbb{R}$ are not required to be finite, in practice one often restricts attention to a finite totally ordered subposet (e.g.\ determined by selected parameter values or critical times) and extends from there. This places interleavings and Galois transports in a common finite setting for comparison.
+%
+%
+%\subsection*{Definition}
+%
+%We recall the standard categorical definition using the shift endofunctor
+%(see \cite{ChazalCohenSteinerGlisseGuibasOudot2009,Lesnick2015}).
+%
+%\begin{definition}[Interleaving distance]\label{def:interleaving-distance}
+%Let $\bfP=(\mathbb{R},\le)$. For $\varepsilon\ge 0$, set
+%$T_\varepsilon:\vect^\bbR \to\vect^\bbR$ by
+%$(T_\varepsilon M)(r)=M(r+\varepsilon)$. An \emph{$\varepsilon$-interleaving}
+%between $M,N\in \vect^\bbR$ is a pair of natural transformations
+%$\varphi:M\Rightarrow T_\varepsilon N$ and $\psi:N\Rightarrow T_\varepsilon M$
+%such that the composites $M\to T_{2\varepsilon}M$ and
+%$N\to T_{2\varepsilon}N$ equal the canonical structure maps.  The
+%\emph{interleaving distance} is
+%\[
+%d_I(M,N):=\inf\{\ \varepsilon\ge 0\mid M,N\ \text{are $\varepsilon$-interleaved}\ \}.
+%\]
+%\end{definition}
+%
+%\subsection*{Two basic facts}
+%
+%\begin{proposition}[Tail agreement implies finiteness]\label{prop:tail-agree-vanish}
+%If $M,N \in \vect^\bbR$ satisfy $M(r)=N(r)=0$ for all $r\le b$ and
+%$M|_{[R,\infty)}\cong N|_{[R,\infty)}$, then $d_I(M,N)\le R-b$.
+%\end{proposition}
+%
+%\begin{proof}
+%Let $\varepsilon=R-b$.  For $r>b$, define $\varphi_r$ by following
+%$M(r)\to M(r+\varepsilon)\xrightarrow{\theta_{r+\varepsilon}}N(r+\varepsilon)$,
+%and symmetrically define $\psi_r$.  For $r\le b$ both $M(r)$ and $N(r)$ vanish,
+%so the maps are zero.  One checks that these assignments are natural, and that
+%the interleaving equations hold: beyond $R$ the isomorphism $\theta$ cancels,
+%and before $b$ everything is zero.  Hence $d_I(M,N)\le\varepsilon$.
+%\end{proof}
+%
+%\begin{proposition}[Pseudo-metric and separation]\label{prop:dI-pseudometric}
+%For $M,N,O \in \vect^\bbR$,
+%\[
+%d_I(M,N)=d_I(N,M),\qquad
+%d_I(M,O)\le d_I(M,N)+d_I(N,O),\qquad
+%d_I(M,M)=0.
+%\]
+%Moreover, $d_I(M,N)=0$ iff $M\cong N$. Hence $d_I$ is an extended
+%metric on isomorphism classes.
+%\end{proposition}
+%
+%\begin{proof}
+%Symmetry is clear by swapping $\varphi,\psi$.  
+%For the triangle inequality, if $M,N$ are $\varepsilon$-interleaved and $N,O$ are $\delta$-interleaved, then by pasting the data one obtains an $(\varepsilon+\delta)$-interleaving of $M,O$; the details are a standard exercise.  
+%Finally, $d_I(M,M)=0$ via the identity maps.  
+%If $d_I(M,N)=0$ then a $0$-interleaving exists, giving mutually inverse isomorphisms $M\cong N$.
+%\end{proof}
+%
+%\subsection*{Relating interleavings and Galois couplings on $\mathbb{R}$}
+%
+%For this subsection fix $\bfP=(\mathbb{R},\le)$ with metric $d(x,y)=|x-y|$.
+%For $\varepsilon\ge 0$, the translations
+%$t_\varepsilon(x)=x+\varepsilon$ and $r_\varepsilon(x)=x-\varepsilon$
+%satisfy $t_\varepsilon\dashv r_\varepsilon$, so $t_\varepsilon\dashv r_\varepsilon$ is a Galois insertion.
+%
+%\begin{proposition}[Interleaving $\Rightarrow$ coupling]\label{prop:int-to-galois-R}
+%If $M,N\in \vect^\bbR$ are $\varepsilon$-interleaved, there exists a
+%Galois coupling $(\bfX,f\dashv g,\ h\dashv i,\ \Gamma)$ for $(M,N)$ with
+%$\bfX=\mathbb{R}_L\sqcup\mathbb{R}_R$ and $\operatorname{cost}(\Gamma)=\varepsilon$.
+%\end{proposition}
+%
+%\begin{proof}
+%Take two copies of $\mathbb{R}$, ordered so that cross-inequalities encode the shift:
+%$a_L\le b_R$ iff $a+\varepsilon\le b$, and symmetrically for $R$ to $L$.
+%Let $f,h:\bfX\to\mathbb{R}$ be the evident projections, with $f(a_L)=a$ and $f(a_R)=a+\varepsilon$, etc.
+%Define $\Gamma$ by $\Gamma(a_L)=M(a)$ and $\Gamma(a_R)=N(a)$, using the interleaving maps to define $\Gamma$ on cross arrows.  
+%By construction $g^\ast\Gamma\cong M$, $i^\ast\Gamma\cong N$, and the cost is $\sup|f(x)-h(x)|=\varepsilon$.  
+%Functoriality of $\Gamma$ on mixed zigzags is ensured by the interleaving identities; the reader can check this directly.
+%\end{proof}
+%
+%\begin{proposition}[Coupling $\Rightarrow$ interleaving]\label{prop:coupling-implies-int-R}
+%Let $(\bfX,f\dashv g,\ h\dashv i,\ \Gamma)$ be a Galois coupling for
+%$(M,N)\in \vect^\bbR$ with $\sup_{x\in \bfX}|f(x)-h(x)|\le\varepsilon$.
+%Then $M$ and $N$ are $\varepsilon$-interleaved.
+%\end{proposition}
+%
+%\begin{proof}
+%Fix $r\in\mathbb{R}$.  Using $x=g(r)$, we have $f(x)=r$ and $h(x)\le r+\varepsilon$.
+%Define $\varphi_r:M(r)\to N(r+\varepsilon)$ by
+%\[
+%M(r)\xrightarrow[\cong]{\alpha_r}\Gamma(x)\xrightarrow{\Gamma(\eta^h_x)}\Gamma(i(h(x)))
+%\xrightarrow[\cong]{\beta_{h(x)}}N(h(x))\to N(r+\varepsilon).
+%\]
+%Here $\eta^h$ is the unit of $h\dashv i$.  Similarly, using $y=i(r)$ one defines
+%\[
+%\psi_r:\ N(r)\to M(r+\varepsilon).
+%\]
+%Naturality follows from functoriality of $\Gamma$ and the seam maps.  
+%For the interleaving identities, one composes $\varphi$ and $\psi$ and uses the triangle identities of the adjunctions, together with the cost condition ensuring $h(g(r))\le r+\varepsilon$, etc.  
+%This reduces exactly to the canonical structure maps $M(r)\to M(r+2\varepsilon)$ and $N(r)\to N(r+2\varepsilon)$.  
+%Routine but slightly tedious diagram chases are left to the reader.
+%\end{proof}
+%
+%\subsection*{Equality of distances on $\mathbb{R}$}
+%
+%\begin{theorem}\label{thm:GT-equals-dI-R}
+%For all $M,N\in \vect^\bbR$, the Galois transport distance equals
+%the interleaving distance:
+%\[
+%\dGT(M,N)=d_I(M,N).
+%\]
+%\end{theorem}
+%
+%\begin{proof}
+%By Proposition~\ref{prop:int-to-galois-R}, any $\varepsilon$-interleaving yields a coupling of cost $\varepsilon$, so $\GT\le d_I$.  
+%Conversely, by Proposition~\ref{prop:coupling-implies-int-R}, any coupling of cost $\varepsilon$ yields an $\varepsilon$-interleaving, so $d_I\le \GT$.  
+%Thus the two distances coincide.
+%\end{proof}
+%
 
 
 
