@@ -35,7 +35,7 @@ Department of Mathematics, Colorado State University, Fort Collins, CO 80523, US
 \noindent\textbf{Emails.}
 \href{mailto:asashiba.hideto@shizuoka.ac.jp}{asashiba.hideto@shizuoka.ac.jp}
 \quad|\quad
-\href{mailto:Amit.Patel@colostate.edu}{Amit.Patel@colostate.edu}
+\href{mailto:amit@akpatel.org}{amit@akpatel.org}
 
 
 \tableofcontents
@@ -128,14 +128,14 @@ for a uniquely determined family $(a_x)_{x\in\bfP}\in\bbN^\bfP$.
 \label{ssec:mont-funct}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-A map $f:\bfP\to\bfQ$ of posets is \emph{monotone} if $x\le y$ in $\bfP$ implies $f(x)\le f(y)$ in $\bfQ$. Viewing posets as thin categories, a functor $\bfP\to\bfQ$ is precisely a monotone map. Thus a monotone map $f:\bfP\to\bfQ$ induces the restriction (precomposition) functor
+A map $f:\bfQ\to\bfP$ of posets is \emph{monotone} if $x\le y$ in $\bfQ$ implies $f(x)\le f(y)$ in $\bfP$. Viewing posets as thin categories, a functor $\bfQ\to\bfP$ is precisely a monotone map. Thus a monotone map $f:\bfQ\to\bfP$ induces the restriction (precomposition) functor
 \[
-f^{*}:\vect^\bfQ\to\vect^\bfP,\qquad f^{*}N = N\circ f .
+f^{*}:\vect^\bfP\to\vect^\bfQ,\qquad f^{*}N = N\circ f .
 \]
 
 \begin{proposition}
 \label{prop:Kan-posets}
-For any monotone $f:\bfP\to\bfQ$, the functor $f^{*}$ is exact. Moreover, the left and right Kan extensions along $f$ exist and we denote them by
+For any monotone $f:\bfQ\to\bfP$, the functor $f^{*}$ is exact. Moreover, the left and right Kan extensions along $f$ exist and we denote them by
 \[
 f_{!}:=\Lan_{f}\qquad\text{and}\qquad f_{*}:=\Ran_{f}.
 \]
@@ -148,7 +148,7 @@ In particular, $f_{!}$ is right exact, $f_{*}$ is left exact, and $f^{*}$ is exa
 
 \[
 \begin{tikzcd}[row sep=3em, column sep=6em]
-\Nname{E}\vect^\bfP & \Nname{C}\vect^\bfQ
+\Nname{E}\vect^\bfQ & \Nname{C}\vect^\bfP
 \arrow[from={E}, to={C}, "f_{!}", ""'{name=Fu}, bend left]
 \arrow[from={C}, to={E},"f^{*}"{description, pos=.5, name=Fc}]
 \arrow[from={E}, to={C}, "f_{*}"', ""'{name=Fd}, bend right]
@@ -463,9 +463,170 @@ M\ \cong\ f_{!}\Gamma\ =\ h_{!}\Gamma\ \cong\ N,
 so $M\cong N$.
 \end{proof}
 
-\begin{example}
-Relate the interleaving distance to the Galois transport distance for finite totally ordered posets.
+\paragraph{Relation to interleavings.}
+Over the totally ordered real line, the Galois transport distance coincides with the classical interleaving distance; see Appendix~\ref{app:interleaving}.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Examples}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We now present two illustrative examples—one in the 1-parameter setting
+and one in the 2-parameter setting.  
+These will serve as running test cases throughout the paper for the 
+Galois transport distance and its comparison with later constructions.
+
+\begin{example}\label{ex:gtd-chain}
+Let $\bfP=\{1<2<3<4\}$ with metric $d_{\bfP}(i,j)=|i-j|$.  
+For $a<b$ write $I[a,b)$ for the interval $\bfP$-module supported on 
+$\{a,a+1,\dots,b-1\}$ with identity maps.  
+Define
+\[
+M:=I[1,3)\oplus I[3,4),\qquad 
+N:=I[2,4).
+\]
+
+\smallskip
+\noindent
+To construct a low-cost coupling, take the apex poset 
+$\bfQ:=\{0<1<2<3<4<5\}$ and define $f,h:\bfQ\to\bfP$ by
+\[
+\begin{array}{c|cccccc}
+q & 0 & 1 & 2 & 3 & 4 & 5\\ \hline
+f(q) & 1 & 1 & 2 & 3 & 4 & 4\\
+h(q) & 1 & 2 & 2 & 3 & 4 & 4
+\end{array}
+\]
+with right adjoints
+\[
+g(x):=\max\{q\in\bfQ \mid f(q)\le x\},\qquad
+i(x):=\max\{q\in\bfQ \mid h(q)\le x\}.
+\]
+A short computation shows that $f\dashv g$ and $h\dashv i$ are Galois insertions.
+
+Let
+\[
+\Gamma := I^{\bfQ}[1,3)\ \oplus\ I^{\bfQ}[3,4),
+\]
+the sum of the corresponding interval modules on $\bfQ$.  
+Then 
+\[
+g^*\Gamma \cong M,\qquad i^*\Gamma \cong N,
+\]
+so $(\bfQ,f\dashv g,h\dashv i,\Gamma)$ is a coupling.
+
+\smallskip
+\noindent
+The coupling cost is
+\[
+\cost(\Gamma)=\sup_{q\in\bfQ} d_{\bfP}(f(q),h(q))=1.
+\]
+Since $\dGT(M,N)$ assumes only integer values and $M\not\cong N$, 
+we conclude
+\[
+\dGT(M,N)=1.
+\]
+
+\smallskip
+\noindent
+A summary of the data appears in Table~\ref{tab:gtd-chain}.
+\begin{table}[h]
+\centering
+\caption{Coupling data for Example~\ref{ex:gtd-chain}.}
+\label{tab:gtd-chain}
+\begin{tabular}{c|c}
+Quantity & Value \\ \hline
+Modules & $M=I[1,3)\oplus I[3,4),\quad N=I[2,4)$ \\
+Apex poset & $\bfQ=\{0,\dots,5\}$ \\
+Adjoints & $f\dashv g,\ h\dashv i$ (defined above) \\
+Apex module & $\Gamma=I^{\bfQ}[1,3)\oplus I^{\bfQ}[3,4)$ \\
+Cost & $\cost(\Gamma)=1$ \\
+GTD & $\dGT(M,N)=1$
+\end{tabular}
+\end{table}
 \end{example}
+
+\begin{example}\label{ex:gtd-2d}
+Let $\bfP=\{1,\dots,8\}^2$ with the product order and 
+$d_{\bfP}((i,j),(i',j'))=\max\{|i-i'|,|j-j'|\}$.  
+For $(a_1,a_2)\le(b_1,b_2)$ let 
+$J[(a_1,a_2),(b_1,b_2))$ denote the rectangle interval module.
+
+Define two $2\times 2$ squares
+\[
+R_1:=J[(2,5),(4,7)],\qquad 
+R_2:=J[(5,2),(7,4)],
+\]
+and set $M^{(2)}:=R_1\oplus R_2$.  
+Define the $L$-shaped module
+\[
+A:=J[(1,4),(5,8)],\qquad
+B:=J[(4,1),(8,5)],\qquad
+S:=J[(4,4),(5,5)],\qquad
+0\to S\xrightarrow{(\iota,-\iota)}A\oplus B\to N^{(2)}\to 0.
+\]
+The supports of $M^{(2)}$ and $N^{(2)}$ are shown in 
+Figure~\ref{fig:gtd-2d-modules}.
+
+\smallskip
+\noindent
+To couple these modules, take the apex 
+$\bfQ:=\bfP_L\sqcup\bfP_R$ (two disjoint copies of $\bfP$) and
+define
+\[
+f:\bfQ\rightleftarrows\bfP:g,\qquad 
+h:\bfQ\rightleftarrows\bfP:i,
+\]
+with
+\[
+f(x)=x\ \text{on both copies},\qquad
+h(x)=\begin{cases}
+\min(x+(1,1),(8,8)), & x\in\bfP_L,\\
+x, & x\in\bfP_R,
+\end{cases}
+\]
+and $g,i$ the corresponding right adjoints.  
+Set
+\[
+\Gamma|_{\bfP_L}=M^{(2)},\qquad \Gamma|_{\bfP_R}=N^{(2)}.
+\]
+Then 
+\[
+g^*\Gamma\cong M^{(2)},\qquad i^*\Gamma\cong N^{(2)}.
+\]
+
+Since points in $\bfP_L$ move by at most $(+1,+1)$ while $\bfP_R$ is fixed,
+\[
+\cost(\Gamma)=1.
+\]
+Thus
+\[
+\dGT^{\bfP}\bigl(M^{(2)},N^{(2)}\bigr)\le 1.
+\]
+
+\smallskip
+\noindent
+A summary of this data appears in Table~\ref{tab:gtd-2d}.
+
+\begin{table}[h]
+\centering
+\caption{Coupling data for Example~\ref{ex:gtd-2d}.}
+\label{tab:gtd-2d}
+\begin{tabular}{c|c}
+Quantity & Value \\ \hline
+Modules & $M^{(2)}=R_1\oplus R_2,\quad N^{(2)}$ (L-shape) \\
+Apex poset & $\bfQ=\bfP_L\sqcup\bfP_R$ \\
+Adjoints & $f\dashv g,\ h\dashv i$ \\
+Apex module & $\Gamma|_{\bfP_L}=M^{(2)},\ \Gamma|_{\bfP_R}=N^{(2)}$ \\
+Cost & $1$ \\
+GTD & $\le 1$ (in fact $=1$)
+\end{tabular}
+\end{table}
+\end{example}
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Bottleneck Distance}
@@ -501,6 +662,10 @@ Every projective resolution of $M$ is obtained from the minimal one by padding w
 \Bigr\}.
 \]
 \end{lemma}
+
+\begin{remark}
+Insert Remark here about Mobius homology.
+\end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Matchings}
@@ -542,16 +707,13 @@ We refer to the quantity
 \]
 as the \emph{matching distance} for resolutions with a fixed size vector.
 
-\begin{lemma}[Triangle inequality for $\dist_R$ on a fixed size vector]
-\label{lem:reg-triangle}
+
+\begin{lemma}\label{lem:reg-triangle}
 If $|E\down|=|F\down|=|G\down|$, then
 \[
-\dist_R(E\down,G\down)\ \le\ \max\bigl\{\dist_R(E\down,F\down),\ \dist_R(F\down,G\down)\bigr\}.
+\dist_R(E\down,G\down)\ \le\ \dist_R(E\down,F\down)\ +\ \dist_R(F\down,G\down).
 \]
 \end{lemma}
-
-\noindent\emph{Proof sketch.}
-Compose nearly optimal degreewise bijections and take suprema across degrees.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -585,6 +747,154 @@ On the class of minimal projective resolutions $\{P\down^M\mid M\in\vect^{\bfP}\
 Nonnegativity is immediate. For any $M$, take the same padding on both sides and the identity matching degreewise to obtain $\dist_B(P\down^M,P\down^M)=0$. Symmetry holds because each matching family $B=(B_i)$ has an inverse family of the same cost. For the triangle inequality, given $P\down^M,P\down^N,P\down^O$, choose paddings producing $(E\down,F\down)$ and $(F'\down,G\down)$ with equal size vectors for $(M,N)$ and $(N,O)$ and with $\dist_R$ arbitrarily close to $\dist_B(M,N)$ and $\dist_B(N,O)$. Pad further to a common refinement so both pairs share the same size vector, compose the degreewise bijections, and apply Lemma~\ref{lem:reg-triangle}; taking infima over paddings yields the inequality. Finally, if $\dist_B(P\down^M,P\down^N)=0$, the costs lie in the finite set $\{d_{\bfP}(x,y)\mid x,y\in\bfP\}$, so the infimum is attained: there exist paddings and a matching of cost $0$. Thus each matched pair of summands has equal index in $\bfP$, the padded resolutions agree termwise up to isomorphism, and removing contractible cones yields $P\down^M\cong P\down^N$. Hence $\dist_B$ is an extended metric.
 \end{proof}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Examples}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We now compute bottleneck distances for our 1D and 2D running examples by
+comparing minimal projective resolutions and equalizing degreewise sizes
+via contractible cones.
+
+\begin{example}\label{ex:bneck-chain}
+Let $\bfP=\{1<2<3<4\}$ and consider
+\[
+M=I[1,3)\oplus I[3,4),\qquad 
+N=I[2,4)
+\]
+as in Example~\ref{ex:gtd-chain}.
+
+Minimal resolutions of the summands are
+\[
+\begin{aligned}
+P\down^{I[1,3)}&:\ 0\to\bfP(3,-)\to\bfP(1,-)\to 0,\\
+P\down^{I[3,4)}&:\ 0\to\bfP(4,-)\to\bfP(3,-)\to 0,\\
+P\down^{I[2,4)}&:\ 0\to\bfP(4,-)\to\bfP(2,-)\to 0.
+\end{aligned}
+\]
+Summing yields
+\[
+\begin{array}{c|c|c}
+ & \text{degree }1 & \text{degree }0 \\ \hline
+P\down^{M} & \bfP(3,-)\oplus\bfP(4,-) & \bfP(1,-)\oplus\bfP(3,-)\\
+P\down^{N} & \bfP(4,-) & \bfP(2,-)
+\end{array}
+\]
+so $|P\down^M|=(2,2,0,\dots)$ and $|P\down^N|=(1,1,0,\dots)$.
+Since the alternating sums agree, padding is possible.
+
+Pad $P\down^{N}$ by $\Cone(\id_{\bfP(3,-)})[1]$, adding $\bfP(3,-)$ in both
+degrees $1$ and $0$:
+\[
+\begin{array}{c|c|c}
+ & \text{degree }1 & \text{degree }0 \\ \hline
+P\down^{N}\oplus\Cone(\id_{\bfP(3,-)})[1]
+ & \bfP(4,-)\oplus\bfP(3,-) 
+ & \bfP(2,-)\oplus\bfP(3,-)
+\end{array}
+\]
+which matches the size vector of $P\down^{M}$.
+
+A degreewise matching is given by
+\[
+\begin{aligned}
+\text{degree }0:&\ 
+\bfP(1,-)\longrightarrow \bfP(2,-),
+\qquad\bfP(3,-)\longrightarrow \bfP(3,-),\\
+\text{degree }1:&\ 
+\bfP(4,-)\longrightarrow \bfP(4,-),
+\qquad\bfP(3,-)\longrightarrow \bfP(3,-).
+\end{aligned}
+\]
+All pairs except $\bfP(1,-)\to\bfP(2,-)$ have cost $0$; that pair has cost
+$d_{\bfP}(1,2)=1$.  Thus
+\[
+\dist_B(P\down^{M},P\down^{N})=1.
+\]
+
+\begin{table}[h]
+\centering
+\caption{Degreewise structure in Example~\ref{ex:bneck-chain}.}
+\label{tab:bneck-chain}
+\begin{tabular}{c|c|c}
+ & $P\down^{M}$ & $P\down^{N}$ (padded) \\ \hline
+degree $0$ & $\bfP(1,-),\ \bfP(3,-)$ & $\bfP(2,-),\ \bfP(3,-)$\\
+degree $1$ & $\bfP(3,-),\ \bfP(4,-)$ & $\bfP(4,-),\ \bfP(3,-)$ 
+\end{tabular}
+\end{table}
+
+\end{example}
+
+\begin{example}\label{ex:bneck-2d}
+Let $\bfP=\{1,\dots,8\}^2$ and consider the modules
+$M^{(2)},N^{(2)}\in\vect^{\bfP}$ from Example~\ref{ex:gtd-2d}.
+
+A rectangle $J[(a_1,a_2),(b_1,b_2))$ has minimal resolution
+\[
+0\to 
+\bfP((b_1,b_2),-)
+\to
+\bfP((a_1,b_2),-)\oplus\bfP((b_1,a_2),-)
+\to
+\bfP((a_1,a_2),-)
+\to J[(a_1,a_2),(b_1,b_2))
+\to 0.
+\]
+
+Thus each $2\times2$ square contributes  
+degree $0$: $1$,\quad degree $1$: $2$,\quad degree $2$: $1$,
+so
+\[
+|P\down^{M^{(2)}}|=
+(\text{deg }0:2,\ \text{deg }1:4,\ \text{deg }2:2).
+\]
+
+For the L-shape (pushout of $A$ and $B$ along $S$), gluing resolutions yields
+\[
+|P\down^{N^{(2)}}|=
+(\text{deg }0:2,\ \text{deg }1:3,\ \text{deg }2:1).
+\]
+
+Pad $P\down^{N^{(2)}}$ by $\Cone(\id_{\bfP((7,4),-)})[2]$, producing
+\[
+|\,P\down^{N^{(2)}}\oplus\Cone(\id_{\bfP((7,4),-)})[2]\,|
+=(2,4,2),
+\]
+which matches $|P\down^{M^{(2)}}|$.
+
+The matching pairs in each degree are recorded in
+Table~\ref{tab:bneck-2d-arrows}, all with cost at most $1$.
+
+\begin{table}[h]
+\centering
+\caption{Degreewise matching for Example~\ref{ex:bneck-2d}. 
+Arrows indicate $P\down^{M^{(2)}}\to P\down^{N^{(2)}}$ (padded).}
+\label{tab:bneck-2d-arrows}
+\begin{tabular}{c|p{7.2cm}}
+\textbf{degree} & \textbf{matching pairs} \\ \hline
+
+0 
+& $\bfP((2,5),-)\ \longrightarrow\ \bfP((1,4),-)$\\[-2pt]
+& $\bfP((5,2),-)\ \longrightarrow\ \bfP((4,1),-)$
+\\[6pt]
+
+1
+& $\bfP((4,5),-)\ \longrightarrow\ \bfP((4,5),-)$\\[-2pt]
+& $\bfP((5,4),-)\ \longrightarrow\ \bfP((5,4),-)$\\[-2pt]
+& $\bfP((2,7),-)\ \longrightarrow\ \bfP((1,8),-)$\\[-2pt]
+& $\bfP((7,2),-)\ \longrightarrow\ \bfP((8,1),-)$
+\\[6pt]
+
+2
+& $\bfP((4,7),-)\ \longrightarrow\ \bfP((5,8),-)$\\[-2pt]
+& $\bfP((7,4),-)\ \longrightarrow\ \bfP((7,4),-)$ (cone)
+\end{tabular}
+\end{table}
+
+Since all moves have cost $\le 1$ and at least one has cost $1$, we obtain
+\[
+\dist_B(P\down^{M^{(2)}},P\down^{N^{(2)}})=1.
+\]
+\end{example}
 
 
 
@@ -619,6 +929,7 @@ By Yoneda, $f_{!}\bfQ(x,-)\cong \bfP(f(x),-)$, hence $g^{*}\bfQ(x,-)\cong f_{!}\
 \end{proof}
 
 \begin{theorem}[Stability]
+\label{thm:triangle}
 Let $(\bfP, d_\bfP)$ be a finite metric poset. Then for any $M, N \in \vect^\bfP$,
 \[
 \dist_B\bigl(P\down^M, P\down^N\bigr)\ \le\ \dGT(M, N).
@@ -658,9 +969,63 @@ Taking the infimum over all compatible paddings yields
 Letting $\varepsilon\to 0$ completes the proof.
 \end{proof}
 
-\begin{example}
-Insert example we constructed in Fort Collins
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Examples}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We now revisit our running 1D and 2D examples to illustrate the stability
+inequality.  
+In both cases the Galois transport distance and the bottleneck distance
+coincide, showing that the bound in Theorem~\ref{thm:triangle} is sharp.
+
+
+\begin{example}\label{ex:stability-chain}
+From Examples~\ref{ex:gtd-chain} and~\ref{ex:bneck-chain} we have
+\[
+\dGT(M,N)=1,
+\qquad
+\dist_B(P\down^{M},P\down^{N})=1.
+\]
+Hence the stability inequality
+\[
+\dist_B(P\down^{M},P\down^{N})\ \le\ \dGT(M,N)
+\]
+holds with equality.
+
+The transport computation detects a unit shift in the birth coordinate,
+and the bottleneck computation recovers the same value after padding by a
+single cone.  
+Thus stability is numerically tight in this 1D case.
 \end{example}
+
+
+\begin{example}\label{ex:stability-2d}
+For the 2D modules $M^{(2)}$ and $N^{(2)}$ from Example~\ref{ex:gtd-2d},
+Example~\ref{ex:gtd-2d} gives
+\[
+\dGT^{\bfP}(M^{(2)},N^{(2)})\le 1,
+\]
+and Example~\ref{ex:bneck-2d} gives
+\[
+\dist_B(P\down^{M^{(2)}},P\down^{N^{(2)}})\le 1.
+\]
+Therefore
+\[
+\dist_B(P\down^{M^{(2)}},P\down^{N^{(2)}})
+\ \le\
+\dGT^{\bfP}(M^{(2)},N^{(2)}),
+\]
+and in this symmetric placement both sides equal \(1\).
+
+Here the transport side shifts each square of $M^{(2)}$ by $(+1,+1)$ into
+the arms of the L–shape, while on the resolution side, padding by a single
+cone yields a matching of identical cost.  
+Stability is therefore sharp in this 2D example as well.
+\end{example}
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -804,287 +1169,272 @@ In particular, if $\bfP=\{1<\cdots<n\}$ with $d_{\bfP}(x,y)=|x-y|$ and $\top$ ad
 Apply the Stability Theorem with the base poset replaced by $\Int\bfP$ and the modules $K(M),K(N)$ to get the first inequality. The second inequality is Proposition~\ref{prop:K-Lipschitz}.
 \end{proof}
 
-\begin{example}
-Do a classical 1-parameter persistence example. Demonstrate matching.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Examples}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We now compute persistence diagrams for our running 1D and 2D examples, and
+verify stability at the level of minimal resolutions in $\vect^{\Int\bfP}$.
+
+\begin{example}\label{ex:persistence-chain-correct}
+Let $\bfP=\{1<2<3<4<\top\}$ with $d_{\bfP}(i,j)=|i-j|$ and
+$d_{\bfP}(\cdot,\top)=\infty$.
+Retain the modules
+\[
+M:=I[1,3)\oplus I[3,4),\qquad
+N:=I[2,4)
+\]
+from Examples~\ref{ex:gtd-chain} and~\ref{ex:bneck-chain}.
+We compute their kernel modules and minimal resolutions over $\Int\bfP$.
+
+The kernel modules vanish at $[3,3]$ and $[4,4]$ for all three summands, and
+$K(\cdot)$ is nonzero on the expected intervals extending upward or to~$\top$.
+
+Let $\Yint{[x,y]}:=\Int\bfP([x,y],-)$.
+The minimal generators of $K(M)$ occur at 
+$\Yint{[1,3]}$, $\Yint{[2,3]}$, and $\Yint{[3,4]}$,
+and the minimal relations occur at 
+$\Yint{[3,3]}$ and $\Yint{[4,4]}$.
+Thus a minimal resolution is
+\[
+0\longrightarrow
+\Yint{[3,3]}\oplus \Yint{[4,4]}
+\longrightarrow
+\Yint{[1,3]}\oplus \Yint{[2,3]}\oplus \Yint{[3,4]}
+\longrightarrow K(M)\longrightarrow 0.
+\]
+
+Similarly, $K(N)$ is minimally generated at $\Yint{[2,4]}$ with a single
+relation at $\Yint{[4,4]}$, giving
+\[
+0\longrightarrow
+\Yint{[4,4]}
+\longrightarrow
+\Yint{[2,4]}
+\longrightarrow
+K(N)\longrightarrow 0.
+\]
+
+The corresponding persistence diagrams are
+\[
+\mathrm{PD}(M):\ 
+\begin{cases}
+\text{degree }0:\ \Yint{[1,3]},\ \Yint{[2,3]},\ \Yint{[3,4]},\\
+\text{degree }1:\ \Yint{[3,3]},\ \Yint{[4,4]},
+\end{cases}
+\qquad
+\mathrm{PD}(N):\
+\begin{cases}
+\text{degree }0:\ \Yint{[2,4]},\\
+\text{degree }1:\ \Yint{[4,4]}.
+\end{cases}
+\]
+
+Cone padding (e.g.\ $\Cone(\id_{\Yint{[3,4]}})[1]$) implements the classical
+“match to the diagonal’’ at zero cost.  
+Since $\dGT^{\bfP}(M,N)=1$ (Example~\ref{ex:gtd-chain}) and 
+$\dGT^{\Int\bfP}(K(M),K(N))\le 1$ (Proposition~\ref{prop:K-Lipschitz}),
+the persistence stability theorem gives
+\[
+\dist_B(K\down^{M},K\down^{N})\le 1.
+\]
 \end{example}
 
-\begin{example}
-Create a 2-parameter persistence example.
+\begin{table}[h]
+\centering
+\caption{Persistence diagrams for $M$ and $N$
+over $\bfP=\{1<2<3<4<\top\}$.}
+\label{tab:pd-1d}
+\begin{tabular}{c|c|c}
+ & $\mathrm{PD}(M)$ & $\mathrm{PD}(N)$ \\ \hline
+degree $0$
+ & $\Yint{[1,3]},\ \Yint{[2,3]},\ \Yint{[3,4]}$
+ & $\Yint{[2,4]}$ \\[4pt]
+degree $1$
+ & $\Yint{[3,3]},\ \Yint{[4,4]}$
+ & $\Yint{[4,4]}$
+\end{tabular}
+\end{table}
+
+
+\begin{example}\label{ex:persistence-2d}
+Let $\bfP=\{1,\dots,8\}^2$ with the product order and $L^\infty$ metric,
+and retain $M^{(2)},N^{(2)}$ from Example~\ref{ex:gtd-2d}$.$  
+Apply the kernel–interval functor $K:\vect^{\bfP}\to\vect^{\Int\bfP}$.
+
+Each rectangle in $M^{(2)}$ contributes one degree-$0$ generator and two
+degree-$1$ face relations.  
+The L-shape contributes generators at $\Yint{[(1,4),(5,8)]}$ and
+$\Yint{[(4,1),(8,5)]}$ and a single degree-$1$ corner relation at
+$\Yint{[(4,4),(5,5)]}$.  
+Thus $K\down^{M^{(2)}}$ and $K\down^{N^{(2)}}$ both have nonzero terms in
+degrees $0$ and $1$.
+
+After padding by contractible cones to equalize degreewise sizes, match the
+degree-$0$ projectives using the $(+1,+1)$ shift:
+\[
+[(2,5),(4,7)]\longleftrightarrow [(1,4),(5,8)],\qquad
+[(5,2),(7,4)]\longleftrightarrow [(4,1),(8,5)],
+\]
+each at cost $1$ in $d_{\Int\bfP}$.  
+Match degree-$1$ relations by pairing the corner with its counterpart and the
+remaining face relations with cone copies (cost $0$).  
+Hence
+\[
+\dist_B(K\down^{M^{(2)}},K\down^{N^{(2)}})\le 1.
+\]
+
+By Proposition~\ref{prop:K-Lipschitz},
+\[
+\dGT^{\Int\bfP}(K(M^{(2)}),K(N^{(2)}))
+\ \le\
+\dGT^{\bfP}(M^{(2)},N^{(2)})=1,
+\]
+and so
+\[
+\dist_B(K\down^{M^{(2)}},K\down^{N^{(2)}})\le 1.
+\]
 \end{example}
 
+\begin{table}[h]
+\centering
+\caption{Persistence diagrams for $M^{(2)}$ and $N^{(2)}$
+in $\vect^{\Int\bfP}$ over $\bfP=\{1,\dots,8\}^2$.}
+\label{tab:pd-2d}
+\begin{tabular}{c|p{3.8cm}|p{3.8cm}}
+ & $\mathrm{PD}(M^{(2)})$ & $\mathrm{PD}(N^{(2)})$ \\ \hline
+degree $0$
+ & $\Yint{[(2,5),(4,7)]}$\\[-3pt]
+   $\Yint{[(5,2),(7,4)]}$
+ & $\Yint{[(1,4),(5,8)]}$\\[-3pt]
+   $\Yint{[(4,1),(8,5)]}$
+ \\[6pt]
+degree $1$
+ & $\Yint{[(4,5),(5,7)]},\ \Yint{[(2,7),(4,8)]}$\\[-3pt]
+   $\Yint{[(5,4),(7,5)]},\ \Yint{[(7,2),(8,4)]}$
+ & $\Yint{[(4,4),(5,5)]}$
+\end{tabular}
+\end{table}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% References
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{alpha}
+\bibliography{references}{}
+
+
+
 \appendix
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\section{Interleaving Distance}
-%\label{sec:intlv-dist}
+\section{Interleaving Distance on \texorpdfstring{$\mathbb{R}$}{R}}
+\label{app:interleaving}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%The Galois transport distance can be viewed as an adaptation of the classical interleaving distance from persistence theory. In this paper we work with modules over a finite poset $\bfP$, whereas classical persistence uses the totally ordered real line $(\mathbb{R},\le)$. Although persistence modules over $\mathbb{R}$ are not required to be finite, in practice one often restricts attention to a finite totally ordered subposet (e.g.\ determined by selected parameter values or critical times) and extends from there. This places interleavings and Galois transports in a common finite setting for comparison.
-%
-%
-%\subsection*{Definition}
-%
-%We recall the standard categorical definition using the shift endofunctor
-%(see \cite{ChazalCohenSteinerGlisseGuibasOudot2009,Lesnick2015}).
-%
-%\begin{definition}[Interleaving distance]\label{def:interleaving-distance}
-%Let $\bfP=(\mathbb{R},\le)$. For $\varepsilon\ge 0$, set
-%$T_\varepsilon:\vect^\bbR \to\vect^\bbR$ by
-%$(T_\varepsilon M)(r)=M(r+\varepsilon)$. An \emph{$\varepsilon$-interleaving}
-%between $M,N\in \vect^\bbR$ is a pair of natural transformations
-%$\varphi:M\Rightarrow T_\varepsilon N$ and $\psi:N\Rightarrow T_\varepsilon M$
-%such that the composites $M\to T_{2\varepsilon}M$ and
-%$N\to T_{2\varepsilon}N$ equal the canonical structure maps.  The
-%\emph{interleaving distance} is
-%\[
-%d_I(M,N):=\inf\{\ \varepsilon\ge 0\mid M,N\ \text{are $\varepsilon$-interleaved}\ \}.
-%\]
-%\end{definition}
-%
-%\subsection*{Two basic facts}
-%
-%\begin{proposition}[Tail agreement implies finiteness]\label{prop:tail-agree-vanish}
-%If $M,N \in \vect^\bbR$ satisfy $M(r)=N(r)=0$ for all $r\le b$ and
-%$M|_{[R,\infty)}\cong N|_{[R,\infty)}$, then $d_I(M,N)\le R-b$.
-%\end{proposition}
-%
-%\begin{proof}
-%Let $\varepsilon=R-b$.  For $r>b$, define $\varphi_r$ by following
-%$M(r)\to M(r+\varepsilon)\xrightarrow{\theta_{r+\varepsilon}}N(r+\varepsilon)$,
-%and symmetrically define $\psi_r$.  For $r\le b$ both $M(r)$ and $N(r)$ vanish,
-%so the maps are zero.  One checks that these assignments are natural, and that
-%the interleaving equations hold: beyond $R$ the isomorphism $\theta$ cancels,
-%and before $b$ everything is zero.  Hence $d_I(M,N)\le\varepsilon$.
-%\end{proof}
-%
-%\begin{proposition}[Pseudo-metric and separation]\label{prop:dI-pseudometric}
-%For $M,N,O \in \vect^\bbR$,
-%\[
-%d_I(M,N)=d_I(N,M),\qquad
-%d_I(M,O)\le d_I(M,N)+d_I(N,O),\qquad
-%d_I(M,M)=0.
-%\]
-%Moreover, $d_I(M,N)=0$ iff $M\cong N$. Hence $d_I$ is an extended
-%metric on isomorphism classes.
-%\end{proposition}
-%
-%\begin{proof}
-%Symmetry is clear by swapping $\varphi,\psi$.  
-%For the triangle inequality, if $M,N$ are $\varepsilon$-interleaved and $N,O$ are $\delta$-interleaved, then by pasting the data one obtains an $(\varepsilon+\delta)$-interleaving of $M,O$; the details are a standard exercise.  
-%Finally, $d_I(M,M)=0$ via the identity maps.  
-%If $d_I(M,N)=0$ then a $0$-interleaving exists, giving mutually inverse isomorphisms $M\cong N$.
-%\end{proof}
-%
-%\subsection*{Relating interleavings and Galois couplings on $\mathbb{R}$}
-%
-%For this subsection fix $\bfP=(\mathbb{R},\le)$ with metric $d(x,y)=|x-y|$.
-%For $\varepsilon\ge 0$, the translations
-%$t_\varepsilon(x)=x+\varepsilon$ and $r_\varepsilon(x)=x-\varepsilon$
-%satisfy $t_\varepsilon\dashv r_\varepsilon$, so $t_\varepsilon\dashv r_\varepsilon$ is a Galois insertion.
-%
-%\begin{proposition}[Interleaving $\Rightarrow$ coupling]\label{prop:int-to-galois-R}
-%If $M,N\in \vect^\bbR$ are $\varepsilon$-interleaved, there exists a
-%Galois coupling $(\bfX,f\dashv g,\ h\dashv i,\ \Gamma)$ for $(M,N)$ with
-%$\bfX=\mathbb{R}_L\sqcup\mathbb{R}_R$ and $\operatorname{cost}(\Gamma)=\varepsilon$.
-%\end{proposition}
-%
-%\begin{proof}
-%Take two copies of $\mathbb{R}$, ordered so that cross-inequalities encode the shift:
-%$a_L\le b_R$ iff $a+\varepsilon\le b$, and symmetrically for $R$ to $L$.
-%Let $f,h:\bfX\to\mathbb{R}$ be the evident projections, with $f(a_L)=a$ and $f(a_R)=a+\varepsilon$, etc.
-%Define $\Gamma$ by $\Gamma(a_L)=M(a)$ and $\Gamma(a_R)=N(a)$, using the interleaving maps to define $\Gamma$ on cross arrows.  
-%By construction $g^\ast\Gamma\cong M$, $i^\ast\Gamma\cong N$, and the cost is $\sup|f(x)-h(x)|=\varepsilon$.  
-%Functoriality of $\Gamma$ on mixed zigzags is ensured by the interleaving identities; the reader can check this directly.
-%\end{proof}
-%
-%\begin{proposition}[Coupling $\Rightarrow$ interleaving]\label{prop:coupling-implies-int-R}
-%Let $(\bfX,f\dashv g,\ h\dashv i,\ \Gamma)$ be a Galois coupling for
-%$(M,N)\in \vect^\bbR$ with $\sup_{x\in \bfX}|f(x)-h(x)|\le\varepsilon$.
-%Then $M$ and $N$ are $\varepsilon$-interleaved.
-%\end{proposition}
-%
-%\begin{proof}
-%Fix $r\in\mathbb{R}$.  Using $x=g(r)$, we have $f(x)=r$ and $h(x)\le r+\varepsilon$.
-%Define $\varphi_r:M(r)\to N(r+\varepsilon)$ by
-%\[
-%M(r)\xrightarrow[\cong]{\alpha_r}\Gamma(x)\xrightarrow{\Gamma(\eta^h_x)}\Gamma(i(h(x)))
-%\xrightarrow[\cong]{\beta_{h(x)}}N(h(x))\to N(r+\varepsilon).
-%\]
-%Here $\eta^h$ is the unit of $h\dashv i$.  Similarly, using $y=i(r)$ one defines
-%\[
-%\psi_r:\ N(r)\to M(r+\varepsilon).
-%\]
-%Naturality follows from functoriality of $\Gamma$ and the seam maps.  
-%For the interleaving identities, one composes $\varphi$ and $\psi$ and uses the triangle identities of the adjunctions, together with the cost condition ensuring $h(g(r))\le r+\varepsilon$, etc.  
-%This reduces exactly to the canonical structure maps $M(r)\to M(r+2\varepsilon)$ and $N(r)\to N(r+2\varepsilon)$.  
-%Routine but slightly tedious diagram chases are left to the reader.
-%\end{proof}
-%
-%\subsection*{Equality of distances on $\mathbb{R}$}
-%
-%\begin{theorem}\label{thm:GT-equals-dI-R}
-%For all $M,N\in \vect^\bbR$, the Galois transport distance equals
-%the interleaving distance:
-%\[
-%\dGT(M,N)=d_I(M,N).
-%\]
-%\end{theorem}
-%
-%\begin{proof}
-%By Proposition~\ref{prop:int-to-galois-R}, any $\varepsilon$-interleaving yields a coupling of cost $\varepsilon$, so $\GT\le d_I$.  
-%Conversely, by Proposition~\ref{prop:coupling-implies-int-R}, any coupling of cost $\varepsilon$ yields an $\varepsilon$-interleaving, so $d_I\le \GT$.  
-%Thus the two distances coincide.
-%\end{proof}
-%
+
+In the body of the paper we work with modules over a finite poset. Classical persistence uses the totally ordered real line
+\[
+\bfR=(\mathbb{R},\le),
+\quad
+d_{\bfR}(x,y)=|x-y|.
+\]
+Here we recall the interleaving distance on $\vect^{\bfR}$ and show it agrees with the Galois transport distance defined earlier (now interpreted over $\bfR$).
 
 
+For $\varepsilon\ge 0$ let $T_\varepsilon:\vect^{\bfR}\to\vect^{\bfR}$ be the shift functor
+\[
+(T_\varepsilon M)(r):=M(r+\varepsilon),
+\qquad
+(T_\varepsilon\alpha)_r:=\alpha_{r+\varepsilon}.
+\]
+
+\begin{definition}\label{def:interleaving-distance}
+An \emph{$\varepsilon$-interleaving} between $M,N\in \vect^{\bfR}$ is a pair of natural transformations
+\[
+\varphi:M\Rightarrow T_\varepsilon N,
+\qquad
+\psi:N\Rightarrow T_\varepsilon M
+\]
+such that the composites $M\xrightarrow{\ \varphi\ } T_\varepsilon N \xrightarrow{T_\varepsilon\psi} T_{2\varepsilon} M$ and
+$N\xrightarrow{\ \psi\ } T_\varepsilon M \xrightarrow{T_\varepsilon\varphi} T_{2\varepsilon} N$
+equal the canonical structure maps induced by $r\le r+2\varepsilon$.
+The \emph{interleaving distance} is
+\[
+d_I(M,N):=\inf\{\ \varepsilon\ge 0\mid M,N\ \text{are $\varepsilon$-interleaved}\ \}.
+\]
+\end{definition}
 
 
+\begin{proposition}\label{prop:dI-pseudometric}
+For $M,N,O \in \vect^{\bfR}$,
+\[
+d_I(M,N)=d_I(N,M),\qquad
+d_I(M,O)\le d_I(M,N)+d_I(N,O),\qquad
+d_I(M,M)=0.
+\]
+Moreover, $d_I(M,N)=0$ iff $M\cong N$; hence $d_I$ is an extended metric on isomorphism classes.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Symmetry is clear by swapping $(\varphi,\psi)$. Triangle inequality is obtained by pasting interleavings. The case $d_I(M,M)=0$ is immediate; if $d_I(M,N)=0$, a $0$-interleaving gives mutually inverse isomorphisms.
+\end{proof}
 
 
-\bibliographystyle{plain}
+For $\varepsilon\ge 0$, the translations
+\[
+t_\varepsilon:\bfR\to\bfR,\quad t_\varepsilon(r)=r+\varepsilon,
+\qquad
+r_\varepsilon:\bfR\to\bfR,\quad r_\varepsilon(r)=r-\varepsilon
+\]
+satisfy \(t_\varepsilon\dashv r_\varepsilon\); in our convention this is a Galois insertion with left adjoint \(t_\varepsilon:\bfR\to\bfR\) and right adjoint \(r_\varepsilon:\bfR\to\bfR\).
 
-\begin{thebibliography}{10}
-\bibitem{MR4402576}
-Hideto Asashiba, Micka\"{e}l Buchet, Emerson~G. Escolar, Ken Nakashima, and Michio Yoshiwaki.
-\newblock On interval decomposability of 2{D} persistence modules.
-\newblock {\em Computational Geometry}, 105/106:Paper No. 101879, 33, 2022.
-\newblock \url{https://doi.org/10.1016/j.comgeo.2022.101879}.
+\begin{proposition}\label{prop:int-to-galois-R}
+If $M,N\in \vect^{\bfR}$ are $\varepsilon$-interleaved, there exists a
+Galois coupling $(\bfQ,f\dashv g,\ h\dashv i,\ \Gamma)$ for $(M,N)$ with
+\[
+\bfQ:=\bfR_L\sqcup \bfR_R,
+\quad
+f|_{\bfR_L}=\mathrm{id},\ f|_{\bfR_R}=t_\varepsilon,
+\quad
+h|_{\bfR_L}=t_\varepsilon,\ h|_{\bfR_R}=\mathrm{id},
+\]
+and \(\cost(\Gamma)=\varepsilon\).
+\end{proposition}
 
-\bibitem{ASASHIBA2023107397}
-Hideto Asashiba, Emerson~G. Escolar, Ken Nakashima, and Michio Yoshiwaki.
-\newblock Approximation by interval-decomposables and interval resolutions of persistence modules.
-\newblock {\em Journal of Pure and Applied Algebra}, 227(10):107397, 2023.
-\newblock \url{https://doi.org/10.1016/j.jpaa.2023.107397}.
+\begin{proof}
+Order the disjoint union $\bfR_L\sqcup\bfR_R$ so that cross-inequalities encode the shift (e.g.\ $a_L\le b_R\iff a+\varepsilon\le b$ and symmetrically). Define $\Gamma(a_L):=M(a)$ and $\Gamma(a_R):=N(a)$, with structure maps on cross arrows induced by the interleaving data. Then $g^{*}\Gamma\cong M$, $i^{*}\Gamma\cong N$, and $\sup_{x\in\bfQ}|f(x)-h(x)|=\varepsilon$.
+\end{proof}
 
-\bibitem{ASASHIBA2023100007}
-Hideto Asashiba, Emerson~G. Escolar, Ken Nakashima, and Michio Yoshiwaki.
-\newblock On approximation of 2{D} persistence modules by interval-decomposables.
-\newblock {\em Journal of Computational Algebra}, 6--7:100007, 2023.
-\newblock \url{https://doi.org/10.1016/j.jaca.2023.100007}.
+\begin{proposition}\label{prop:coupling-implies-int-R}
+Let $(\bfQ,f\dashv g,\ h\dashv i,\ \Gamma)$ be a Galois coupling for
+$(M,N)\in \vect^{\bfR}$ with \(\sup_{x\in \bfQ}|f(x)-h(x)|\le\varepsilon\).
+Then $M$ and $N$ are $\varepsilon$-interleaved.
+\end{proposition}
 
-\bibitem{aoki2024bipath}
-Toshitaka Aoki, Emerson~G. Escolar, and Shunsuke Tada.
-\newblock Bipath persistence.
-\newblock {\em arXiv preprint}, arXiv:2404.02536, 2024.
-\newblock \url{https://doi.org/10.48550/arXiv.2404.02536}.
+\begin{proof}[Idea]
+For $r\in\mathbb{R}$ set $x=g(r)$. Then $f(x)\le r$ and $h(x)\le r+\varepsilon$. Using the unit/counit of $h\dashv i$ and $f\dashv g$, define
+\[
+\varphi_r: M(r)\xrightarrow{\ \cong\ }\Gamma(x)\to \Gamma(i(h(x)))\xrightarrow{\ \cong\ }N(h(x))\to N(r+\varepsilon),
+\]
+and symmetrically \(\psi_r:N(r)\to M(r+\varepsilon)\). Naturality and the interleaving identities follow from the adjunction triangle identities and the cost bound.
+\end{proof}
 
-\bibitem{aoki2023summand}
-Toshitaka Aoki, Emerson~G. Escolar, and Shunsuke Tada.
-\newblock Summand-injectivity of interval covers and monotonicity of interval resolution global dimensions.
-\newblock {\em arXiv preprint}, arXiv:2308.14979, 2023.
-\newblock \url{https://doi.org/10.48550/arXiv.2308.14979}.
 
-\bibitem{asashiba2024interval}
-Hideto Asashiba, Etienne Gauthier, and Enhao Liu.
-\newblock Interval replacements of persistence modules.
-\newblock {\em arXiv preprint}, arXiv:2403.08308, 2024.
-\newblock \url{https://doi.org/10.48550/arXiv.2403.08308}.
+\begin{theorem}\label{thm:GT-equals-dI-R}
+For all $M,N\in \vect^{\bfR}$, the Galois transport distance equals
+the interleaving distance:
+\[
+\dGT^{\bfR}(M,N)=d_I(M,N).
+\]
+\end{theorem}
 
-\bibitem{Asashiba2017}
-Hideto Asashiba, Ken Nakashima, and Michio Yoshiwaki.
-\newblock Decomposition theory of modules: the case of Kronecker algebra.
-\newblock {\em Japan Journal of Industrial and Applied Mathematics}, 34(2):489--507, Aug 2017.
-\newblock \url{https://doi.org/10.1007/s13160-017-0247-y}.
-
-\bibitem{MR4091895}
-Ulrich Bauer, Magnus~B. Botnan, Steffen Oppermann, and Johan Steen.
-\newblock Cotorsion torsion triples and the representation theory of filtered hierarchical clustering.
-\newblock {\em Advances in Mathematics}, 369:107171, 51, 2020.
-\newblock \url{https://doi.org/10.1016/j.aim.2020.107171}.
-
-\bibitem{BBH2024approximations}
-Benjamin Blanchette, Thomas Br{\"u}stle, and Eric~J. Hanson.
-\newblock Homological approximations in persistence theory.
-\newblock {\em Canadian Journal of Mathematics}, 76(1):66--103, 2024.
-\newblock \url{https://doi.org/10.4153/s0008414x22000657}.
-
-\bibitem{dey2022fast}
-Tamal~K Dey and Tao Hou.
-\newblock Fast computation of zigzag persistence.
-\newblock In {\em 30th Annual European Symposium on Algorithms (ESA 2022)}. Schloss Dagstuhl-Leibniz-Zentrum f{\"u}r Informatik, 2022.
-\newblock \url{https://doi.org/10.4230/LIPIcs.ESA.2022.43}.
-
-\bibitem{dey2023computing}
-Tamal~K Dey, Woojin Kim, and Facundo M{\'e}moli.
-\newblock Computing generalized rank invariant for 2-parameter persistence modules via zigzag persistence and its applications.
-\newblock {\em Discrete {$\&$} Computational Geometry}, pages 1--28, 2023.
-\newblock \url{https://doi.org/10.1007/s00454-023-00584-z}.
-
-\bibitem{MR3824276}
-Tamal~K. Dey and Cheng Xin.
-\newblock Computing bottleneck distance for 2-{D} interval decomposable modules.
-\newblock In {\em 34th {I}nternational {S}ymposium on {C}omputational {G}eometry}, volume~99 of {\em LIPIcs. Leibniz Int. Proc. Inform.}, pages Art. No. 32, 15. Schloss Dagstuhl. Leibniz-Zent. Inform., Wadern, 2018.
-\newblock \url{https://doi.org/10.4230/LIPIcs.SoCG.2018.32}.
-
-\bibitem{edelsbrunner2010computational}
-Herbert Edelsbrunner and John L. Harer.
-{\em Computational {T}opology: {A}n {I}ntroduction}. 
-American Mathematical Society, Providence, 2010.
-\newblock \url{https://doi.org/10.1090/mbk/069}.
-
-\bibitem{MR1949898}
-Herbert Edelsbrunner, David Letscher, and Afra Zomorodian.
-\newblock Topological persistence and simplification.
-\newblock {\em Discrete {$\&$} Computational Geometry}, 28(4):511--533, 2002.
-\newblock \url{https://doi.org/10.1007/s00454-002-2885-2}.
-
-\bibitem{gabriel2006auslander}
-Peter Gabriel.
-\newblock Auslander-Reiten sequences and representation-finite algebras.
-\newblock In {\em Representation Theory I: Proceedings of the Workshop on the Present Trends in Representation Theory, Ottawa, Carleton University, August 13--18, 1979}, pages 1--71. Springer, 2006.
-\newblock \url{https://doi.org/10.1007/BFb0089778}.
-
-\bibitem{hiraoka2023refinement}
-Yasuaki Hiraoka, Ken Nakashima, Ippei Obayashi, and Chenguang Xu.
-\newblock Refinement of interval approximations for fully commutative quivers.
-\newblock {\em arXiv preprint arXiv:2310.03649}, 2023.
-\newblock \url{https://doi.org/10.48550/arXiv.2310.03649}.
-
-\bibitem{JY}
-Johnson; Donald Yau:
-{\it 2-dimensional categories}%%%%%%% give a complete one
-
-\bibitem{kim2021generalized}
-Woojin Kim and Facundo M{\'e}moli.
-\newblock Generalized persistence diagrams for persistence modules over posets.
-\newblock {\em Journal of Applied and Computational Topology}, 5(4):533--581, 2021.
-\newblock \url{https://doi.org/10.1007/s41468-021-00075-1}.
-
-\bibitem{MR3728284}
-James R. Munkres.
-{\em Topology} second edition. 
-Prentice Hall, Inc., Upper Saddle River, NJ, 2000.
-
-\bibitem{MR2121296}
-Afra Zomorodian and Gunnar Carlsson.
-\newblock Computing persistent homology.
-\newblock {\em Discrete $\&$ Computational Geometry}, 33(2):249--274, 2005.
-\newblock \url{https://doi.org/10.1007/s00454-004-1146-y}.
-
-\bibitem[CCSG+09]{ChazalCohenSteinerGlisseGuibasOudot2009} Fr{\'e}d{\'e}ric Chazal, David Cohen--Steiner, Marc Glisse, Leonidas J. Guibas, and Steve Y.
-Oudot. {\it Proximity of persistence modules and their diagrams}. In Proceedings of the
-25th Annual Symposium on Computational Geometry (SoCG), pages 237--246. ACM,
-2009.
-
-\bibitem[Cur18]{curry2018}
-Justin Michael Curry: {\it Dualities between cellular sheaves and cosheaves}. Journal of
-Pure and Applied Algebra, 222(4):966--993, 2018.
-
-\bibitem[EP24]{ElchesenPatel}
-Alex Elchesen and Amit Patel:
-{\it A categorical approach to m{\"o}bius inversion via de-
-rived functors}, 2024.
-
-\bibitem[Les15]{Lesnick2015}
-Michael Lesnick:
-{\it The theory of the interleaving distance on multidimensional persistence modules}, Foundations of Computational Mathematics, 15(3):613--650, 2015.
+\begin{proof}
+By Proposition~\ref{prop:int-to-galois-R}, any $\varepsilon$-interleaving yields a coupling of cost $\varepsilon$, so \(\dGT^{\bfR}(M,N)\le d_I(M,N)\).
+Conversely, by Proposition~\ref{prop:coupling-implies-int-R}, any coupling of cost $\varepsilon$ yields an $\varepsilon$-interleaving, so \(d_I(M,N)\le \dGT^{\bfR}(M,N)\).
+\end{proof}
 
 
 
@@ -1092,6 +1442,8 @@ Michael Lesnick:
 
 
 
-\end{thebibliography}
+
+
+
 
 \end{document}
