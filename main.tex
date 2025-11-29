@@ -6,20 +6,44 @@
 
 \begin{document}
 
-\title{Title TBD}
 \author{Hideto Asashiba\thanks{Supported by JSPS Grant-in-Aid for Scientific Research (C) 18K03207; 
 JSPS Grant-in-Aid for Transformative Research Areas (A) (22A201); 
 Osaka Central Advanced Mathematical Institute (MEXT Promotion of Distinctive Joint Research Center Program JPMXP0723833165).}
 \and Amit K. Patel}
 
 
+\title{Minimal Resolutions, M\"obius Inversion, and Bottleneck Stability}
+
 \maketitle
 
-\begin{abstract}
 
+\begin{abstract}
+We develop a bottleneck stability theory for minimal projective resolutions of
+persistence modules over finite posets.  On the module side, we introduce the
+Galois transport distance, defined by transporting two modules through a common
+“apex’’ poset via pairs of Galois connections and measuring the maximal
+displacement in the index poset.  This distance is an extended metric and, in
+the one-parameter case, agrees with the classical interleaving distance.
+
+On the homological side, we define a bottleneck distance between minimal
+projective resolutions by matching indecomposable projectives degreewise, with
+contractible cones playing the role of diagonal points.  Our main stability
+theorem shows that this resolution-level bottleneck distance is always bounded
+above by the Galois transport distance.
+
+Specializing to persistence, we pass to the interval poset and a kernel
+construction, view persistence diagrams as minimal resolutions of kernel
+modules, and obtain a stability inequality that recovers classical bottleneck
+stability in one parameter and extends it to signed multiparameter diagrams.
+Via a general relationship between minimal resolutions and M\"obius inversion,
+these results can be interpreted as a stability theorem for
+M\"obius homology, while remaining entirely phrased in the language of projective
+resolutions.
 \end{abstract}
 
-\noindent\textbf{2020 Mathematics Subject Classification.} 16G20, 16G70, 55N31, 62R40.
+
+
+\noindent\textbf{2020 Mathematics Subject Classification.} 16G20, 18G10, 55N31, 62R40.
 
 \medskip
 
@@ -40,22 +64,206 @@ Department of Mathematics, Colorado State University, Fort Collins, CO 80523, US
 
 \tableofcontents
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%
+Persistent homology over a totally ordered parameter enjoys a particularly
+rigid and satisfying structure.  Every finitely generated one-parameter
+persistence module decomposes into intervals, and its persistence diagram can
+be viewed in two equivalent ways: as the multiset of indecomposable interval
+summands, and as the M\"obius inversion of suitable kernel and rank functions
+on the interval poset
+\cite{MR1949898,MR2121296,cohen2007stability,Patel:2018,kim2021generalized,McClearyPatel2022EditDistance}.
+In this setting, bottleneck stability identifies the interleaving distance
+with an optimal-transport-type distance between diagrams, providing a clean
+metric framework for stability
+\cite{cohen2007stability,ChazalCohenSteinerGlisseGuibasOudot2009,chazal2016structure}.
 
-\subsection{Purposes}
+For multiparameter persistence, both parts of this story fracture.  The algebra
+no longer reduces to intervals, and the M\"obius inversion of the kernel and
+rank functions for a $\bfP$-module, defined on the interval poset of $\bfP$,
+is in general \emph{signed}: it takes both positive and negative values
+\cite{kim2021generalized,McClearyPatel2022EditDistance}.  When interpreted
+through M\"obius homology and the rank-exact Betti-table viewpoint, these
+signed coefficients group naturally into homological degrees, giving rise to
+“signed barcodes’’ in the sense of Botnan–Oppermann–Oudot–Scoccola
+\cite{BOTNAN2024109780}, with no analogue in the classical one-parameter
+picture.  One of the conceptual contributions of this paper is to make this
+relationship precise for arbitrary $\bfP$-modules by expressing M\"obius
+homology in terms of minimal projective resolutions
+(Remark~\ref{rmk:mobius-betti}); the persistence constructions we study are
+built on top of this general bridge.
 
-%%%%%%%%%%%%%%%%%%%
+A longstanding difficulty has been to formulate a satisfactory \emph{stability}
+theorem in this signed setting.  In one parameter, the bottleneck distance is
+an honest metric and, by the isometry theorem of Lesnick, is equivalent to the
+interleaving distance \cite{Lesnick2015}.  In the multiparameter case,
+however, natural extensions of the bottleneck construction to signed barcodes
+generally fail the triangle inequality, and the resulting “signed bottleneck
+distances’’ give only weak lower bounds on interleaving
+\cite{BOTNAN2024109780}.  Earlier attempts to obtain bottleneck-type stability
+for generalized persistence diagrams, via edit distances over lattices, run
+into related issues; an erratum in \cite{McClearyPatel2025Erratum} clarifies
+this point for the framework of \cite{McClearyPatel2022EditDistance}.  In
+parallel, Bubenik and Elchesen introduce and study Wasserstein-type metrics on
+\emph{virtual persistence diagrams}—signed measures that encompass many of the
+signed persistence diagrams appearing in the literature \cite{BubenikElchesen2022}.
+Nevertheless, a metric stability theory formulated directly at the level of
+$\bfP$-modules and their M\"obius-theoretic invariants, especially in the
+multiparameter setting, has so far been missing.
 
-\subsection{Our contributions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Purpose}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The purpose of this paper is twofold.  First, at the level of arbitrary
+$\bfP$-modules, we construct a metric stability theory for a \emph{categorified
+M\"obius inversion}, formulated in terms of minimal projective resolutions.
+Second, we specialize this framework to persistence by passing to the interval
+poset and the kernel construction, recovering classical bottleneck stability in
+one parameter and extending it to signed multiparameter diagrams.
+
+Minimal projective resolutions and their Betti tables have recently emerged as
+central invariants for multiparameter persistence modules, both in the
+rank-exact setting and in the usual multigraded setting
+\cite{BOTNAN2024109780,doi:10.1137/22M1489150}.  On the computational side,
+there is now a growing body of work on algorithms for computing minimal
+presentations and resolutions, and hence Betti tables, for low-parameter
+modules \cite{LesnickWright2022,dey2023computing,CGRST2024FoCM}.  Our approach
+provides a metric layer that sits above these developments: it views minimal
+projective resolutions as the recipients of an optimal-transport-type
+stability theorem, with categorified M\"obius inversion as the organizing
+principle.
+
+Remark~\ref{rmk:mobius-betti} explains, for a
+general $\bfP$-module $X$, how its M\"obius homology (in the sense of
+\cite{patel2023mobius_homology,ElchesenPatel}) is encoded in a minimal
+projective resolution $P\down^X$ via $\Ext$-groups, providing a formal bridge
+between M\"obius inversion and minimal resolutions.  To our knowledge this
+connection has not been made explicit before in this generality; a fuller treatment would merit a separate paper.  The present work
+leans on this bridge to phrase all our constructions and stability results in
+terms of minimal resolutions, while still controlling M\"obius-theoretic
+invariants.
 
 
-\subsection{Organization}
+Concretely, for a finite metric poset $(\bfP,d_\bfP)$ we depart from the
+classical interleaving-distance viewpoint and instead take a
+Galois-theoretic version of optimal transport.  Following
+G\"ulen--McCleary \cite{GulenMcCleary}, we recast interleavings in terms of
+adjoint pairs of monotone maps.  In Section~\ref{sec:galois-transport} we
+define the \emph{Galois transport distance}
+\[
+\dGT:\vect^\bfP\times\vect^\bfP\longrightarrow[0,\infty]
+\]
+(Definition~\ref{def:transport-distance}) by infimizing the cost of
+\emph{Galois couplings}: factorizations of two $\bfP$-modules $M,N$ through a
+common apex poset $\bfQ$ via two Galois insertions
+$f:\bfQ\rightleftarrows\bfP:g$ and $h:\bfQ\rightleftarrows\bfP:i$, together
+with a module $\Gamma\in\vect^\bfQ$ whose pullbacks along the right adjoints
+recover $M$ and $N$.  The cost of such a coupling is the $L^\infty$-type
+quantity
+\[
+\cost(\Gamma)\ :=\ \sup_{q\in\bfQ} d_\bfP\bigl(f(q),h(q)\bigr),
+\]
+directly mirroring the Kantorovich formulation of optimal transport in which
+one transports mass along a cost function and measures the worst-case
+displacement \cite{villani2003topics,rachev1998mass,edwards2011KRtheorem}.
+We then set $\dGT(M,N)$ to be the infimum of $\cost(\Gamma)$ over all such
+couplings.  Proposition~\ref{prop:gt-pseudometric} shows that $\dGT$ is an
+extended pseudometric, and Corollary~\ref{cor:gt-metric-on-iso} upgrades it to
+an extended metric on isomorphism classes of $\bfP$-modules.  In
+Appendix~\ref{app:interleaving} we prove that when $\bfP=\bbR$ with its usual
+metric, $\dGT$ recovers the classical interleaving distance, so Galois
+transport refines the interleaving picture while remaining compatible with it.
+
+On the “diagram side’’ we work not with signed barcodes directly, but with
+minimal projective resolutions.  For a finite metric poset $(\bfP,d_\bfP)$ we
+introduce, in Section~\ref{sec:bneck}, a bottleneck distance
+\[
+\dist_B:\{P\down^M\}\times\{P\down^N\}\longrightarrow[0,\infty]
+\]
+between minimal projective resolutions by matching indecomposable projective
+summands degreewise, measuring the distance between summands via $d_\bfP$ on
+the underlying points, and allowing padding by contractible cones that plays
+the role of matching to the diagonal.  Proposition~\ref{prop:bneck-pseudometric}
+shows that this yields an extended metric on the space of minimal resolutions.
+Our first stability theorem (Theorem~\ref{thm:triangle}) shows that the Galois
+transport distance controls this resolution-level bottleneck distance:
+\[
+\dist_B\bigl(P\down^M,P\down^N\bigr)\ \le\ \dGT(M,N)\qquad(M,N\in\vect^\bfP).
+\]
+Conceptually, this inequality is obtained by a single functorial construction:
+given a Galois coupling for $(M,N)$, we choose a projective resolution of the
+apex module $\Gamma$, pull it back along the two right adjoints to obtain
+resolutions of $M$ and $N$, and then match their indecomposable summands
+degreewise.  Even in the one-parameter setting, this viewpoint reinterprets
+the classical bottleneck distance in terms of resolutions pulled back along
+Galois couplings, clarifying why many different choices of matchings (or even
+different apex couplings) can induce the same bottleneck distance.
+
+Our second main step is to connect this framework to persistence diagrams.
+For a finite metric poset $\bfP$ with a top element we consider the interval
+poset $\Int\bfP$ and define, in Section~\ref{sec:persistence}, a kernel functor
+\[
+K:\vect^\bfP\longrightarrow\vect^{\Int\bfP}
+\]
+by sending an interval $[x,y)\in\Int\bfP$ with $y<\top$ to the kernel of the
+structure map $M(x\to y)$ (and to $M(x)$ when $y=\top$).  Thus $K(M)$ is the
+\emph{kernel module} associated to $M$, viewed as a functor on the interval
+poset.  We show in Proposition~\ref{prop:K-Lipschitz} that $K$ is
+1-Lipschitz with respect to Galois transport, and we define the persistence
+diagram of $M$ to be the minimal projective resolution $K\down^M$.
+
+In the persistence setting we apply Remark~\ref{rmk:mobius-betti} to the kernel
+module $K(M)$, regarded as an $\Int\bfP$-module.  This shows that the minimal
+projective resolution $K\down^M$ encodes the M\"obius homology of $K(M)$ and,
+via the rank-exact Betti-table viewpoint
+\cite{BOTNAN2024109780,doi:10.1137/22M1489150}, produces a signed barcode.
+Combining the Lipschitz property of $K$ with the resolution-level stability
+inequality yields our main persistence stability result
+(Theorem~\ref{thm:persistence-stability}):
+\[
+\dist_B\bigl(K\down^M,K\down^N\bigr)\ \le\ \dGT^\bfP(M,N).
+\]
+In the one-parameter case, where $\bfP$ is a finite chain in $\bbR$ with a top
+element adjoined and $d_\bfP$ is the path metric, this recovers the classical
+bottleneck stability theorem for persistence diagrams.
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Outline}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Section~\ref{sec:prelim} collects the categorical and homological preliminaries
+we need for $\bfP$-modules.  Section~\ref{sec:galois-transport} introduces
+Galois couplings and the transport distance $\dGT$, while
+Section~\ref{sec:bneck} defines the bottleneck distance $\dist_B$ on minimal
+projective resolutions and proves the stability inequality
+$\dist_B\le\dGT$.  Section~\ref{sec:persistence} builds the kernel functor
+$K:\vect^\bfP\to\vect^{\Int\bfP}$, interprets its minimal resolution as a
+categorified M\"obius inversion, and establishes stability for the resulting
+persistence diagrams.  Appendix~\ref{app:interleaving} shows that for
+$\bfP=\bbR$ the Galois transport distance coincides with the usual
+interleaving distance.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Acknowledgment of AI assistance}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+This paper was written with the assistance of ChatGPT~5~Pro. The authors have reviewed all results and take full
+responsibility for the mathematical content and any remaining errors.
+
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Preliminaries}
 \label{sec:prelim}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 We start with some categorical facts that will be used throughout.
 
@@ -99,7 +307,8 @@ In particular, the $2$-functor $\Cat^\frkU(\mbox{-},\calC)$ sends an adjoint sys
 \label{ssec:poset-mod}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Throughout, $\Bbbk$ is a field, and $\bfP=(\bfP,\le)$ is a poset. We regard $\bfP$ as a small (thin) category: there is a unique morphism $x\to y$ exactly when $x\le y$. This lets us identify $\bfP$-modules with functors $\bfP\to\vect$ and, equivalently, with left modules over the $\Bbbk$-linearization $\Bbbk\bfP$ (same objects, order relations as basis arrows, composition by transitivity). We assume $\bfP$ is finite except in Sect.\ \ref{sec:intlv-dist}.
+Throughout, $\Bbbk$ is a field, and $\bfP=(\bfP,\le)$ is a poset. We regard $\bfP$ as a small (thin) category: there is a unique morphism $x\to y$ exactly when $x\le y$. This lets us identify $\bfP$-modules with functors $\bfP\to\vect$ and, equivalently, with left modules over the $\Bbbk$-linearization $\Bbbk\bfP$ (same objects, order relations as basis arrows, composition by transitivity). We assume $\bfP$ is finite except in Appendix~\ref{app:interleaving}.
+
 
 Let $\vect$ denote the category of finite-dimensional $\Bbbk$-vector spaces, and write $\vect^\bfP=\Fun(\bfP,\vect)$ for the category of $\bfP$-modules. If $\bfP$ is finite, then $\vect^\bfP$ is a $\Bbbk$-linear, abelian, Krull–Schmidt category, and for each $M,N\in\vect^\bfP$ the $\Bbbk$-space $\vect^\bfP(M,N)$ is finite dimensional.
 
@@ -128,6 +337,11 @@ for a uniquely determined family $(a_x)_{x\in\bfP}\in\bbN^\bfP$.
 \label{ssec:mont-funct}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+We now record how monotone maps between posets induce adjoint triples
+between the corresponding module categories via Kan extensions. This
+will be used repeatedly once we restrict to Galois connections.
+
+
 A map $f:\bfQ\to\bfP$ of posets is \emph{monotone} if $x\le y$ in $\bfQ$ implies $f(x)\le f(y)$ in $\bfP$. Viewing posets as thin categories, a functor $\bfQ\to\bfP$ is precisely a monotone map. Thus a monotone map $f:\bfQ\to\bfP$ induces the restriction (precomposition) functor
 \[
 f^{*}:\vect^\bfP\to\vect^\bfQ,\qquad f^{*}N = N\circ f .
@@ -135,15 +349,11 @@ f^{*}:\vect^\bfP\to\vect^\bfQ,\qquad f^{*}N = N\circ f .
 
 \begin{proposition}
 \label{prop:Kan-posets}
-For any monotone $f:\bfQ\to\bfP$, the functor $f^{*}$ is exact. Moreover, the left and right Kan extensions along $f$ exist and we denote them by
-\[
-f_{!}:=\Lan_{f}\qquad\text{and}\qquad f_{*}:=\Ran_{f}.
-\]
-By the defining property of conextensions there are natural adjunctions
-\[
-f_{!}\dashv f^{*}\dashv f_{*}.
-\]
-In particular, $f_{!}$ is right exact, $f_{*}$ is left exact, and $f^{*}$ is exact.
+For any monotone $f:\bfQ\to\bfP$, the restriction functor $f^{*}$ is exact.
+Moreover, the left and right Kan extensions along $f$ exist; we denote them by
+$f_{!}:=\Lan_f$ and $f_{*}:=\Ran_f$. By the defining property of Kan extensions
+there are natural adjunctions $f_{!}\dashv f^{*}\dashv f_{*}$, so $f_{!}$ is
+right exact and $f_{*}$ is left exact.
 \end{proposition}
 
 \[
@@ -156,6 +366,7 @@ In particular, $f_{!}$ is right exact, $f_{*}$ is left exact, and $f^{*}$ is exa
 \arrow[from={Fc}, to={Fd}, "\rotatebox{-90}{$\dashv$}" description, phantom]
 \end{tikzcd}
 \]
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Galois Connections}
@@ -175,9 +386,9 @@ Equivalently, viewing $\bfQ$ and $\bfP$ as thin categories, this means $f\dashv 
 If $f:\bfQ\rightleftarrows \bfP:g$ is a Galois connection, then $g^{*}\dashv f^{*}$.
 \[
 \begin{tikzcd}[row sep=3em]
-\Nname{E}\vect^\bfP & \Nname{C} \vect^\bfQ 
-\arrow[from={C}, to={E}, "g^{*}", ""'{name=Gs}, bend left]
-\arrow[from={E}, to={C}, "f^{*}"{name=Fs}, bend left]
+\Nname{E}\vect^\bfQ & \Nname{C} \vect^\bfP 
+\arrow[from={E}, to={C}, "g^{*}", ""'{name=Gs}, bend left]
+\arrow[from={C}, to={E}, "f^{*}"{name=Fs}, bend left]
 \arrow[from={Gs}, to={Fs}, "\rotatebox{-90}{$\dashv$}" description, phantom]
 \end{tikzcd}.
 \]
@@ -196,20 +407,20 @@ g^{*}\dashv f^{*},\qquad f_{!}\dashv f^{*},\qquad g^{*}\dashv g_{*}
 are compatible via these isomorphisms.
 \[
 \begin{tikzcd}[row sep=50pt, column sep = 70pt]
-\Nname{E}\vect^\bfP & \Nname{C} \vect^\bfQ 
-\arrow[from={C}, to={E}, "g^{*} \cong f_{!}"{description, pos=.5, name=gs}, bend left=15pt]
-\arrow[from={E}, to={C}, "f^{*}\cong g_{*}"{description, pos=.5, name=fs}, bend left=15pt]
-\arrow[from={E}, to={C}, "g_{!}"', ""{name=gL}, bend right=80pt]
-\arrow[from={C}, to={E}, "f_{*}"', ""{name=fR}, bend right=80pt]
-\arrow[from={gs}, to={fs}, "\rotatebox{-90}{$\dashv$}" description, phantom]
+\Nname{E}\vect^\bfQ & \Nname{C} \vect^\bfP 
+\arrow[from={E}, to={C}, "g^{*} \cong f_{!}"{description, pos=.5, name=gs}, bend left=15pt]
+\arrow[from={C}, to={E}, "f^{*}\cong g_{*}"{description, pos=.5, name=fs}, bend left=15pt]
+\arrow[from={C}, to={E}, "g_{!}"', ""{name=gL}, bend right=80pt]
+\arrow[from={E}, to={C}, "f_{*}"', ""{name=fR}, bend right=80pt]
 \arrow[from={gL}, to={gs}, "\rotatebox{-90}{$\dashv$}" description, phantom]
+\arrow[from={gs}, to={fs}, "\rotatebox{-90}{$\dashv$}" description, phantom]
 \arrow[from={fs}, to={fR}, "\rotatebox{-90}{$\dashv$}" description, phantom]
 \end{tikzcd}.
 \]
 \end{corollary}
 
 \begin{proof}
-By uniqueness of adjoints in a $2$-category: $g^{*}$ and $f_{!}$ are both left adjoint to $f^{*}$, hence canonically isomorphic; dually for $f^{*}$ and $g_{*}$.
+By uniqueness of adjoints in a $2$-category: $g^{*}$ and $f_{!}$ are both left adjoint to $f^{*}$, hence canonically isomorphic; dually, $f^{*}$ and $g_{*}$ are both right adjoint to $g^{*}$, hence canonically isomorphic.
 \end{proof}
 
 \begin{corollary}
@@ -248,6 +459,10 @@ g(x)=\max\{\,u\in \bfQ\mid f(u)=x\,\}.
 
 
 
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Galois Transport Distance}
@@ -256,10 +471,13 @@ g(x)=\max\{\,u\in \bfQ\mid f(u)=x\,\}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Fix a finite poset $\bfP$ equipped with a metric $d_{\bfP}$. Motivated by optimal transport, we compare $\bfP$-modules by \emph{transporting} them through a common “apex” poset $\bfQ$ via \emph{Galois insertions}. 
+A \emph{Galois insertion} is a Galois connection $f:\bfQ\rightleftarrows\bfP:g$
+such that $f\circ g=\id_\bfP$ (equivalently, $f$ is surjective and $g$ is injective
+by Lemma~\ref{lem:galois-connection-basics}).
 
 \begin{definition}
 \label{def:coupling-insertion}
-Let $M,N\in\vect^{\bfP}$. A \emph{Galois coupling} of $(M,N, f \dashv g, h \dashv i, \Gamma)$ consists of a poset $\bfQ$, two Galois insertions
+Let $M,N\in\vect^{\bfP}$. A \emph{Galois coupling} of $(M,N, f \dashv g, h \dashv i, \Gamma)$ consists of a finite poset $\bfQ$, two Galois insertions
 \[
 f:\bfQ\rightleftarrows \bfP:g,
 \qquad
@@ -464,8 +682,10 @@ so $M\cong N$.
 \end{proof}
 
 \paragraph{Relation to interleavings.}
-Over the totally ordered real line, the Galois transport distance coincides with the classical interleaving distance; see Appendix~\ref{app:interleaving}.
-
+Over the totally ordered real line, the Galois transport distance coincides
+with the classical interleaving distance.  This equivalence was first observed
+by G\"ulen and McCleary~\cite{GulenMcCleary}; for the convenience of the
+reader, we include a self-contained proof in Appendix~\ref{app:interleaving}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -476,6 +696,7 @@ We now present two illustrative examples—one in the 1-parameter setting
 and one in the 2-parameter setting.  
 These will serve as running test cases throughout the paper for the 
 Galois transport distance and its comparison with later constructions.
+
 
 \begin{example}\label{ex:gtd-chain}
 Let $\bfP=\{1<2<3<4\}$ with metric $d_{\bfP}(i,j)=|i-j|$.  
@@ -520,31 +741,42 @@ so $(\bfQ,f\dashv g,h\dashv i,\Gamma)$ is a coupling.
 \noindent
 The coupling cost is
 \[
-\cost(\Gamma)=\sup_{q\in\bfQ} d_{\bfP}(f(q),h(q))=1.
+\cost(\Gamma)=\sup_{q\in\bfQ} d_{\bfP}(f(q),h(q))=1,
 \]
-Since $\dGT(M,N)$ assumes only integer values and $M\not\cong N$, 
-we conclude
+so $\dGT(M,N)\le 1$.
+
+To see that this bound is sharp, note that $\bfP$ is finite, so 
+$d_{\bfP}$ takes only integer values.  A coupling of cost $<1$ would
+therefore have cost $0$, which would force $\dGT(M,N)=0$.  By
+Corollary~\ref{cor:gt-metric-on-iso}, this would imply $M\cong N$, which
+is false.  Hence no cost-$0$
+coupling exists, and every coupling must move at least one point by
+distance~$1$.  Thus $\dGT(M,N)\ge 1$.
+
+
+Combining the upper and lower bounds, we conclude
 \[
 \dGT(M,N)=1.
 \]
 
-\smallskip
-\noindent
-A summary of the data appears in Table~\ref{tab:gtd-chain}.
-\begin{table}[h]
-\centering
-\caption{Coupling data for Example~\ref{ex:gtd-chain}.}
-\label{tab:gtd-chain}
-\begin{tabular}{c|c}
-Quantity & Value \\ \hline
-Modules & $M=I[1,3)\oplus I[3,4),\quad N=I[2,4)$ \\
-Apex poset & $\bfQ=\{0,\dots,5\}$ \\
-Adjoints & $f\dashv g,\ h\dashv i$ (defined above) \\
-Apex module & $\Gamma=I^{\bfQ}[1,3)\oplus I^{\bfQ}[3,4)$ \\
-Cost & $\cost(\Gamma)=1$ \\
-GTD & $\dGT(M,N)=1$
-\end{tabular}
-\end{table}
+%\smallskip
+%\noindent
+%A summary of the data appears in Table~\ref{tab:gtd-chain}.
+%\begin{table}[h]
+%\centering
+%\caption{Coupling data for Example~\ref{ex:gtd-chain}.}
+%\label{tab:gtd-chain}
+%\begin{tabular}{c|c}
+%Quantity & Value \\ \hline
+%Modules & $M=I[1,3)\oplus I[3,4),\quad N=I[2,4)$ \\
+%Apex poset & $\bfQ=\{0,\dots,5\}$ \\
+%Adjoints & $f\dashv g,\ h\dashv i$ (defined above) \\
+%Apex module & $\Gamma=I^{\bfQ}[1,3)\oplus I^{\bfQ}[3,4)$ \\
+%Cost & $\cost(\Gamma)=1$ \\
+%GTD & $\dGT(M,N)=1$
+%\end{tabular}
+%\end{table}
+
 \end{example}
 
 \begin{example}\label{ex:gtd-2d}
@@ -555,74 +787,122 @@ $J[(a_1,a_2),(b_1,b_2))$ denote the rectangle interval module.
 
 Define two $2\times 2$ squares
 \[
-R_1:=J[(2,5),(4,7)],\qquad 
-R_2:=J[(5,2),(7,4)],
+R_1:=J[(2,5),(4,7)),\qquad 
+R_2:=J[(5,2),(7,4)),
 \]
-and set $M^{(2)}:=R_1\oplus R_2$.  
-Define the $L$-shaped module
+and set $M:=R_1\oplus R_2$.  
+
+We now define the second $\bfP$-module $N$ by a short exact sequence.
+Let
 \[
-A:=J[(1,4),(5,8)],\qquad
-B:=J[(4,1),(8,5)],\qquad
-S:=J[(4,4),(5,5)],\qquad
-0\to S\xrightarrow{(\iota,-\iota)}A\oplus B\to N^{(2)}\to 0.
+A:=J[(1,4),(5,8)),\qquad
+B:=J[(4,1),(8,5)),\qquad
+S:=J[(4,4),(5,5)),
 \]
-The supports of $M^{(2)}$ and $N^{(2)}$ are shown in 
-Figure~\ref{fig:gtd-2d-modules}.
+and define $N$ via
+\[
+0\longrightarrow S\xrightarrow{(\iota,-\iota)}A\oplus B\longrightarrow N\longrightarrow 0.
+\]
+The supports of $M$ and $N$ are shown in Figure~\ref{fig:gtd-2d-modules}.
 
 \smallskip
 \noindent
 To couple these modules, take the apex 
 $\bfQ:=\bfP_L\sqcup\bfP_R$ (two disjoint copies of $\bfP$) and
-define
+define monotone maps
 \[
 f:\bfQ\rightleftarrows\bfP:g,\qquad 
 h:\bfQ\rightleftarrows\bfP:i,
 \]
-with
+by
 \[
 f(x)=x\ \text{on both copies},\qquad
-h(x)=\begin{cases}
+h(x)=
+\begin{cases}
 \min(x+(1,1),(8,8)), & x\in\bfP_L,\\
 x, & x\in\bfP_R,
 \end{cases}
 \]
-and $g,i$ the corresponding right adjoints.  
+with $g,i$ the corresponding right adjoints.  
 Set
 \[
-\Gamma|_{\bfP_L}=M^{(2)},\qquad \Gamma|_{\bfP_R}=N^{(2)}.
+\Gamma|_{\bfP_L}=M,\qquad \Gamma|_{\bfP_R}=N.
 \]
 Then 
 \[
-g^*\Gamma\cong M^{(2)},\qquad i^*\Gamma\cong N^{(2)}.
+g^*\Gamma\cong M,\qquad i^*\Gamma\cong N,
 \]
+so $(\bfQ,f\dashv g,h\dashv i,\Gamma)$ is a Galois coupling.
 
-Since points in $\bfP_L$ move by at most $(+1,+1)$ while $\bfP_R$ is fixed,
+Since points in $\bfP_L$ move by at most $(+1,+1)$ while points in $\bfP_R$
+do not move at all, we have
 \[
-\cost(\Gamma)=1.
+\cost(\Gamma)\ =\ \sup_{q\in\bfQ} d_{\bfP}(f(q),h(q))\ =\ 1,
 \]
-Thus
+and therefore
 \[
-\dGT^{\bfP}\bigl(M^{(2)},N^{(2)}\bigr)\le 1.
+\dGT^{\bfP}(M,N)\ \le\ 1.
 \]
 
-\smallskip
-\noindent
-A summary of this data appears in Table~\ref{tab:gtd-2d}.
+To see that this bound is sharp, note that $d_{\bfP}$ takes only integer values.
+Thus a cost strictly smaller than $1$ would have to be $0$.  A cost-$0$
+coupling forces $f=h$ and hence $M\cong N$
+(Corollary~\ref{cor:gt-metric-on-iso}), but the modules are not isomorphic.
 
-\begin{table}[h]
+Combining the upper and lower bounds yields
+\[
+\dGT^{\bfP}(M,N)=1.
+\]
+\begin{figure}[t]
 \centering
-\caption{Coupling data for Example~\ref{ex:gtd-2d}.}
-\label{tab:gtd-2d}
-\begin{tabular}{c|c}
-Quantity & Value \\ \hline
-Modules & $M^{(2)}=R_1\oplus R_2,\quad N^{(2)}$ (L-shape) \\
-Apex poset & $\bfQ=\bfP_L\sqcup\bfP_R$ \\
-Adjoints & $f\dashv g,\ h\dashv i$ \\
-Apex module & $\Gamma|_{\bfP_L}=M^{(2)},\ \Gamma|_{\bfP_R}=N^{(2)}$ \\
-Cost & $1$ \\
-GTD & $\le 1$ (in fact $=1$)
-\end{tabular}
-\end{table}
+\begin{tikzpicture}[scale=0.55, line cap=round, line join=round, >=Latex]
+
+% ------- Left panel: M -------
+\begin{scope}[shift={(0,0)}]
+  \draw[thick] (1,1) rectangle (8,8);
+  \draw[step=1, very thin, gray!50] (1,1) grid (8,8);
+  \node[font=\small] at (4.5,8.6) {$M$};
+
+  \foreach \x in {1,...,8} \node[below, font=\scriptsize] at (\x,1) {\x};
+  \foreach \y in {1,...,8} \node[left,  font=\scriptsize] at (1,\y) {\y};
+
+  % Two 2x2 squares for M
+  \draw[thick, fill=black!12] (2,5) rectangle (4,7); % R1
+  \draw[thick, fill=black!25] (5,2) rectangle (7,4); % R2
+\end{scope}
+
+% ------- Right panel: N -------
+\begin{scope}[shift={(10.2,0)}]
+  \draw[thick] (1,1) rectangle (8,8);
+  \draw[step=1, very thin, gray!50] (1,1) grid (8,8);
+  \node[font=\small] at (4.5,8.6) {$N$};
+
+  \foreach \x in {1,...,8} \node[below, font=\scriptsize] at (\x,1) {\x};
+  \foreach \y in {1,...,8} \node[left,  font=\scriptsize] at (1,\y) {\y};
+
+  % L-shape: A and B (overlap is cross-hatched automatically)
+  \draw[thick, pattern=north east lines] (1,4) rectangle (5,8); % A
+  \draw[thick, pattern=north west lines] (4,1) rectangle (8,5); % B
+\end{scope}
+
+% ------- Shift arrows (visualizing the (+1,+1) move) -------
+\draw[->, thick] (3,6) -- ($(10.2,0)+(4,7)$)
+  node[midway, above, sloped, font=\scriptsize] {$(+1,+1)$};
+
+\draw[->, thick] (6,3) -- ($(10.2,0)+(7,4)$)
+  node[midway, below, sloped, font=\scriptsize] {$(+1,+1)$};
+
+\end{tikzpicture}
+
+\caption{Supports of \(M\) (left) and \(N\) (right) over 
+\(\bfP=\{1,\dots,8\}^2\).
+The \((+1,+1)\) arrows illustrate a unit-cost coupling moving each square of 
+\(M\) onto the corresponding arm of the \(L\)-shape \(N\).}
+\label{fig:gtd-2d-modules}
+\end{figure}
+
+
+
 \end{example}
 
 
@@ -630,8 +910,14 @@ GTD & $\le 1$ (in fact $=1$)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Bottleneck Distance}
+\label{sec:bneck}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In this section we define a second distance, expressed entirely in terms
+of minimal projective resolutions, which we will compare to the Galois
+transport distance in Section~\ref{sec:galois-transport}.
+
 
 We adopt the following conventions. For $n\in\bbN$ write $[n]=\{1,\dots,n\}$. If $X \cong \bigoplus_{i=1}^{n} X_i$ is a finite direct sum of indecomposables, write $\Summands(X)=\{X_i \mid i\in [n]\}$; for finite sets $A,B$ with $|A|=|B|$, let $\Bij(A,B)$ be the set of bijections $A\to B$. Throughout, $(\bfP,d_{\bfP})$ is a finite metric poset.
 
@@ -663,9 +949,41 @@ Every projective resolution of $M$ is obtained from the minimal one by padding w
 \]
 \end{lemma}
 
+
 \begin{remark}
-Insert Remark here about Mobius homology.
+\label{rmk:mobius-betti}
+For $b\in\bfP$, let $1_b$ denote the indicator $\bfP$–module of the singleton
+$\{b\}$ (a spread in the sense of~\cite{ElchesenPatel}), and let $M\in\vect^\bfP$.
+
+In the language of~\cite{ElchesenPatel}, the M\"obius cohomology of $M$ at $b$
+is computed by the Ext–groups
+\[
+\Ext^d_{\vect^\bfP}(1_b,M),
+\]
+and the M\"obius homology groups $H^\downarrow_d M(b)$ of~\cite{patel2023mobius_homology}
+are, for $\vect$, canonically dual:
+\[
+H^\downarrow_d M(b)\ \cong\ \Ext^d_{\vect^\bfP}(1_b,M)^\vee,
+\]
+where $(-)^\vee$ denotes $k$–linear dual.
+In particular, if $P\down^M\to M$ is a minimal projective resolution, then the
+Ext–groups (and hence the M\"obius homology at $b$) are functorially determined
+by $P\down^M$ via the standard computation
+\[
+\Ext^d_{\vect^\bfP}(1_b,M)
+\ \cong\
+H^d\!\bigl(\Hom_{\vect^\bfP}(P\down^{1_b},P\down^M)\bigr),
+\]
+for any projective resolution $P\down^{1_b}\to 1_b$.
+Thus, up to duality, the M\"obius homology of $M$ is encoded in its minimal
+projective resolution.
+
+We will not use this identification in the sequel, but it provides a conceptual
+bridge between the M\"obius homology of~\cite{patel2023mobius_homology} and the
+projective–resolution viewpoint developed in this paper; full details in the
+(cohomological) setting can be found in~\cite{ElchesenPatel}.
 \end{remark}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Matchings}
@@ -737,7 +1055,7 @@ Proposition~\ref{prop:common-padding} gives a sufficient condition for finitenes
 
 \begin{proposition}
 \label{prop:bneck-pseudometric}
-On the class of minimal projective resolutions $\{P\down^M\mid M\in\vect^{\bfP}\}$, the function $\dist_B$ is an extended metric:
+On the class of minimal projective resolutions $\{P\down^M\mid M\in\vect^{\bfP}\}$, the function $\dist_B$ is an extended pseudometric metric:
 \[
 \dist_B:\ \{P\down^M\}\times\{P\down^N\}\longrightarrow [0,+\infty].
 \]
@@ -755,80 +1073,13 @@ We now compute bottleneck distances for our 1D and 2D running examples by
 comparing minimal projective resolutions and equalizing degreewise sizes
 via contractible cones.
 
-\begin{example}\label{ex:bneck-chain}
-Let $\bfP=\{1<2<3<4\}$ and consider
-\[
-M=I[1,3)\oplus I[3,4),\qquad 
-N=I[2,4)
-\]
-as in Example~\ref{ex:gtd-chain}.
-
-Minimal resolutions of the summands are
-\[
-\begin{aligned}
-P\down^{I[1,3)}&:\ 0\to\bfP(3,-)\to\bfP(1,-)\to 0,\\
-P\down^{I[3,4)}&:\ 0\to\bfP(4,-)\to\bfP(3,-)\to 0,\\
-P\down^{I[2,4)}&:\ 0\to\bfP(4,-)\to\bfP(2,-)\to 0.
-\end{aligned}
-\]
-Summing yields
-\[
-\begin{array}{c|c|c}
- & \text{degree }1 & \text{degree }0 \\ \hline
-P\down^{M} & \bfP(3,-)\oplus\bfP(4,-) & \bfP(1,-)\oplus\bfP(3,-)\\
-P\down^{N} & \bfP(4,-) & \bfP(2,-)
-\end{array}
-\]
-so $|P\down^M|=(2,2,0,\dots)$ and $|P\down^N|=(1,1,0,\dots)$.
-Since the alternating sums agree, padding is possible.
-
-Pad $P\down^{N}$ by $\Cone(\id_{\bfP(3,-)})[1]$, adding $\bfP(3,-)$ in both
-degrees $1$ and $0$:
-\[
-\begin{array}{c|c|c}
- & \text{degree }1 & \text{degree }0 \\ \hline
-P\down^{N}\oplus\Cone(\id_{\bfP(3,-)})[1]
- & \bfP(4,-)\oplus\bfP(3,-) 
- & \bfP(2,-)\oplus\bfP(3,-)
-\end{array}
-\]
-which matches the size vector of $P\down^{M}$.
-
-A degreewise matching is given by
-\[
-\begin{aligned}
-\text{degree }0:&\ 
-\bfP(1,-)\longrightarrow \bfP(2,-),
-\qquad\bfP(3,-)\longrightarrow \bfP(3,-),\\
-\text{degree }1:&\ 
-\bfP(4,-)\longrightarrow \bfP(4,-),
-\qquad\bfP(3,-)\longrightarrow \bfP(3,-).
-\end{aligned}
-\]
-All pairs except $\bfP(1,-)\to\bfP(2,-)$ have cost $0$; that pair has cost
-$d_{\bfP}(1,2)=1$.  Thus
-\[
-\dist_B(P\down^{M},P\down^{N})=1.
-\]
-
-\begin{table}[h]
-\centering
-\caption{Degreewise structure in Example~\ref{ex:bneck-chain}.}
-\label{tab:bneck-chain}
-\begin{tabular}{c|c|c}
- & $P\down^{M}$ & $P\down^{N}$ (padded) \\ \hline
-degree $0$ & $\bfP(1,-),\ \bfP(3,-)$ & $\bfP(2,-),\ \bfP(3,-)$\\
-degree $1$ & $\bfP(3,-),\ \bfP(4,-)$ & $\bfP(4,-),\ \bfP(3,-)$ 
-\end{tabular}
-\end{table}
-
-\end{example}
+\begin{example}\label{ex:bneck-chain} Let $\bfP=\{1<2<3<4\}$ and consider \[ M=I[1,3)\oplus I[3,4),\qquad N=I[2,4) \] as in Example~\ref{ex:gtd-chain}. Minimal resolutions of the summands are \[ \begin{aligned} P\down^{I[1,3)}&:\ 0\to\bfP(3,-)\to\bfP(1,-)\to 0,\\ P\down^{I[3,4)}&:\ 0\to\bfP(4,-)\to\bfP(3,-)\to 0,\\ P\down^{I[2,4)}&:\ 0\to\bfP(4,-)\to\bfP(2,-)\to 0. \end{aligned} \] Summing yields \[ \begin{array}{c|c|c} & \text{degree }1 & \text{degree }0 \\ \hline P\down^{M} & \bfP(3,-)\oplus\bfP(4,-) & \bfP(1,-)\oplus\bfP(3,-)\\ P\down^{N} & \bfP(4,-) & \bfP(2,-) \end{array} \] so $|P\down^M|=(2,2,0,\dots)$ and $|P\down^N|=(1,1,0,\dots)$. Since the alternating sums agree, padding is possible. Pad $P\down^{N}$ by $\Cone(\id_{\bfP(3,-)})[1]$, adding $\bfP(3,-)$ in both degrees $1$ and $0$: \[ \begin{array}{c|c|c} & \text{degree }1 & \text{degree }0 \\ \hline P\down^{N}\oplus\Cone(\id_{\bfP(3,-)})[1] & \bfP(4,-)\oplus\bfP(3,-) & \bfP(2,-)\oplus\bfP(3,-) \end{array} \] which matches the size vector of $P\down^{M}$. A degreewise matching is given by \[ \begin{aligned} \text{degree }0:&\ \bfP(1,-)\longrightarrow \bfP(2,-), \qquad\bfP(3,-)\longrightarrow \bfP(3,-),\\ \text{degree }1:&\ \bfP(4,-)\longrightarrow \bfP(4,-), \qquad\bfP(3,-)\longrightarrow \bfP(3,-). \end{aligned} \] All pairs except $\bfP(1,-)\to\bfP(2,-)$ have cost $0$; that pair has cost $d_{\bfP}(1,2)=1$. Thus \[ \dist_B(P\down^{M},P\down^{N})=1. \] \end{example}
 
 \begin{example}\label{ex:bneck-2d}
-Let $\bfP=\{1,\dots,8\}^2$ and consider the modules
-$M^{(2)},N^{(2)}\in\vect^{\bfP}$ from Example~\ref{ex:gtd-2d}.
+Let $\bfP=\{1,\dots,8\}^2$ with the product order and $L^\infty$ metric, and
+consider the modules $M,N\in\vect^{\bfP}$ from Example~\ref{ex:gtd-2d}.
 
-A rectangle $J[(a_1,a_2),(b_1,b_2))$ has minimal resolution
+A rectangle interval module $J[(a_1,a_2),(b_1,b_2))$ has minimal resolution
 \[
 0\to 
 \bfP((b_1,b_2),-)
@@ -839,60 +1090,56 @@ A rectangle $J[(a_1,a_2),(b_1,b_2))$ has minimal resolution
 \to J[(a_1,a_2),(b_1,b_2))
 \to 0.
 \]
-
-Thus each $2\times2$ square contributes  
-degree $0$: $1$,\quad degree $1$: $2$,\quad degree $2$: $1$,
-so
+Thus each $2\times2$ square contributes one indecomposable projective in
+degree~$0$, two in degree~$1$, and one in degree~$2$.  Since $M$ is the sum of
+two such squares, we obtain
 \[
-|P\down^{M^{(2)}}|=
-(\text{deg }0:2,\ \text{deg }1:4,\ \text{deg }2:2).
+|P\down^{M}|=(\mathrm{deg}\ 0:2,\ \mathrm{deg}\ 1:4,\ \mathrm{deg}\ 2:2).
 \]
 
-For the L-shape (pushout of $A$ and $B$ along $S$), gluing resolutions yields
+For the $L$-shape $N$ (the pushout of $A$ and $B$ along $S$), gluing minimal
+resolutions gives
 \[
-|P\down^{N^{(2)}}|=
-(\text{deg }0:2,\ \text{deg }1:3,\ \text{deg }2:1).
+|P\down^{N}|=(\mathrm{deg}\ 0:2,\ \mathrm{deg}\ 1:3,\ \mathrm{deg}\ 2:1).
 \]
 
-Pad $P\down^{N^{(2)}}$ by $\Cone(\id_{\bfP((7,4),-)})[2]$, producing
+Pad $P\down^{N}$ by $\Cone(\id_{\bfP((7,4),-)})[2]$, which adds one copy of
+$\bfP((7,4),-)$ in degrees $2$ and $1$, producing
 \[
-|\,P\down^{N^{(2)}}\oplus\Cone(\id_{\bfP((7,4),-)})[2]\,|
+|\,P\down^{N}\oplus\Cone(\id_{\bfP((7,4),-)})[2]\,|
 =(2,4,2),
 \]
-which matches $|P\down^{M^{(2)}}|$.
+matching the size vector of $P\down^{M}$.
 
-The matching pairs in each degree are recorded in
-Table~\ref{tab:bneck-2d-arrows}, all with cost at most $1$.
+A degreewise matching $P\down^{M}\to P\down^{N}$ (padded) is as follows:
 
-\begin{table}[h]
-\centering
-\caption{Degreewise matching for Example~\ref{ex:bneck-2d}. 
-Arrows indicate $P\down^{M^{(2)}}\to P\down^{N^{(2)}}$ (padded).}
-\label{tab:bneck-2d-arrows}
-\begin{tabular}{c|p{7.2cm}}
-\textbf{degree} & \textbf{matching pairs} \\ \hline
-
-0 
-& $\bfP((2,5),-)\ \longrightarrow\ \bfP((1,4),-)$\\[-2pt]
-& $\bfP((5,2),-)\ \longrightarrow\ \bfP((4,1),-)$
-\\[6pt]
-
-1
-& $\bfP((4,5),-)\ \longrightarrow\ \bfP((4,5),-)$\\[-2pt]
-& $\bfP((5,4),-)\ \longrightarrow\ \bfP((5,4),-)$\\[-2pt]
-& $\bfP((2,7),-)\ \longrightarrow\ \bfP((1,8),-)$\\[-2pt]
-& $\bfP((7,2),-)\ \longrightarrow\ \bfP((8,1),-)$
-\\[6pt]
-
-2
-& $\bfP((4,7),-)\ \longrightarrow\ \bfP((5,8),-)$\\[-2pt]
-& $\bfP((7,4),-)\ \longrightarrow\ \bfP((7,4),-)$ (cone)
-\end{tabular}
-\end{table}
-
-Since all moves have cost $\le 1$ and at least one has cost $1$, we obtain
+\smallskip
+\noindent\emph{Degree $0$:}
 \[
-\dist_B(P\down^{M^{(2)}},P\down^{N^{(2)}})=1.
+\bfP((2,5),-) \longrightarrow \bfP((1,4),-),\qquad
+\bfP((5,2),-) \longrightarrow \bfP((4,1),-).
+\]
+
+\noindent\emph{Degree $1$:}
+\[
+\bfP((4,5),-) \longrightarrow \bfP((4,5),-),\quad
+\bfP((5,4),-) \longrightarrow \bfP((5,4),-),
+\]
+\[
+\bfP((2,7),-) \longrightarrow \bfP((1,8),-),\quad
+\bfP((7,2),-) \longrightarrow \bfP((8,1),-).
+\]
+
+\noindent\emph{Degree $2$:}
+\[
+\bfP((4,7),-) \longrightarrow \bfP((5,8),-),\qquad
+\bfP((7,4),-) \longrightarrow \bfP((7,4),-) \ \text{(cone)}.
+\]
+
+All matches have cost at most $1$ (in $d_{\bfP}$), and at least one match has
+cost exactly $1$.  Therefore
+\[
+\dist_B(P\down^{M},P\down^{N})=1.
 \]
 \end{example}
 
@@ -901,6 +1148,7 @@ Since all moves have cost $\le 1$ and at least one has cost $1$, we obtain
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Stability Theorem}
+\label{sec:stability}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -910,23 +1158,36 @@ The next lemma says that pulling back along the right adjoint of a Galois connec
 
 \begin{lemma}
 \label{lem:rt-adj-prj-ind}
-If $f : \bfQ \rightleftarrows \bfP : g$ is a Galois connection of posets, then
+If $f:\bfQ \rightleftarrows \bfP:g$ is a Galois connection of posets, then
 \[
-g^\ast\bigl(\bfQ(x,\blank)\bigr)\ \cong\ \bfP\bigl(f(x), \blank\bigr)
-\qquad\text{in }\vect^\bfP\ \text{for all }x\in\bfQ.
+g^{*}\bigl(\bfQ(x,-)\bigr)\ \cong\ \bfP(f(x),-)
+\qquad\text{in }\vect^{\bfP}\text{ for all }x\in\bfQ.
 \]
 \end{lemma}
 
 \begin{proof}
-By Corollary~\ref{cor:3_adj} we have a natural isomorphism $g^{*}\cong f_{!}$. For any $M\in\vect^{\bfP}$,
+For $y\in\bfP$, the value of $g^{*}\bfQ(x,-)$ at $y$ is
 \[
-\Hom_{\vect^{\bfP}}\bigl(\bfP(f(x),-),\,M\bigr)\ \cong\ M\bigl(f(x)\bigr)
-\ \cong\ (f^{*}M)(x)
-\ \cong\ \Hom_{\vect^{\bfQ}}\bigl(\bfQ(x,-),\,f^{*}M\bigr)
-\ \cong\ \Hom_{\vect^{\bfP}}\bigl(f_{!}\bfQ(x,-),\,M\bigr).
+(g^{*}\bfQ(x,-))(y)=\bfQ(x,g(y)).
 \]
-By Yoneda, $f_{!}\bfQ(x,-)\cong \bfP(f(x),-)$, hence $g^{*}\bfQ(x,-)\cong f_{!}\bfQ(x,-)\cong \bfP(f(x),-)$.
+Because $f\dashv g$, we have
+\[
+\bfQ(x,g(y))\neq 0
+\quad\Longleftrightarrow\quad
+x\le g(y)
+\quad\Longleftrightarrow\quad
+f(x)\le y
+\quad\Longleftrightarrow\quad
+\bfP(f(x),y)\neq 0.
+\]
+Thus
+\[
+(g^{*}\bfQ(x,-))(y)\ \cong\ \bfP(f(x),y)
+\]
+naturally in $y$.  
+Hence $g^{*}\bfQ(x,-)\cong \bfP(f(x),-)$ in $\vect^{\bfP}$.
 \end{proof}
+
 
 \begin{theorem}[Stability]
 \label{thm:triangle}
@@ -966,7 +1227,7 @@ Taking the infimum over all compatible paddings yields
 \[
 \dist_B\bigl(P\down^M,P\down^N\bigr)\ \le\ \dist_R(E\down,F\down)\ \le\ \cost(\Gamma)\ \le\ \dGT(M,N)+\varepsilon.
 \]
-Letting $\varepsilon\to 0$ completes the proof.
+This completes the proof.
 \end{proof}
 
 
@@ -993,35 +1254,37 @@ Hence the stability inequality
 \]
 holds with equality.
 
-The transport computation detects a unit shift in the birth coordinate,
-and the bottleneck computation recovers the same value after padding by a
-single cone.  
-Thus stability is numerically tight in this 1D case.
+On the transport side, the Galois coupling moves each interval in $M$ forward
+by one step in the parameter.  On the resolution side, padding by a single
+contractible cone aligns the minimal resolutions and produces a matching of
+the same cost.  Thus stability is numerically sharp in this one-parameter
+example.
 \end{example}
 
 
-\begin{example}\label{ex:stability-2d}
-For the 2D modules $M^{(2)}$ and $N^{(2)}$ from Example~\ref{ex:gtd-2d},
-Example~\ref{ex:gtd-2d} gives
-\[
-\dGT^{\bfP}(M^{(2)},N^{(2)})\le 1,
-\]
-and Example~\ref{ex:bneck-2d} gives
-\[
-\dist_B(P\down^{M^{(2)}},P\down^{N^{(2)}})\le 1.
-\]
-Therefore
-\[
-\dist_B(P\down^{M^{(2)}},P\down^{N^{(2)}})
-\ \le\
-\dGT^{\bfP}(M^{(2)},N^{(2)}),
-\]
-and in this symmetric placement both sides equal \(1\).
 
-Here the transport side shifts each square of $M^{(2)}$ by $(+1,+1)$ into
-the arms of the L–shape, while on the resolution side, padding by a single
-cone yields a matching of identical cost.  
-Stability is therefore sharp in this 2D example as well.
+\begin{example}\label{ex:stability-2d}
+For the $2$-parameter modules $M$ and $N$ from Example~\ref{ex:gtd-2d}, we
+computed
+\[
+\dGT^{\bfP}(M,N)=1
+\qquad\text{and}\qquad
+\dist_B(P\down^{M},P\down^{N})=1
+\]
+in Examples~\ref{ex:gtd-2d} and~\ref{ex:bneck-2d}.  Hence
+\[
+\dist_B(P\down^{M},P\down^{N})
+\ =\
+\dGT^{\bfP}(M,N)
+\ =\ 1,
+\]
+so the stability inequality holds with equality.
+
+Geometrically, the transport coupling shifts each $2\times2$ square of $M$ by
+$(+1,+1)$ into the corresponding arm of the $L$-shape.  On the resolution
+side, padding $P\down^{N}$ by one cone equalizes the degreewise sizes and
+permits a matching of cost~$1$.  Stability is therefore sharp in this
+two-parameter example as well.
 \end{example}
 
 
@@ -1031,290 +1294,329 @@ Stability is therefore sharp in this 2D example as well.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Application to Persistence}
+\label{sec:persistence}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-We extract a persistence construction from a $\bfP$-module by passing to an interval poset and taking kernels of structure maps. The resulting “diagram” admits a stability inequality that recovers the classical bottleneck stability when $\bfP$ is totally ordered.
+In this section we extract a persistence-like construction from a
+$\bfP$-module by passing to the interval poset and taking kernels of structure
+maps. We then show that the Galois transport stability inequality descends to
+this construction, recovering classical bottleneck stability when $\bfP$ is a
+finite chain.
 
 \begin{definition}
-Let $(\bfP,d_{\bfP})$ be a finite metric poset with a top element $\top$.
-We extend $d_{\bfP}$ to an \emph{extended} metric by
+Let $(\bfP,d_{\bfP})$ be a finite metric poset with a top element $\top$.  We
+extend $d_{\bfP}$ to an \emph{extended} metric by
 \[
-d_{\bfP}(x,\top)=d_{\bfP}(\top,x)=+\infty\ \ (x\neq \top),\qquad d_{\bfP}(\top,\top)=0.
+d_{\bfP}(x,\top)=d_{\bfP}(\top,x)=+\infty\ (x\neq\top), 
+\qquad d_{\bfP}(\top,\top)=0.
 \]
-Define the \emph{interval poset} $\Int\bfP$ to have objects the intervals $[x,y]$ with $x\le y\le \top$ in $\bfP$ and order
+Define the \emph{interval poset} $\Int\bfP$ to have objects the half-open
+intervals $[x,y)$ with $x\le y\le \top$ and order
 \[
-[x_1,y_1]\ \le\ [x_2,y_2]\quad\Longleftrightarrow\quad x_1\le x_2\ \text{ and }\ y_1\le y_2.
+[x_1,y_1)\le [x_2,y_2)\quad\Longleftrightarrow\quad x_1\le x_2
+ \ \text{and}\ y_1\le y_2.
 \]
-Equip $\Int\bfP$ with the product $L^\infty$ extended metric
+Equip $\Int\bfP$ with the $L^\infty$ extended metric
 \[
-d_{\Int\bfP}\bigl([x_1,y_1],[x_2,y_2]\bigr)\ :=\ \max\{\,d_{\bfP}(x_1,x_2),\ d_{\bfP}(y_1,y_2)\,\}.
+d_{\Int\bfP}\bigl([x_1,y_1),[x_2,y_2)\bigr)
+:=\max\{\,d_{\bfP}(x_1,x_2),\, d_{\bfP}(y_1,y_2)\,\}.
 \]
 \end{definition}
 
 \begin{definition}
 For $M\in\vect^{\bfP}$ define $K(M)\in\vect^{\Int\bfP}$ by
 \[
-K(M)([x,y])\ :=\
+K(M)([x,y)) :=
 \begin{cases}
-\ker\bigl(M(x\to y)\bigr), & y<\top,\\[2pt]
-M(x), & y=\top,
+\ker(M(x\to y)), & y<\top, \\
+M(x), & y=\top.
 \end{cases}
 \]
-and for a relation $[x_1,y_1]\le [x_2,y_2]$ let $K(M)([x_1,y_1]\to [x_2,y_2])$ be the map induced by $M(x_1\to x_2)$, which sends $\ker(M(x_1\to y_1))$ into $\ker(M(x_2\to y_2))$ when $y_2<\top$ by functoriality of $M$. This defines a functor $K:\vect^{\bfP}\to\vect^{\Int\bfP}$.
+For a relation $[x_1,y_1)\le [x_2,y_2)$, define 
+\[
+K(M)([x_1,y_1)\to[x_2,y_2))
+\]
+to be the map induced by $M(x_1\to x_2)$; functoriality of $M$ ensures that
+kernels map into kernels when $y_2<\top$.  Thus $K:\vect^{\bfP}\to
+\vect^{\Int\bfP}$ is a functor.
 \end{definition}
 
 We record two lemmas that will be used implicitly below.
 
 \begin{lemma}\label{lem:Int-Galois}
-If $f:\bfQ \rightleftarrows \bfP:g$ is a Galois connection, then so is
+If $f:\bfQ\rightleftarrows\bfP:g$ is a Galois connection, then so is
 \[
-\Int(f):\Int\bfQ \rightleftarrows \Int\bfP:\Int(g),
+\Int(f):\Int\bfQ\rightleftarrows\Int\bfP:\Int(g),
 \qquad
-\Int(f)[u,v]=[f(u),f(v)],\ \ \Int(g)[x,y]=[g(x),g(y)].
+\Int(f)[u,v)=[f(u),f(v)),\ \ \Int(g)[x,y)=[g(x),g(y)).
 \]
 \end{lemma}
 
 \begin{proof}
-Monotonicity of $\Int(f)$ and $\Int(g)$ follows from that of $f$ and $g$.
-For $[u_1,v_1]\in\Int\bfQ$ and $[x_2,y_2]\in\Int\bfP$,
-\[
-\begin{aligned}
-\Int(f)[u_1,v_1]\le [x_2,y_2]
-&\iff \bigl(f(u_1)\le x_2\bigr)\ \text{and}\ \bigl(f(v_1)\le y_2\bigr)\\
-&\iff \bigl(u_1\le g(x_2)\bigr)\ \text{and}\ \bigl(v_1\le g(y_2)\bigr)\\
-&\iff [u_1,v_1]\le \Int(g)[x_2,y_2],
-\end{aligned}
-\]
-using $f\dashv g$ coordinatewise. Thus $\Int(f)\dashv\Int(g)$.
+Immediate from $f\dashv g$ applied coordinatewise.
 \end{proof}
 
 \begin{lemma}\label{lem:Int-Lipschitz}
-For any monotone maps $f,h:\bfQ\to\bfP$,
+For any monotone $f,h:\bfQ\to\bfP$,
 \[
-\sup_{[u,v]\in\Int\bfQ}
-d_{\Int\bfP}\bigl(\Int(f)[u,v],\,\Int(h)[u,v]\bigr)
+\sup_{[u,v)\in\Int\bfQ}
+d_{\Int\bfP}\bigl(\Int(f)[u,v),\Int(h)[u,v)\bigr)
 \ \le\
-\sup_{u\in\bfQ} d_{\bfP}\bigl(f(u),\,h(u)\bigr).
+\sup_{u\in\bfQ} d_{\bfP}(f(u),h(u)).
 \]
 \end{lemma}
 
 \begin{proof}
-By the $L^\infty$ metric on $\Int\bfP$,
-\[
-d_{\Int\bfP}\bigl([f(u),f(v)],\,[h(u),h(v)]\bigr)
-=\max\bigl\{\,d_{\bfP}(f(u),h(u)),\ d_{\bfP}(f(v),h(v))\,\bigr\}
-\le \sup_{w\in\bfQ} d_{\bfP}(f(w),h(w)).
-\]
-Taking the supremum over all $[u,v]\in\Int\bfQ$ gives the claim.
+Direct from the $L^\infty$ definition and monotonicity.
 \end{proof}
 
 \begin{lemma}\label{lem:K-commute}
-For any monotone $g:\bfP\to\bfQ$ there is a natural isomorphism of functors
+For any monotone $g:\bfP\to\bfQ$, 
 \[
-\Int(g)^{*}\circ K\ \ \cong\ \ K\circ g^{*}:\ \vect^{\bfQ}\longrightarrow \vect^{\Int\bfP}.
+\Int(g)^*\circ K\ \cong\ K\circ g^*.
 \]
 \end{lemma}
 
 \begin{proof}
-Evaluate both composites at $M\in\vect^{\bfQ}$ and $[x,y]\in\Int\bfP$. If $y<\top$,
-\[
-(\Int(g)^{*}K(M))([x,y])\ =\ K(M)\bigl([g(x),g(y)]\bigr)\ =\ \ker\bigl(M(g(x)\to g(y))\bigr),
-\]
-\[
-(K(g^{*}M))([x,y])\ =\ \ker\bigl((g^{*}M)(x\to y)\bigr)\ =\ \ker\bigl(M(g(x)\to g(y))\bigr).
-\]
-If $y=\top$, both sides equal $M(g(x))$. Naturality in $[x,y]$ follows from functoriality of $M$.
+Evaluation at $[x,y)$ gives the same kernel in both cases.
 \end{proof}
 
 \begin{proposition}\label{prop:K-Lipschitz}
-For all $M,N\in\vect^{\bfP}$ one has
+For all $M,N$,
 \[
-\dGT^{\Int\bfP}\bigl(K(M),K(N)\bigr)\ \le\ \dGT^{\bfP}(M,N).
+\dGT^{\Int\bfP}(K(M),K(N))\ \le\ \dGT^{\bfP}(M,N).
 \]
 \end{proposition}
 
 \begin{proof}
-Given a Galois coupling $(\bfQ,f\dashv g,\ h\dashv i,\ \Gamma)$ for $(M,N)$ in $\vect^{\bfP}$, Lemma~\ref{lem:Int-Galois} yields a Galois coupling
-\(
-\Int(f)\dashv\Int(g),\ \Int(h)\dashv\Int(i)
-\)
-on $\Int\bfQ\rightleftarrows\Int\bfP$. Take the apex module $K(\Gamma)\in\vect^{\Int\bfQ}$. By Lemma~\ref{lem:K-commute},
-\[
-\Int(g)^{*}K(\Gamma)\ \cong\ K(g^{*}\Gamma)\ \cong\ K(M),\qquad
-\Int(i)^{*}K(\Gamma)\ \cong\ K(i^{*}\Gamma)\ \cong\ K(N),
-\]
-so this is a coupling for $(K(M),K(N))$. Its cost is bounded by Lemma~\ref{lem:Int-Lipschitz}. Taking infima gives the claim.
+Given a coupling for $(M,N)$, apply $K$ to the apex and use
+Lemmas~\ref{lem:Int-Galois}–\ref{lem:Int-Lipschitz}.
 \end{proof}
 
 \begin{definition}
-For $M\in\vect^{\bfP}$, let $K\down^{M}$ denote a minimal projective resolution of $K(M)$ in $\vect^{\Int\bfP}$. We call the family of its degreewise indecomposable projective summands
-\[
-\bigl\{\Summands\bigl(K^{M}_i\bigr)\bigr\}_{i\ge 0}
-\]
-the \emph{persistence diagram} of $M$ over $\bfP$. (Equivalently, the isomorphism class of the minimal resolution $K\down^{M}$ encodes the diagram.)
+For $M\in\vect^{\bfP}$ let $K\down^M$ denote a minimal projective resolution of
+$K(M)$.  Its degreewise indecomposable projective summands form the
+\emph{persistence diagram} of $M$.
 \end{definition}
 
-Padding a resolution by contractible cones $\Cone(\id_E)[a]$ adds one copy of $E$ in consecutive degrees $a$ and $a-1$ without changing the resolved module. In our bottleneck framework this plays the role of adding \emph{diagonal points} in classical matching: it equalizes degreewise sizes, and cones added symmetrically on both sides can be matched at zero cost. Thus diagonal padding is implemented categorically by homotopically trivial cones.
+\begin{remark}
+We work over $\Int\bfP$ rather than more general families of subsets
+(cf.~\cite{kim2021generalized}).  
+Even this setting already requires delicate homological control; extending the
+construction further would require additional combinatorial machinery.
+\end{remark}
 
-\begin{theorem}
-For all $M,N\in\vect^{\bfP}$,
+Padding a resolution by a cone $\Cone(\id_E)[a]$ adds one copy of $E$ in
+degrees $a$ and $a-1$, playing the role of adding diagonal points in classical
+bottleneck matchings.
+
+\begin{theorem}\label{thm:persistence-stability}
+For all $M,N$,
 \[
-\dist_B\bigl(K\down^{M},K\down^{N}\bigr)\ \le\ \dGT^{\Int\bfP}\bigl(K(M),K(N)\bigr)\ \le\ \dGT^{\bfP}(M,N).
+\dist_B(K\down^{M},K\down^{N})
+\ \le\
+\dGT^{\Int\bfP}(K(M),K(N))
+\ \le\
+\dGT^{\bfP}(M,N).
 \]
-In particular, if $\bfP=\{1<\cdots<n\}$ with $d_{\bfP}(x,y)=|x-y|$ and $\top$ adjoined with $d_{\bfP}(\cdot,\top)=\infty$, this recovers the classical bottleneck stability inequality.
+For $\bfP=\{1<\dots<n\}$, this recovers classical bottleneck stability.
 \end{theorem}
 
 \begin{proof}
-Apply the Stability Theorem with the base poset replaced by $\Int\bfP$ and the modules $K(M),K(N)$ to get the first inequality. The second inequality is Proposition~\ref{prop:K-Lipschitz}.
+Combine the stability theorem for minimal resolutions with
+Proposition~\ref{prop:K-Lipschitz}.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Examples}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-We now compute persistence diagrams for our running 1D and 2D examples, and
-verify stability at the level of minimal resolutions in $\vect^{\Int\bfP}$.
+We now compute persistence diagrams for our running 1D and 2D examples, and verify stability at the level of minimal resolutions in $\vect^{\Int\bfP}$.
+
 
 \begin{example}\label{ex:persistence-chain-correct}
 Let $\bfP=\{1<2<3<4<\top\}$ with $d_{\bfP}(i,j)=|i-j|$ and
-$d_{\bfP}(\cdot,\top)=\infty$.
-Retain the modules
+$d_{\bfP}(\cdot,\top)=\infty$.  
+Let 
 \[
-M:=I[1,3)\oplus I[3,4),\qquad
-N:=I[2,4)
+M=I[1,3)\oplus I[3,4),\qquad N=I[2,4).
 \]
-from Examples~\ref{ex:gtd-chain} and~\ref{ex:bneck-chain}.
-We compute their kernel modules and minimal resolutions over $\Int\bfP$.
+We compute $K(M)$ and $K(N)$.
 
-The kernel modules vanish at $[3,3]$ and $[4,4]$ for all three summands, and
-$K(\cdot)$ is nonzero on the expected intervals extending upward or to~$\top$.
-
-Let $\Yint{[x,y]}:=\Int\bfP([x,y],-)$.
-The minimal generators of $K(M)$ occur at 
-$\Yint{[1,3]}$, $\Yint{[2,3]}$, and $\Yint{[3,4]}$,
-and the minimal relations occur at 
-$\Yint{[3,3]}$ and $\Yint{[4,4]}$.
-Thus a minimal resolution is
+The kernels vanish on $[3,3)$ and $[4,4)$, and are nonzero on the expected
+intervals.  Minimal generators and relations are:
 \[
-0\longrightarrow
-\Yint{[3,3]}\oplus \Yint{[4,4]}
-\longrightarrow
-\Yint{[1,3]}\oplus \Yint{[2,3]}\oplus \Yint{[3,4]}
-\longrightarrow K(M)\longrightarrow 0.
+\begin{aligned}
+K(M):\quad &\text{deg }0:\ \Yint{[1,3)},\ \Yint{[2,3)},\ \Yint{[3,4)},\\
+           &\text{deg }1:\ \Yint{[3,3)},\ \Yint{[4,4)}; \\[4pt]
+K(N):\quad &\text{deg }0:\ \Yint{[2,4)},\\
+           &\text{deg }1:\ \Yint{[4,4)}.
+\end{aligned}
 \]
 
-Similarly, $K(N)$ is minimally generated at $\Yint{[2,4]}$ with a single
-relation at $\Yint{[4,4]}$, giving
+A minimal resolution of $K(M)$ is
 \[
-0\longrightarrow
-\Yint{[4,4]}
-\longrightarrow
-\Yint{[2,4]}
-\longrightarrow
-K(N)\longrightarrow 0.
+0\longrightarrow \Yint{[3,3)}\oplus\Yint{[4,4)}
+ \longrightarrow \Yint{[1,3)}\oplus\Yint{[2,3)}\oplus\Yint{[3,4)}
+ \longrightarrow K(M)\longrightarrow 0.
+\]
+A minimal resolution of $K(N)$ is
+\[
+0\longrightarrow \Yint{[4,4)}
+ \longrightarrow \Yint{[2,4)}
+ \longrightarrow K(N)\longrightarrow 0.
 \]
 
-The corresponding persistence diagrams are
+Pad $K\down^{N}$ by $\Cone(\id_{\Yint{[3,4)}})[1]$ to match the degreewise
+sizes of $K\down^{M}$.  
+Matching degreewise shows that at least one pair has cost~$1$, and all others
+have cost~$0$, so
 \[
-\mathrm{PD}(M):\ 
-\begin{cases}
-\text{degree }0:\ \Yint{[1,3]},\ \Yint{[2,3]},\ \Yint{[3,4]},\\
-\text{degree }1:\ \Yint{[3,3]},\ \Yint{[4,4]},
-\end{cases}
-\qquad
-\mathrm{PD}(N):\
-\begin{cases}
-\text{degree }0:\ \Yint{[2,4]},\\
-\text{degree }1:\ \Yint{[4,4]}.
-\end{cases}
+\dist_B(K\down^M,K\down^N)=1.
 \]
-
-Cone padding (e.g.\ $\Cone(\id_{\Yint{[3,4]}})[1]$) implements the classical
-“match to the diagonal’’ at zero cost.  
-Since $\dGT^{\bfP}(M,N)=1$ (Example~\ref{ex:gtd-chain}) and 
-$\dGT^{\Int\bfP}(K(M),K(N))\le 1$ (Proposition~\ref{prop:K-Lipschitz}),
-the persistence stability theorem gives
-\[
-\dist_B(K\down^{M},K\down^{N})\le 1.
-\]
+Combined with $\dGT^{\bfP}(M,N)=1$, this realizes the stability bound with
+equality.
 \end{example}
-
-\begin{table}[h]
-\centering
-\caption{Persistence diagrams for $M$ and $N$
-over $\bfP=\{1<2<3<4<\top\}$.}
-\label{tab:pd-1d}
-\begin{tabular}{c|c|c}
- & $\mathrm{PD}(M)$ & $\mathrm{PD}(N)$ \\ \hline
-degree $0$
- & $\Yint{[1,3]},\ \Yint{[2,3]},\ \Yint{[3,4]}$
- & $\Yint{[2,4]}$ \\[4pt]
-degree $1$
- & $\Yint{[3,3]},\ \Yint{[4,4]}$
- & $\Yint{[4,4]}$
-\end{tabular}
-\end{table}
 
 
 \begin{example}\label{ex:persistence-2d}
-Let $\bfP=\{1,\dots,8\}^2$ with the product order and $L^\infty$ metric,
-and retain $M^{(2)},N^{(2)}$ from Example~\ref{ex:gtd-2d}$.$  
-Apply the kernel–interval functor $K:\vect^{\bfP}\to\vect^{\Int\bfP}$.
+Let $\bfP=\{1,\dots,8\}^2$ and retain $M,N$ from
+Example~\ref{ex:gtd-2d}.  Apply the kernel functor $K$.
 
-Each rectangle in $M^{(2)}$ contributes one degree-$0$ generator and two
-degree-$1$ face relations.  
-The L-shape contributes generators at $\Yint{[(1,4),(5,8)]}$ and
-$\Yint{[(4,1),(8,5)]}$ and a single degree-$1$ corner relation at
-$\Yint{[(4,4),(5,5)]}$.  
-Thus $K\down^{M^{(2)}}$ and $K\down^{N^{(2)}}$ both have nonzero terms in
-degrees $0$ and $1$.
-
-After padding by contractible cones to equalize degreewise sizes, match the
-degree-$0$ projectives using the $(+1,+1)$ shift:
+Each $2\times 2$ square summand of $M$ contributes one generator in
+degree~$0$ and two relations in degree~$1$ to $K(M)$.  
+The $L$-shaped module $N$ contributes two generators and one corner relation.
+Thus $K\down^{M}$ has
 \[
-[(2,5),(4,7)]\longleftrightarrow [(1,4),(5,8)],\qquad
-[(5,2),(7,4)]\longleftrightarrow [(4,1),(8,5)],
+\text{deg }0:2,\qquad \text{deg }1:4,
 \]
-each at cost $1$ in $d_{\Int\bfP}$.  
-Match degree-$1$ relations by pairing the corner with its counterpart and the
-remaining face relations with cone copies (cost $0$).  
-Hence
+and $K\down^{N}$ has
 \[
-\dist_B(K\down^{M^{(2)}},K\down^{N^{(2)}})\le 1.
+\text{deg }0:2,\qquad \text{deg }1:3.
 \]
 
-By Proposition~\ref{prop:K-Lipschitz},
+Pad $K\down^{N}$ by $\Cone(\id_{\Yint{[(7,4),(8,5))}})[1]$ to obtain matching
+degreewise sizes.  A degreewise matching is:
+
+\smallskip
+\noindent\emph{Degree $0$:}
 \[
-\dGT^{\Int\bfP}(K(M^{(2)}),K(N^{(2)}))
-\ \le\
-\dGT^{\bfP}(M^{(2)},N^{(2)})=1,
+\Yint{[(2,5),(4,7))}\longrightarrow\Yint{[(1,4),(5,8))},\qquad
+\Yint{[(5,2),(7,4))}\longrightarrow\Yint{[(4,1),(8,5))}.
 \]
-and so
+
+\noindent\emph{Degree $1$:}
 \[
-\dist_B(K\down^{M^{(2)}},K\down^{N^{(2)}})\le 1.
+\Yint{[(4,5),(5,7))}\longrightarrow\Yint{[(4,5),(5,7))},\qquad
+\Yint{[(5,4),(7,5))}\longrightarrow\Yint{[(5,4),(7,5))},
 \]
+\[
+\Yint{[(2,7),(4,8))}\longrightarrow\Yint{[(1,8),(5,8))},\qquad
+\Yint{[(7,2),(8,4))}\longrightarrow\Yint{[(8,1),(8,5))}.
+\]
+
+All pairs have cost at most~$1$, and at least one pair has cost~$1$, so
+\[
+\dist_B(K\down^{M},K\down^{N})=1.
+\]
+Since $\dGT^{\bfP}(M,N)=1$, stability holds with equality in this 2D example
+as well.
 \end{example}
 
-\begin{table}[h]
-\centering
-\caption{Persistence diagrams for $M^{(2)}$ and $N^{(2)}$
-in $\vect^{\Int\bfP}$ over $\bfP=\{1,\dots,8\}^2$.}
-\label{tab:pd-2d}
-\begin{tabular}{c|p{3.8cm}|p{3.8cm}}
- & $\mathrm{PD}(M^{(2)})$ & $\mathrm{PD}(N^{(2)})$ \\ \hline
-degree $0$
- & $\Yint{[(2,5),(4,7)]}$\\[-3pt]
-   $\Yint{[(5,2),(7,4)]}$
- & $\Yint{[(1,4),(5,8)]}$\\[-3pt]
-   $\Yint{[(4,1),(8,5)]}$
- \\[6pt]
-degree $1$
- & $\Yint{[(4,5),(5,7)]},\ \Yint{[(2,7),(4,8)]}$\\[-3pt]
-   $\Yint{[(5,4),(7,5)]},\ \Yint{[(7,2),(8,4)]}$
- & $\Yint{[(4,4),(5,5)]}$
-\end{tabular}
-\end{table}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Future Directions}
+\label{sec:directions}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We close by highlighting three directions that naturally extend the present
+work.  They are meant as themes rather than precise problems, in the hope that
+they will spark further exploration rather than constrain it.
+
+\paragraph{Beyond intervals: kernels on convex subsets}
+
+In this paper, the kernel construction $K$ is defined on the interval poset
+$\Int\bfP$ and sends a half-open interval $[x,y)$ to the kernel of a single
+structure map $M(x\to y)$.  It is natural to ask whether one can extend this
+to a functor defined on a larger family of subsets, for example the convex
+subposets of $\bfP$.
+
+We say a subposet $Z\subset\bfP$ is \emph{convex} if, whenever $a\le c$ lie in
+$Z$ and $a\le b\le c$ in $\bfP$, one has $b\in Z$.  For intervals, the kernel
+functor $K$ produces a genuine functor
+\[
+K:\vect^\bfP\longrightarrow\vect^{\Int\bfP},
+\]
+not just a numerical rank invariant, and its functoriality is crucial for our
+stability results.  In contrast, for general families of convex subsets, the
+generalized rank invariants of Kim--M\'emoli~\cite{kim2021generalized} assign
+numbers to images of structure maps but do not assemble into a functor on the
+poset of convex subsets ordered by reverse inclusion.
+
+It would be very interesting to build an ``interval-like’’ poset (or category)
+whose objects are convex subsets of $\bfP$ and whose order and metric reflect
+the combinatorics of $\bfP$—for example, by viewing convex subsets as
+intervals in a suitable poset of upsets—and to extend the kernel construction
+to this setting.  A satisfactory notion of ``convex persistence’’ with a
+kernel functor and a Galois-transport stability statement would give a
+conceptual home to many of the generalized rank-type constructions that have
+appeared in the literature.
+
+\paragraph{Beyond $L^\infty$: other transport and matching costs}
+
+Both metric constructions in this paper are inherently of $L^\infty$-type.  On
+the transport side, the cost of a Galois coupling is the supremum of the
+displacements $d_\bfP(f(q),h(q))$ over points $q$ in the apex poset.  On the
+diagram side, the bottleneck distance on minimal resolutions takes a supremum
+over matched indecomposable summands.  This mirrors the classical bottleneck
+distance on persistence diagrams.
+
+In one-parameter persistence, there is also a substantial literature on
+$L^p$- and Wasserstein-type distances between diagrams and their stability; see
+for instance
+\cite{cohen2010lipschitz,mileyko2011probability,divol2019understanding,
+Skraba:2020,bubenik2015metrics,bubenik2018wasserstein}.  In a closely related
+spirit, G\"ulen--M\'emoli--Patel introduce $\ell^p$-type edit distances for
+weighted persistence diagrams and prove $\ell^p$-stability with respect to
+Gromov--Hausdorff and Gromov--Wasserstein distances, interpreting these classical
+metrics as edit distances built from Galois-connection edits
+\cite{GulenMemoliPatel2025}.  It is natural to ask whether the
+constructions in this paper admit analogous $L^p$-type formulations.
+
+Roughly speaking, one would like to replace the supremum in the definition of
+Galois transport by a $p$-norm (perhaps by introducing weights or measures on
+the apex poset), and to replace the bottleneck cost on resolutions by a
+$p$-Wasserstein-type aggregate over matched indecomposable summands.  The main
+questions are whether such $L^p$-type transport and matching distances can be
+defined in a way that still enjoys the triangle inequality and interacts well
+with the pullback of resolutions along Galois couplings, and whether an
+analogue of our main stability theorem survives for $p<\infty$.
+
+
+\paragraph{Beyond incidence algebras: other representation-theoretic settings}
+
+Throughout this paper, a $\bfP$-module is equivalently a finite-dimensional
+module over the incidence algebra $k\bfP$; that is, $\vect^\bfP$ is equivalent
+to the category of finite-dimensional left $k\bfP$-modules.  Our stability
+results are phrased purely in terms of projective resolutions and Galois
+transport, and the appearance of M\"obius inversion comes only from how these
+resolutions can be interpreted, especially in the persistence setting via the
+kernel construction.
+
+For a general finite-dimensional algebra $A$, the Cartan matrix records how
+projective modules decompose into simples.  When $A=k\bfP$, this Cartan matrix
+is (up to ordering) the zeta matrix of the poset, and its inverse (when it
+exists) is the M\"obius matrix.  Thus in the poset case, M\"obius inversion is
+literally encoded in the homological relationship between projectives and
+simples.
+
+Understanding how much of this Cartan/M\"obius relationship persists for
+more general algebras would be very interesting.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1323,7 +1625,6 @@ degree $1$
 
 \bibliographystyle{alpha}
 \bibliography{references}{}
-
 
 
 \appendix
