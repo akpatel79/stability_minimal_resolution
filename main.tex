@@ -565,12 +565,7 @@ Let $\bfR$ be the pullback of $(h_1,f_2)$ in the category of posets:
 with projections $\pi_1:\bfR\to\bfQ_1$ and $\pi_2:\bfR\to\bfQ_2$.
 Since $\pi_1$ and \(\pi_2\) are surjective monotone maps, 
 Lemma~\ref{lem:galois-connection-basics} guarantees that each 
-admits a right adjoint:
-\[
-\pi_1 \dashv \iota_1,
-\qquad
-\pi_2 \dashv \iota_2.
-\]
+admits a right adjoint $\pi_1 \dashv \iota_1$ and $\pi_2 \dashv \iota_2$.
 Thus both \(\pi_1\dashv\iota_1\) and \(\pi_2\dashv\iota_2\) are Galois insertions.
 Our goal is to construct a module $\Psi\in\vect^{\bfR}$ whose pullbacks
 recover $M$ and $O$.
@@ -614,8 +609,8 @@ q_1 \le i_1 h_1(q_1),\qquad q_2 \le g_2 f_2(q_2),
 \]
 hence canonical structure maps
 \[
-\Gamma_1(q_1)\to N(h_1(q_1)),\qquad
-\Gamma_2(q_2)\to N(f_2(q_2)).
+\Gamma_1(q_1)\to \Gamma_1(i_1 h_1 (q_1)) \cong N(h_1(q_1)),\qquad
+\Gamma_2(q_2)\to \Gamma_2(g_2 f_2 (q_2)) \cong N(f_2(q_2)).
 \]
 Because $(q_1,q_2)\in\bfR$ satisfies $h_1(q_1)=f_2(q_2)$, these maps land in the   
 same vector space.  Define $\Psi(q_1,q_2)$ as their pullback:
@@ -635,12 +630,9 @@ $(q_1,q_2)\le(q_1',q_2')$, making $\Psi$ a functor $\bfR\to\vect$.
 \paragraph{Recovering $M$.}
 For $p\in\bfP$, set $(q_1,q_2)=\iota_1 g_1(p)$.  
 Then $q_1=g_1(p)$ and $q_2=g_2 h_1(q_1)$, and the coupling isomorphism 
-$g_1^{*}\Gamma_1\cong M$ gives a canonical identification
-\[
-\Gamma_1(q_1)\ \cong\ M(p).
-\]
+$g_1^{*}\Gamma_1\cong M$ gives a canonical identification $\Gamma_1(q_1)\ \cong\ M(p)$.
 Moreover, since $q_2=g_2 h_1(q_1)$, the structure map $\Gamma_2(q_2\le g_2 f_2(q_2))$
-is an isomorphism.
+is the identity.
 
 For this pair $(q_1,q_2)$, the defining pullback square becomes
 \[
@@ -650,7 +642,7 @@ For this pair $(q_1,q_2)$, the defining pullback square becomes
    \ar[d, "\Gamma_2(q_2\le g_2 f_2(q_2))", "\cong"'] \\
 \Gamma_1(q_1)\cong M(p)
    \ar[r, "\Gamma_1(q_1\le i_1 h_1(q_1))"'] &
-N(p),
+N(h_1(q_1)) = N(f_2(q_2)),
 \end{tikzcd}
 \]
 and hence $\Psi(q_1,q_2)\ \cong\ M(p)$.
@@ -660,12 +652,9 @@ Naturality then yields $(\iota_1 g_1)^{*}\Psi\ \cong\ M$.
 \paragraph{Recovering $O$.}
 For $p\in\bfP$, set $(q_1,q_2)=\iota_2 i_2(p)$.  
 Then $q_2=i_2(p)$ and $q_1 = i_1 f_2(q_2)$, and the coupling isomorphism 
-$i_2^{*}\Gamma_2\cong O$ gives a canonical identification
-\[
-\Gamma_2(q_2)\ \cong\ O(p).
-\]
+$i_2^{*}\Gamma_2\cong O$ gives a canonical identification $\Gamma_2(q_2)\ \cong\ O(p)$.
 Moreover, since $q_1 = i_1 f_2(q_2)$, the structure map 
-$\Gamma_1(q_1 \le i_1 h_1(q_1))$ is an isomorphism.
+$\Gamma_1(q_1 \le i_1 h_1(q_1))$ is the identity.
 
 For this pair $(q_1,q_2)$, the defining pullback square becomes
 \[
@@ -675,7 +664,7 @@ For this pair $(q_1,q_2)$, the defining pullback square becomes
    \ar[d, "\Gamma_2(q_2\le g_2 f_2(q_2))"'] \\
 \Gamma_1(q_1)
    \ar[r, "\Gamma_1(q_1\le i_1 h_1(q_1))", "\cong"'] &
-N(f_2(q_2)) = N(p),
+N(h_1(q_1)) = N(f_2(q_2)),
 \end{tikzcd}
 \]
 and hence $\Psi(q_1,q_2)\ \cong\ O(p)$.
@@ -683,11 +672,8 @@ Naturality then yields $(\iota_2 i_2)^{*}\Psi\ \cong\ O$.
 
 \smallskip
 \paragraph{Adjunctions.}
-Because adjoints compose and $\pi_i\dashv\iota_i$ (Lemma~\ref{lem:galois-connection-basics}), we obtain
-\[
-f_1\pi_1 \dashv \iota_1 g_1, \qquad
-h_2\pi_2 \dashv \iota_2 i_2.
-\]
+Because adjoints compose and $\pi_i\dashv\iota_i$ (Lemma~\ref{lem:galois-connection-basics}), we obtain Galois insertions
+$f_1\pi_1 \dashv \iota_1 g_1$ and $h_2\pi_2 \dashv \iota_2 i_2$.
 Together with the identifications above, this completes the construction of the
 composite coupling.
 \end{proof}
