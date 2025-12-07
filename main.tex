@@ -512,20 +512,39 @@ The \emph{cost} of a coupling $(\bfQ,f\dashv g,\ h\dashv i,\ \Gamma)$ is
 \label{ssec:composition}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Now consider two Galois couplings $(M,N, f_1 \dashv g_1, h_1 \dashv i_1, \Gamma_1)$ and
-$(N,O, f_2 \dashv g_2, h_2 \dashv i_2, \Gamma_2)$ below:
-
+We now show that Galois couplings compose.  
+Suppose we are given couplings
+\[
+(M,N,\ f_1\dashv g_1,\ h_1\dashv i_1,\ \Gamma_1)
+\qquad\text{and}\qquad
+(N,O,\ f_2\dashv g_2,\ h_2\dashv i_2,\ \Gamma_2),
+\]
+displayed below:
 \[
 \begin{tikzcd}
-    && \bfR \ar[dr, bend left, "\pi_2"{name=piTwo}] \ar[dl, bend right, "\pi_1"'{name=piOne}]  && \\
-    & \bfQ_1 \ar[dddr, "\Gamma_1", near end, bend right = 20] \ar[ur, bend right, "\iota_1"'{name=iotaOne}]  
-        \ar[dl, bend right, "f_1"'{name=fOne}] \ar[dr, bend left, "h_1"{name=hOne}] & & 
-      \bfQ_2 \ar[ddld, "\Gamma_2"', bend left = 20, near end] \ar[ul, bend left, "\iota_2"{name=iotaTwo}] 
-        \ar[dl, bend right, "f_2"'{name=fTwo}] \ar[dr, bend left, "h_2"{name=hTwo}] & \\
-    \bfP \ar[rrdd, "M"] \ar[ur, bend right, "g_1"'{name=gOne}] && 
-    \bfP \ar[dd, "N"]  \ar[ul, bend left, "i_1"{name=iOne}] 
-      \ar[ur, bend right, "g_2"'{name=gTwo}] && 
-    \bfP \ar[ldld, "O"] \ar[ul, bend left, "i_2"{name=iTwo}] \\
+    && \bfR \ar[dr, bend left, "\pi_2"{name=piTwo}] 
+           \ar[dl, bend right, "\pi_1"'{name=piOne}]  && \\
+    & \bfQ_1 
+        \ar[dddr, "\Gamma_1", near end, bend right = 20]
+        \ar[ur, bend right, "\iota_1"'{name=iotaOne}]  
+        \ar[dl, bend right, "f_1"'{name=fOne}]
+        \ar[dr, bend left, "h_1"{name=hOne}]
+        & & 
+      \bfQ_2 
+        \ar[ddld, "\Gamma_2"', bend left = 20, near end]
+        \ar[ul, bend left, "\iota_2"{name=iotaTwo}]
+        \ar[dl, bend right, "f_2"'{name=fTwo}]
+        \ar[dr, bend left, "h_2"{name=hTwo}]
+        & \\
+    \bfP \ar[rrdd, "M"] 
+        \ar[ur, bend right, "g_1"'{name=gOne}] 
+      && 
+    \bfP \ar[dd, "N"]  
+        \ar[ul, bend left, "i_1"{name=iOne}] 
+        \ar[ur, bend right, "g_2"'{name=gTwo}] 
+      && 
+    \bfP \ar[ldld, "O"] 
+        \ar[ul, bend left, "i_2"{name=iTwo}] \\
     &  & &  & \\
     && \vect &&
     % adjunction markers:
@@ -539,80 +558,141 @@ $(N,O, f_2 \dashv g_2, h_2 \dashv i_2, \Gamma_2)$ below:
 \]
 \vspace{-0.5em}
 
-Let $\bfR$ be the pullback of $(h_1,f_2)$ in the category of posets (i.e.\ thin categories), with projections $\pi_1:\bfR\to\bfQ_1$ and $\pi_2:\bfR\to\bfQ_2$. Set
+Let $\bfR$ be the pullback of $(h_1,f_2)$ in the category of posets:
 \[
-\delta:=h_1\circ\pi_1=f_2\circ\pi_2:\bfR\to\bfP.
+\bfR \ :=\ \{(q_1,q_2)\in\bfQ_1\times\bfQ_2 : h_1(q_1)=f_2(q_2)\},
 \]
-Since $h_1$ and $f_2$ are the left adjoints in Galois insertions, $f_2\circ g_2=\id_{\bfP}$ and $h_1\circ i_1=\id_{\bfP}$. By the universal property of the pullback there are unique monotone maps
+with projections $\pi_1:\bfR\to\bfQ_1$ and $\pi_2:\bfR\to\bfQ_2$.
+Since $\pi_1$ and \(\pi_2\) are surjective monotone maps, 
+Lemma~\ref{lem:galois-connection-basics} guarantees that each 
+admits a right adjoint:
 \[
-\iota_1:\bfQ_1\to\bfR\quad\text{and}\quad \iota_2:\bfQ_2\to\bfR
+\pi_1 \dashv \iota_1,
+\qquad
+\pi_2 \dashv \iota_2.
 \]
-with $\pi_1\circ\iota_1=\id_{\bfQ_1}$ and $\pi_2\circ\iota_2=\id_{\bfQ_2}$. In particular, $\pi_j\dashv\iota_j$ is a Galois insertion (Lemma~\ref{lem:galois-connection-basics}(1)–(2)).
+Thus both \(\pi_1\dashv\iota_1\) and \(\pi_2\dashv\iota_2\) are Galois insertions.
+Our goal is to construct a module $\Psi\in\vect^{\bfR}$ whose pullbacks
+recover $M$ and $O$.
+
+
 
 \begin{proposition}
 \label{prop:compose-couplings}
-With notation as above, there exists $\Psi\in\vect^{\bfR}$ and natural isomorphisms
+There exists $\Psi\in\vect^{\bfR}$ and natural isomorphisms
 \[
-(\iota_1\circ g_1)^{*}\Psi \cong M,
+(\iota_1 g_1)^{*}\Psi \cong M,
 \qquad
-(\iota_2\circ i_2)^{*}\Psi \cong O,
+(\iota_2 i_2)^{*}\Psi \cong O,
 \]
 so that
 \[
-\big(M,O,\ f_1\circ\pi_1 \dashv \iota_1\circ g_1,\ \ h_2\circ\pi_2 \dashv \iota_2\circ i_2,\ \ \Psi\big)
+\bigl(M,O,\ f_1\pi_1 \dashv \iota_1 g_1,\ 
+\ h_2\pi_2 \dashv \iota_2 i_2,\ 
+\ \Psi \bigr)
 \]
-is a Galois coupling (the \emph{composite} of the two displayed couplings).
-Moreover, this composite is unique up to unique isomorphism of couplings.
+is a Galois coupling.  
+This composite is unique up to unique isomorphism.
 \end{proposition}
 
 \begin{proof}
-Consider the canonical isomorphisms in $\vect^{\bfP}$ coming from the two couplings,
+Each coupling gives canonical identifications in $\vect^{\bfP}$:
 \[
-i_1^{*}\Gamma_1 \ \cong\ N \ \cong\ g_2^{*}\Gamma_2,
+g_1^{*}\Gamma_1 \cong M,\qquad
+i_1^{*}\Gamma_1 \cong N,\qquad
+g_2^{*}\Gamma_2 \cong N,\qquad
+i_2^{*}\Gamma_2 \cong O,
 \]
-and let $\varphi:i_1^{*}\Gamma_1\xrightarrow{\cong} g_2^{*}\Gamma_2$ be their composite. Whisker by $\delta^{*}$ to obtain an isomorphism
-\[
-\delta^{*}i_1^{*}\Gamma_1 \xrightarrow{\cong} \delta^{*}g_2^{*}\Gamma_2\quad\text{in }\vect^{\bfR}.
-\]
-The units of the insertions $\id\Rightarrow i_1h_1$ and $\id\Rightarrow g_2f_2$, transported by precomposition, give natural transformations
-\[
-\sigma_1:\ \pi_1^{*}\Gamma_1 \longrightarrow \delta^{*}i_1^{*}\Gamma_1,
-\qquad
-\sigma_2:\ \pi_2^{*}\Gamma_2 \longrightarrow \delta^{*}g_2^{*}\Gamma_2.
-\]
-Define $\Psi$ as the \emph{pullback} in the functor category $\vect^{\bfR}$:
-\[
-\Psi\ :=\ \mathrm{pullback}\left(
-\pi_1^{*}\Gamma_1 \xrightarrow{\ \sigma_1\ } \delta^{*}i_1^{*}\Gamma_1
-\ \xleftarrow[\ \cong\ ]{\ \delta^{*}\varphi\ }\ 
-\delta^{*}g_2^{*}\Gamma_2 \xleftarrow{\ \sigma_2\ } \pi_2^{*}\Gamma_2
-\right).
-\]
-Functor categories into $\vect$ admit limits computed pointwise, so this pullback exists canonically; the universal property immediately yields
-$\iota_1^{*}\Psi\cong\Gamma_1$ and $\iota_2^{*}\Psi\cong\Gamma_2$, hence the endpoint isomorphisms. Uniqueness up to unique isomorphism follows from the universal property of the pullback.
+and we use these isomorphisms freely, suppressing them from the notation.
 
-By construction we have $\iota_1^{*}\Psi\cong\Gamma_1$ and $\iota_2^{*}\Psi\cong\Gamma_2$. 
-Since precomposition is a (contravariant) $2$-functor, it is strictly functorial on composites:
+\smallskip
+\paragraph{Constructing $\Psi$.}
+For $(q_1,q_2)\in\bfR$ the adjunctions $h_1\dashv i_1$ and $f_2\dashv g_2$
+give
 \[
-(\iota_1\circ g_1)^{*}=g_1^{*}\circ \iota_1^{*},
-\qquad
-(\iota_2\circ i_2)^{*}=i_2^{*}\circ \iota_2^{*}.
+q_1 \le i_1 h_1(q_1),\qquad q_2 \le g_2 f_2(q_2),
 \]
-Therefore
+hence canonical structure maps
 \[
-(\iota_1\circ g_1)^{*}\Psi
-= g_1^{*}(\iota_1^{*}\Psi)
-\cong g_1^{*}\Gamma_1
-\cong M,
-\qquad
-(\iota_2\circ i_2)^{*}\Psi
-= i_2^{*}(\iota_2^{*}\Psi)
-\cong i_2^{*}\Gamma_2
-\cong O,
+\Gamma_1(q_1)\to N(h_1(q_1)),\qquad
+\Gamma_2(q_2)\to N(f_2(q_2)).
 \]
-where the last isomorphisms are those in the defining data of the two input couplings.
-These composites are natural isomorphisms, being composites of natural isomorphisms.
+Because $(q_1,q_2)\in\bfR$ satisfies $h_1(q_1)=f_2(q_2)$, these maps land in the   
+same vector space.  Define $\Psi(q_1,q_2)$ as their pullback:
+\[
+\begin{tikzcd}[column sep=6em]
+\Psi(q_1,q_2) \ar[r, dashed] \ar[d, dashed] &
+\Gamma_2(q_2) \ar[d, "\Gamma_2(q_2\le g_2 f_2(q_2))"] \\
+\Gamma_1(q_1) \ar[r, "\Gamma_1(q_1\le i_1 h_1(q_1))"'] &
+N(h_1(q_1)) = N(f_2(q_2)).
+\end{tikzcd}
+\]
+Functoriality of $\Gamma_1$ and $\Gamma_2$, together with the universal property
+of pullbacks, yields maps $\Psi(q_1,q_2)\to\Psi(q_1',q_2')$ for
+$(q_1,q_2)\le(q_1',q_2')$, making $\Psi$ a functor $\bfR\to\vect$.
+
+\smallskip
+\paragraph{Recovering $M$.}
+For $p\in\bfP$, set $(q_1,q_2)=\iota_1 g_1(p)$.  
+Then $q_1=g_1(p)$ and $q_2=g_2 h_1(q_1)$, and the coupling isomorphism 
+$g_1^{*}\Gamma_1\cong M$ gives a canonical identification
+\[
+\Gamma_1(q_1)\ \cong\ M(p).
+\]
+Moreover, since $q_2=g_2 h_1(q_1)$, the structure map $\Gamma_2(q_2\le g_2 f_2(q_2))$
+is an isomorphism.
+
+For this pair $(q_1,q_2)$, the defining pullback square becomes
+\[
+\begin{tikzcd}[column sep=7.5em]
+\Psi(q_1,q_2) \ar[r, dashed] \ar[d, dashed] &
+\Gamma_2(q_2) 
+   \ar[d, "\Gamma_2(q_2\le g_2 f_2(q_2))", "\cong"'] \\
+\Gamma_1(q_1)\cong M(p)
+   \ar[r, "\Gamma_1(q_1\le i_1 h_1(q_1))"'] &
+N(p),
+\end{tikzcd}
+\]
+and hence $\Psi(q_1,q_2)\ \cong\ M(p)$.
+Naturality then yields $(\iota_1 g_1)^{*}\Psi\ \cong\ M$.
+
+\smallskip
+\paragraph{Recovering $O$.}
+For $p\in\bfP$, set $(q_1,q_2)=\iota_2 i_2(p)$.  
+Then $q_2=i_2(p)$ and $q_1 = i_1 f_2(q_2)$, and the coupling isomorphism 
+$i_2^{*}\Gamma_2\cong O$ gives a canonical identification
+\[
+\Gamma_2(q_2)\ \cong\ O(p).
+\]
+Moreover, since $q_1 = i_1 f_2(q_2)$, the structure map 
+$\Gamma_1(q_1 \le i_1 h_1(q_1))$ is an isomorphism.
+
+For this pair $(q_1,q_2)$, the defining pullback square becomes
+\[
+\begin{tikzcd}[column sep=7.5em]
+\Psi(q_1,q_2) \ar[r, dashed] \ar[d, dashed] &
+\Gamma_2(q_2)\cong O(p)
+   \ar[d, "\Gamma_2(q_2\le g_2 f_2(q_2))"'] \\
+\Gamma_1(q_1)
+   \ar[r, "\Gamma_1(q_1\le i_1 h_1(q_1))", "\cong"'] &
+N(f_2(q_2)) = N(p),
+\end{tikzcd}
+\]
+and hence $\Psi(q_1,q_2)\ \cong\ O(p)$.
+Naturality then yields $(\iota_2 i_2)^{*}\Psi\ \cong\ O$.
+
+\smallskip
+\paragraph{Adjunctions.}
+Because adjoints compose and $\pi_i\dashv\iota_i$ (Lemma~\ref{lem:galois-connection-basics}), we obtain
+\[
+f_1\pi_1 \dashv \iota_1 g_1, \qquad
+h_2\pi_2 \dashv \iota_2 i_2.
+\]
+Together with the identifications above, this completes the construction of the
+composite coupling.
 \end{proof}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Transport Distance}
